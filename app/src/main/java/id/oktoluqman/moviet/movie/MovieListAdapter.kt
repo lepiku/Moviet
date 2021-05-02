@@ -9,7 +9,8 @@ import id.oktoluqman.moviet.R
 import id.oktoluqman.moviet.data.MovieItem
 import id.oktoluqman.moviet.databinding.ItemBinding
 
-class MovieListAdapter : RecyclerView.Adapter<MovieListAdapter.ListViewHolder>() {
+class MovieListAdapter(val onClick: (id: Int) -> Unit) :
+    RecyclerView.Adapter<MovieListAdapter.ListViewHolder>() {
     private val movieItems = ArrayList<MovieItem>()
 
     inner class ListViewHolder(view: View) : RecyclerView.ViewHolder(view) {
@@ -21,6 +22,7 @@ class MovieListAdapter : RecyclerView.Adapter<MovieListAdapter.ListViewHolder>()
                 .into(binding.imgThumbnail)
             binding.tvName.text = movieItem.title
             binding.tvOverview.text = movieItem.overview
+            binding.card.setOnClickListener { onClick(movieItem.id) }
         }
     }
 

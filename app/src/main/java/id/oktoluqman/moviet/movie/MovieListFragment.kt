@@ -1,5 +1,6 @@
 package id.oktoluqman.moviet.movie
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -27,7 +28,8 @@ class MovieListFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         if (activity != null) {
-            val adapter = MovieListAdapter()
+            val adapter = MovieListAdapter { onClickItem(it) }
+
             binding.rvItems.apply {
                 layoutManager = LinearLayoutManager(requireContext())
                 this.adapter = adapter
@@ -45,5 +47,11 @@ class MovieListFragment : Fragment() {
                 adapter.setData(it)
             }
         }
+    }
+
+    private fun onClickItem(id: Int) {
+        val intent = Intent(requireContext(), MovieDetailActivity::class.java)
+        intent.putExtra(MovieDetailActivity.EXTRA_ID, id)
+        startActivity(intent)
     }
 }
