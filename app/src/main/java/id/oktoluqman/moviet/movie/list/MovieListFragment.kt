@@ -41,7 +41,7 @@ class MovieListFragment : Fragment() {
                     DividerItemDecoration(binding.rvItems.context, DividerItemDecoration.VERTICAL)
                 )
             }
-
+            viewModel.queryItemList()
             viewModel.getItemList().observe(viewLifecycleOwner) {
                 adapter.setData(it)
             }

@@ -1,18 +1,20 @@
 package id.oktoluqman.moviet.movie.detail
 
 import android.os.Bundle
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
+import dagger.hilt.android.AndroidEntryPoint
 import id.oktoluqman.moviet.databinding.ActivityMovieDetailBinding
 
+@AndroidEntryPoint
 class MovieDetailActivity : AppCompatActivity() {
     companion object {
         const val EXTRA_ID = "extra_id"
     }
 
     private lateinit var binding: ActivityMovieDetailBinding
-    private lateinit var viewModel: MovieDetailViewModel
+    private val viewModel by viewModels<MovieDetailViewModel>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -21,10 +23,6 @@ class MovieDetailActivity : AppCompatActivity() {
 
         val movieId = intent.getIntExtra(EXTRA_ID, 0)
 
-        viewModel = ViewModelProvider(
-            this,
-            ViewModelProvider.NewInstanceFactory()
-        )[MovieDetailViewModel::class.java]
         viewModel.setMovie(movieId)
         viewModel.getMovie().observe(this) { movie ->
             Glide.with(this)

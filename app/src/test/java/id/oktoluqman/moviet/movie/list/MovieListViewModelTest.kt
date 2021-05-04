@@ -34,11 +34,11 @@ class MovieListViewModelTest {
         coroutinesRule.testDispatcher.runBlockingTest {
             val movieItem = MovieItem(1, "title", "overview", "/a.jpg", 0.2f)
             val list = listOf(movieItem)
-            `when`(repository.fetchMovies()).thenReturn(list)
+            `when`(repository.discoverMovies()).thenReturn(list)
 
             viewModel.queryItemList()
 
-            verify(repository, times(1)).fetchMovies()
+            verify(repository, times(1)).discoverMovies()
             assertEquals(viewModel.getItemList().value, list)
         }
     }

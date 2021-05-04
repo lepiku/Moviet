@@ -19,7 +19,7 @@ class MovieListViewModel @Inject constructor(
 
     fun queryItemList() {
         viewModelScope.launch {
-            movieList.postValue(movieRepository.fetchMovies())
+            movieList.postValue(movieRepository.discoverMovies())
         }
     }
 
