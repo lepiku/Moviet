@@ -1,4 +1,4 @@
-package id.oktoluqman.moviet.home
+package id.oktoluqman.moviet.services
 
 import id.oktoluqman.moviet.data.*
 import retrofit2.Call

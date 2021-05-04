@@ -1,4 +1,4 @@
-package id.oktoluqman.moviet.movie
+package id.oktoluqman.moviet.tv.list
 
 import android.util.Log
 import androidx.lifecycle.LiveData
@@ -6,20 +6,20 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import id.oktoluqman.moviet.BuildConfig.TMDB_TOKEN
 import id.oktoluqman.moviet.data.DiscoverQuery
-import id.oktoluqman.moviet.data.MovieItem
-import id.oktoluqman.moviet.home.TMDBService
+import id.oktoluqman.moviet.data.TvItem
+import id.oktoluqman.moviet.services.TMDBService
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
-class MovieListViewModel : ViewModel() {
+class TvListViewModel : ViewModel() {
     companion object {
-        private val TAG = MovieListViewModel::class.java.simpleName
+        private val TAG = TvListViewModel::class.java.simpleName
     }
 
-    private val movieList = MutableLiveData<List<MovieItem>>()
+    private val movieList = MutableLiveData<List<TvItem>>()
 
     fun queryItemList() {
         val retrofit = Retrofit.Builder()
@@ -28,12 +28,13 @@ class MovieListViewModel : ViewModel() {
             .build()
         val service = retrofit.create(TMDBService::class.java)
 
-        val call = service.discoverMovies(TMDB_TOKEN)
+        val call = service.discoverTv(TMDB_TOKEN)
+
         call.enqueue(
-            object : Callback<DiscoverQuery<MovieItem>> {
+            object : Callback<DiscoverQuery<TvItem>> {
                 override fun onResponse(
-                    call: Call<DiscoverQuery<MovieItem>>,
-                    response: Response<DiscoverQuery<MovieItem>>,
+                    call: Call<DiscoverQuery<TvItem>>,
+                    response: Response<DiscoverQuery<TvItem>>,
                 ) {
                     if (response.isSuccessful) {
                         Log.d(TAG, "onResponse: ${response.body()}")
@@ -43,7 +44,7 @@ class MovieListViewModel : ViewModel() {
                     }
                 }
 
-                override fun onFailure(call: Call<DiscoverQuery<MovieItem>>, t: Throwable) {
+                override fun onFailure(call: Call<DiscoverQuery<TvItem>>, t: Throwable) {
                     Log.d(TAG, "onFailure: $t")
                 }
 
@@ -51,5 +52,5 @@ class MovieListViewModel : ViewModel() {
         )
     }
 
-    fun getItemList(): LiveData<List<MovieItem>> = movieList
+    fun getItemList(): LiveData<List<TvItem>> = movieList
 }

@@ -1,4 +1,4 @@
-package id.oktoluqman.moviet.movie
+package id.oktoluqman.moviet.movie.detail
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity

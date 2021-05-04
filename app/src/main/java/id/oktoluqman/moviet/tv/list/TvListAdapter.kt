@@ -1,4 +1,4 @@
-package id.oktoluqman.moviet.tv
+package id.oktoluqman.moviet.tv.list
 
 import android.view.LayoutInflater
 import android.view.View

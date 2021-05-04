@@ -1,56 +1,51 @@
-package id.oktoluqman.moviet.tv
+package id.oktoluqman.moviet.tv.detail
 
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import id.oktoluqman.moviet.BuildConfig.TMDB_TOKEN
-import id.oktoluqman.moviet.data.DiscoverQuery
-import id.oktoluqman.moviet.data.TvItem
-import id.oktoluqman.moviet.home.TMDBService
+import id.oktoluqman.moviet.BuildConfig
+import id.oktoluqman.moviet.data.TvDetail
+import id.oktoluqman.moviet.services.TMDBService
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
-class TvListViewModel : ViewModel() {
+class TvDetailViewModel : ViewModel() {
     companion object {
-        private val TAG = TvListViewModel::class.java.simpleName
+        private val TAG = TvDetailViewModel::class.java.simpleName
     }
 
-    private val movieList = MutableLiveData<List<TvItem>>()
+    private val tv = MutableLiveData<TvDetail>()
 
-    fun queryItemList() {
+    fun setTv(id: Int) {
         val retrofit = Retrofit.Builder()
             .baseUrl(TMDBService.BASE_URL)
             .addConverterFactory(GsonConverterFactory.create())
             .build()
         val service = retrofit.create(TMDBService::class.java)
 
-        val call = service.discoverTv(TMDB_TOKEN)
-
+        val call = service.getTv(id, BuildConfig.TMDB_TOKEN, "credits")
         call.enqueue(
-            object : Callback<DiscoverQuery<TvItem>> {
-                override fun onResponse(
-                    call: Call<DiscoverQuery<TvItem>>,
-                    response: Response<DiscoverQuery<TvItem>>,
-                ) {
+            object : Callback<TvDetail> {
+                override fun onResponse(call: Call<TvDetail>, response: Response<TvDetail>) {
                     if (response.isSuccessful) {
                         Log.d(TAG, "onResponse: ${response.body()}")
-                        movieList.postValue(response.body()?.results)
+                        tv.postValue(response.body())
                     } else {
                         Log.d(TAG, "onResponse: not success")
+                        Log.d(TAG, "onResponse: $response")
                     }
                 }
 
-                override fun onFailure(call: Call<DiscoverQuery<TvItem>>, t: Throwable) {
+                override fun onFailure(call: Call<TvDetail>, t: Throwable) {
                     Log.d(TAG, "onFailure: $t")
                 }
-
             }
         )
     }
 
-    fun getItemList(): LiveData<List<TvItem>> = movieList
+    fun getTv(): LiveData<TvDetail> = tv
 }

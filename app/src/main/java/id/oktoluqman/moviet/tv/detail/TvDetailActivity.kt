@@ -1,4 +1,4 @@
-package id.oktoluqman.moviet.tv
+package id.oktoluqman.moviet.tv.detail
 
 import android.os.Bundle
 import android.view.View

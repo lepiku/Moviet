@@ -1,4 +1,4 @@
-package id.oktoluqman.moviet.tv
+package id.oktoluqman.moviet.movie.list
 
 import android.content.Intent
 import android.os.Bundle
@@ -10,17 +10,17 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import id.oktoluqman.moviet.databinding.FragmentItemListBinding
+import id.oktoluqman.moviet.movie.detail.MovieDetailActivity
 
-class TvListFragment : Fragment() {
+class MovieListFragment : Fragment() {
     private lateinit var binding: FragmentItemListBinding
-    private lateinit var viewModel: TvListViewModel
+    private lateinit var viewModel: MovieListViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentItemListBinding.inflate(layoutInflater, container, false)
-
 
         return binding.root
     }
@@ -29,7 +29,8 @@ class TvListFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         if (activity != null) {
-            val adapter = TvListAdapter { onClickItem(it) }
+            val adapter = MovieListAdapter { onClickItem(it) }
+
             binding.rvItems.apply {
                 layoutManager = LinearLayoutManager(requireContext())
                 this.adapter = adapter
@@ -41,7 +42,7 @@ class TvListFragment : Fragment() {
             viewModel = ViewModelProvider(
                 this,
                 ViewModelProvider.NewInstanceFactory(),
-            )[TvListViewModel::class.java]
+            )[MovieListViewModel::class.java]
             viewModel.queryItemList()
             viewModel.getItemList().observe(viewLifecycleOwner) {
                 adapter.setData(it)
@@ -50,8 +51,8 @@ class TvListFragment : Fragment() {
     }
 
     private fun onClickItem(id: Int) {
-        val intent = Intent(requireContext(), TvDetailActivity::class.java)
-        intent.putExtra(TvDetailActivity.EXTRA_ID, id)
+        val intent = Intent(requireContext(), MovieDetailActivity::class.java)
+        intent.putExtra(MovieDetailActivity.EXTRA_ID, id)
         startActivity(intent)
     }
 }
