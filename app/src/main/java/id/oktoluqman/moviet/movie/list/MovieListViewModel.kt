@@ -17,10 +17,6 @@ class MovieListViewModel @Inject constructor(
 
     private val movieList = MutableLiveData<List<MovieItem>>()
 
-    init {
-        queryItemList()
-    }
-
     fun queryItemList() {
         viewModelScope.launch {
             movieList.postValue(movieRepository.fetchMovies())
