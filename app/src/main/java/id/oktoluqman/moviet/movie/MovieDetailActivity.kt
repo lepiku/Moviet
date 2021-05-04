@@ -30,7 +30,7 @@ class MovieDetailActivity : AppCompatActivity() {
             Glide.with(this)
                 .load("https://image.tmdb.org/t/p/w185${movie.posterPath}")
                 .into(binding.imgPoster)
-            binding.tvTitle.text = movie.title
+            binding.tvMovieDetailTitle.text = movie.title
             binding.tvReleaseDate.text = movie.releaseDate
             binding.tvGenre.text = movie.genres.joinToString { it.name }
             binding.tvVoteAverage.text = movie.voteAverage.toString()
@@ -39,5 +39,13 @@ class MovieDetailActivity : AppCompatActivity() {
             binding.tvStatus.text = movie.status
             binding.tvRevenue.text = movie.revenue.toString()
         }
+
+        supportActionBar?.title = "Movie Detail"
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+    }
+
+    override fun onSupportNavigateUp(): Boolean {
+        finish()
+        return super.onSupportNavigateUp()
     }
 }

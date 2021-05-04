@@ -1,5 +1,6 @@
 package id.oktoluqman.moviet.tv
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -28,7 +29,7 @@ class TvListFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         if (activity != null) {
-            val adapter = TvListAdapter()
+            val adapter = TvListAdapter { onClickItem(it) }
             binding.rvItems.apply {
                 layoutManager = LinearLayoutManager(requireContext())
                 this.adapter = adapter
@@ -46,5 +47,11 @@ class TvListFragment : Fragment() {
                 adapter.setData(it)
             }
         }
+    }
+
+    private fun onClickItem(id: Int) {
+        val intent = Intent(requireContext(), TvDetailActivity::class.java)
+        intent.putExtra(TvDetailActivity.EXTRA_ID, id)
+        startActivity(intent)
     }
 }

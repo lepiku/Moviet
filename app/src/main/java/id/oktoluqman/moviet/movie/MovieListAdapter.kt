@@ -20,7 +20,7 @@ class MovieListAdapter(val onClick: (id: Int) -> Unit) :
             Glide.with(itemView.context)
                 .load("https://image.tmdb.org/t/p/w92${movieItem.posterPath}")
                 .into(binding.imgThumbnail)
-            binding.tvName.text = movieItem.title
+            binding.tvTvDetailName.text = movieItem.title
             binding.tvOverview.text = movieItem.overview
             binding.card.setOnClickListener { onClick(movieItem.id) }
         }

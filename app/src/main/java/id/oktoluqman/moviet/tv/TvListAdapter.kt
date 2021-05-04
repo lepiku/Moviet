@@ -9,7 +9,8 @@ import id.oktoluqman.moviet.R
 import id.oktoluqman.moviet.data.TvItem
 import id.oktoluqman.moviet.databinding.ItemBinding
 
-class TvListAdapter : RecyclerView.Adapter<TvListAdapter.ListViewHolder>() {
+class TvListAdapter(val onClick: (id: Int) -> Unit) :
+    RecyclerView.Adapter<TvListAdapter.ListViewHolder>() {
     private val tvItems = ArrayList<TvItem>()
 
     inner class ListViewHolder(view: View) : RecyclerView.ViewHolder(view) {
@@ -19,8 +20,9 @@ class TvListAdapter : RecyclerView.Adapter<TvListAdapter.ListViewHolder>() {
             Glide.with(itemView.context)
                 .load("https://image.tmdb.org/t/p/w92${tvItem.posterPath}")
                 .into(binding.imgThumbnail)
-            binding.tvName.text = tvItem.name
+            binding.tvTvDetailName.text = tvItem.name
             binding.tvOverview.text = tvItem.overview
+            binding.card.setOnClickListener { onClick(tvItem.id) }
         }
     }
 
