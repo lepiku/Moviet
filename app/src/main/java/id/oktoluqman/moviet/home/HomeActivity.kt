@@ -2,8 +2,10 @@ package id.oktoluqman.moviet.home
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import dagger.hilt.android.AndroidEntryPoint
 import id.oktoluqman.moviet.databinding.ActivityHomeBinding
 
+@AndroidEntryPoint
 class HomeActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
