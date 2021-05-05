@@ -3,7 +3,7 @@ package id.oktoluqman.moviet.movie.detail
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import id.oktoluqman.moviet.data.Credits
 import id.oktoluqman.moviet.data.MovieDetail
-import id.oktoluqman.moviet.services.MovieRepository
+import id.oktoluqman.moviet.services.TMDBRepository
 import id.oktoluqman.moviet.utils.CoroutinesTestRule
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runBlockingTest
@@ -24,7 +24,7 @@ class MovieDetailViewModelTest {
     val coroutinesRule = CoroutinesTestRule()
 
     private lateinit var viewModel: MovieDetailViewModel
-    private val repository = mock(MovieRepository::class.java)
+    private val repository = mock(TMDBRepository::class.java)
 
     @Before
     fun setUp() {

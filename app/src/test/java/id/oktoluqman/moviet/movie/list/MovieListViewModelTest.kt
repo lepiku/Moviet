@@ -2,7 +2,7 @@ package id.oktoluqman.moviet.movie.list
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import id.oktoluqman.moviet.data.MovieItem
-import id.oktoluqman.moviet.services.MovieRepository
+import id.oktoluqman.moviet.services.TMDBRepository
 import id.oktoluqman.moviet.utils.CoroutinesTestRule
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runBlockingTest
@@ -22,7 +22,7 @@ class MovieListViewModelTest {
 
     private lateinit var viewModel: MovieListViewModel
 
-    private val repository = mock(MovieRepository::class.java)
+    private val repository = mock(TMDBRepository::class.java)
 
     @Before
     fun setUp() {

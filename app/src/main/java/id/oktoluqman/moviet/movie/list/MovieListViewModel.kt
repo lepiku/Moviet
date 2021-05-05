@@ -6,20 +6,20 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import id.oktoluqman.moviet.data.MovieItem
-import id.oktoluqman.moviet.services.MovieRepository
+import id.oktoluqman.moviet.services.TMDBRepository
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class MovieListViewModel @Inject constructor(
-    private val movieRepository: MovieRepository
+    private val repository: TMDBRepository
 ) : ViewModel() {
 
     private val movieList = MutableLiveData<List<MovieItem>>()
 
     fun queryItemList() {
         viewModelScope.launch {
-            movieList.postValue(movieRepository.discoverMovies())
+            movieList.postValue(repository.discoverMovies())
         }
     }
 

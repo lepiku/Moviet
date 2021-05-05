@@ -1,7 +1,7 @@
 package id.oktoluqman.moviet.services
 
 import id.oktoluqman.moviet.data.*
-import retrofit2.Call
+import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Query
@@ -12,22 +12,22 @@ interface TMDBService {
     }
 
     @GET("discover/movie")
-    fun discoverMovies(@Query("api_key") apiKey: String): Call<DiscoverQuery<MovieItem>>
+    suspend fun discoverMovies(@Query("api_key") apiKey: String): Response<DiscoverQuery<MovieItem>>
 
     @GET("discover/tv")
-    fun discoverTv(@Query("api_key") apiKey: String): Call<DiscoverQuery<TvItem>>
+    suspend fun discoverTv(@Query("api_key") apiKey: String): Response<DiscoverQuery<TvItem>>
 
     @GET("movie/{id}")
-    fun getMovie(
+    suspend fun getMovie(
         @Path("id") id: Int,
         @Query("api_key") apiKey: String,
         @Query("append_to_response") appendToResponse: String?,
-    ): Call<MovieDetail>
+    ): Response<MovieDetail>
 
     @GET("tv/{id}")
-    fun getTv(
+    suspend fun getTv(
         @Path("id") id: Int,
         @Query("api_key") apiKey: String,
         @Query("append_to_response") appendToResponse: String?,
-    ): Call<TvDetail>
+    ): Response<TvDetail>
 }

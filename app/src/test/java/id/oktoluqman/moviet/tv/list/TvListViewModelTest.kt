@@ -1,10 +1,8 @@
 package id.oktoluqman.moviet.tv.list
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
-import id.oktoluqman.moviet.data.MovieItem
 import id.oktoluqman.moviet.data.TvItem
-import id.oktoluqman.moviet.movie.list.MovieListViewModel
-import id.oktoluqman.moviet.services.MovieRepository
+import id.oktoluqman.moviet.services.TMDBRepository
 import id.oktoluqman.moviet.utils.CoroutinesTestRule
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runBlockingTest
@@ -25,7 +23,7 @@ class TvListViewModelTest {
 
     private lateinit var viewModel: TvListViewModel
 
-    private val repository = Mockito.mock(MovieRepository::class.java)
+    private val repository = Mockito.mock(TMDBRepository::class.java)
 
     @Before
     fun setUp() {
