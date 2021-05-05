@@ -5,9 +5,11 @@ import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
+import dagger.hilt.android.AndroidEntryPoint
 import id.oktoluqman.moviet.R
 import id.oktoluqman.moviet.databinding.ActivityTvDetailBinding
 
+@AndroidEntryPoint
 class TvDetailActivity : AppCompatActivity() {
     companion object {
         const val EXTRA_ID = "extra_id"
@@ -22,6 +24,7 @@ class TvDetailActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         val tvId = intent.getIntExtra(EXTRA_ID, 0)
+
         viewModel.setTv(tvId)
         viewModel.getTv().observe(this) { tv ->
             Glide.with(this)
