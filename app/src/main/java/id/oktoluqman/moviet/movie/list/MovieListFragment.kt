@@ -15,6 +15,9 @@ import id.oktoluqman.moviet.movie.detail.MovieDetailActivity
 
 @AndroidEntryPoint
 class MovieListFragment : Fragment() {
+    companion object {
+        private const val TAG = "MovieListFragment"
+    }
     private lateinit var binding: FragmentItemListBinding
 
     private val viewModel by viewModels<MovieListViewModel>()
@@ -24,6 +27,7 @@ class MovieListFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentItemListBinding.inflate(layoutInflater, container, false)
+        binding.rvItems.contentDescription = TAG
 
         return binding.root
     }

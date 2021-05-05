@@ -16,6 +16,9 @@ import id.oktoluqman.moviet.tv.detail.TvDetailActivity
 
 @AndroidEntryPoint
 class TvListFragment : Fragment() {
+    companion object {
+        private const val TAG = "TvListFragment"
+    }
     private lateinit var binding: FragmentItemListBinding
     private val viewModel by viewModels<TvListViewModel>()
 
@@ -24,7 +27,7 @@ class TvListFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentItemListBinding.inflate(layoutInflater, container, false)
-
+        binding.rvItems.contentDescription = TAG
 
         return binding.root
     }
