@@ -12,6 +12,7 @@ Project ini dibuat untuk submission "Belajar Android Jetpack Pro" di Dicoding.
     * Memastikan RecyclerView **rv_items** descendant dari **MovieListFragment**
     
   * Menampilkan **List TV Shows**
+    * Klik TabLayout dengan text **TV SHOWS**
     * Memastikan RecyclerView dengan description **MovieListFragment** tidak ditampilkan
     * Memastikan RecyclerView dengan description **TvListFragment** ditampilkan
     * Memastikan RecyclerView **rv_items** descendant dari **TvListFragment**
