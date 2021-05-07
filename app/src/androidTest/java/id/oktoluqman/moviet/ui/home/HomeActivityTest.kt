@@ -2,13 +2,14 @@ package id.oktoluqman.moviet.ui.home
 
 import androidx.recyclerview.widget.RecyclerView
 import androidx.test.espresso.Espresso.onView
-import androidx.test.espresso.action.ViewActions.*
-import androidx.test.espresso.assertion.ViewAssertions.*
+import androidx.test.espresso.action.ViewActions.click
+import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.contrib.RecyclerViewActions
 import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.ext.junit.rules.ActivityScenarioRule
 import id.oktoluqman.moviet.R
-import org.hamcrest.Matchers.*
+import org.hamcrest.Matchers.allOf
+import org.hamcrest.Matchers.not
 import org.junit.Rule
 import org.junit.Test
 
@@ -17,10 +18,29 @@ class HomeActivityTest {
     val activityRule = ActivityScenarioRule(HomeActivity::class.java)
 
     @Test
-    fun loadDetailMovie() {
-        onView(allOf(withId(R.id.rv_items), isDisplayed()))
+    fun loadListMovies() {
+        onView(withContentDescription("MovieListFragment")).check(matches(isDisplayed()))
+        onView(withContentDescription("TvListFragment")).check(matches(not(isDisplayed())))
+        onView(allOf(withId(R.id.rv_items), isDescendantOfA(withContentDescription("MovieListFragment"))))
+    }
+
+    @Test
+    fun loadListTv() {
+        onView(withText("TV SHOWS")).perform(click())
         Thread.sleep(1000)
-        onView(withContentDescription("MovieListFragment")).perform(RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(0, click()))
+        onView(withContentDescription("MovieListFragment")).check(matches(not(isDisplayed())))
+        onView(withContentDescription("TvListFragment")).check(matches(isDisplayed()))
+        onView(allOf(withId(R.id.rv_items), isDescendantOfA(withContentDescription("TvListFragment"))))
+    }
+
+    @Test
+    fun loadDetailMovie() {
+        Thread.sleep(1000)
+        onView(withContentDescription("MovieListFragment")).perform(
+            RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(
+                0, click()
+            )
+        )
         Thread.sleep(1000)
         onView(withId(R.id.img_poster)).check(matches(isDisplayed()))
         onView(withId(R.id.tv_movie_detail_title)).check(matches(isDisplayed()))
@@ -35,11 +55,13 @@ class HomeActivityTest {
 
     @Test
     fun loadDetailTv() {
-        onView(allOf(withId(R.id.rv_items), isDisplayed()))
-        Thread.sleep(500)
         onView(withText("TV SHOWS")).perform(click())
         Thread.sleep(1000)
-        onView(withContentDescription("TvListFragment")).perform(RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(0, click()))
+        onView(withContentDescription("TvListFragment")).perform(
+            RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(
+                0, click()
+            )
+        )
         Thread.sleep(1000)
         onView(withId(R.id.img_poster)).check(matches(isDisplayed()))
         onView(withId(R.id.tv_tv_detail_name)).check(matches(isDisplayed()))
