@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="id.oktoluqman.moviet.ui.movie.list.MovieListFragment">
+    tools:context=".ui.movie.list.MovieListFragment">
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_items"

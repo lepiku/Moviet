@@ -12,9 +12,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Moviet">
-        <activity android:name="id.oktoluqman.moviet.ui.tv.detail.TvDetailActivity" />
-        <activity android:name="id.oktoluqman.moviet.ui.movie.detail.MovieDetailActivity" />
-        <activity android:name="id.oktoluqman.moviet.ui.home.HomeActivity">
+        <activity android:name=".ui.tv.detail.TvDetailActivity" />
+        <activity android:name=".ui.movie.detail.MovieDetailActivity" />
+        <activity android:name=".ui.home.HomeActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
