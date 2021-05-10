@@ -1,55 +1,29 @@
 package id.oktoluqman.moviet.data.source
 
-import android.util.Log
-import id.oktoluqman.moviet.BuildConfig.TMDB_TOKEN
-import id.oktoluqman.moviet.data.*
-import id.oktoluqman.moviet.services.TMDBService
-import retrofit2.Response
-import retrofit2.Retrofit
+import id.oktoluqman.moviet.data.MovieDetail
+import id.oktoluqman.moviet.data.MovieItem
+import id.oktoluqman.moviet.data.TvDetail
+import id.oktoluqman.moviet.data.TvItem
+import id.oktoluqman.moviet.data.source.remote.TMDBRemoteDataSource
 import javax.inject.Inject
 
-class TMDBRepository @Inject constructor(private val retrofit: Retrofit) {
-    companion object {
-        private const val TAG = "TMDBRepository"
+class TMDBRepository @Inject constructor(private val remoteDataSource: TMDBRemoteDataSource) :
+    TMDBDataSource {
+
+    override suspend fun discoverMovies(): List<MovieItem> {
+        return remoteDataSource.discoverMovies()
     }
 
-    suspend fun discoverMovies(): List<MovieItem> {
-        val service = retrofit.create(TMDBService::class.java)
-        val response = service.discoverMovies(TMDB_TOKEN)
-        return getResponse { response }!!.results
+    override suspend fun discoverTv(): List<TvItem> {
+        return remoteDataSource.discoverTv()
     }
 
-    suspend fun discoverTv(): List<TvItem> {
-        val service = retrofit.create(TMDBService::class.java)
-        val response = service.discoverTv(TMDB_TOKEN)
-        return getResponse { response }!!.results
+    override suspend fun getMovie(id: Int): MovieDetail {
+        return remoteDataSource.getMovie(id)
     }
 
-    suspend fun getMovie(id: Int): MovieDetail {
-        val service = retrofit.create(TMDBService::class.java)
-        val response = service.getMovie(id, TMDB_TOKEN, "credits")
-        return getResponse { response }!!
+    override suspend fun getTv(id: Int): TvDetail {
+        return remoteDataSource.getTv(id)
     }
 
-    suspend fun getTv(id: Int): TvDetail {
-        val service = retrofit.create(TMDBService::class.java)
-        val response = service.getTv(id, TMDB_TOKEN, null)
-        return getResponse { response }!!
-    }
-
-    private suspend fun <T> getResponse(request: suspend () -> Response<T>): T? {
-        return try {
-            val result = request.invoke()
-            if (result.isSuccessful) {
-                result.body()
-            } else {
-                Log.d(TAG, "getResponse: not success?")
-                null
-            }
-        } catch (e: Throwable) {
-            Log.d(TAG, "getResponse: nani?")
-
-            null
-        }
-    }
 }

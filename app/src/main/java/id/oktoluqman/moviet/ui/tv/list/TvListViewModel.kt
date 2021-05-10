@@ -6,13 +6,13 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import id.oktoluqman.moviet.data.TvItem
-import id.oktoluqman.moviet.data.source.TMDBRepository
+import id.oktoluqman.moviet.data.source.TMDBDataSource
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class TvListViewModel @Inject constructor(
-    private val repository: TMDBRepository
+    private val repository: TMDBDataSource
 ) : ViewModel() {
     private val tvList = MutableLiveData<List<TvItem>>()
 

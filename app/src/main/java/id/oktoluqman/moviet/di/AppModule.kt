@@ -4,6 +4,9 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
+import id.oktoluqman.moviet.data.source.TMDBDataSource
+import id.oktoluqman.moviet.data.source.TMDBRepository
+import id.oktoluqman.moviet.data.source.remote.TMDBRemoteDataSource
 import id.oktoluqman.moviet.utils.TMDBConstants
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
