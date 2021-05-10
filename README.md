@@ -3,6 +3,11 @@
 Aplikasi menampilkan movies dan TV shows dari https://www.themoviedb.org/ .
 Project ini dibuat untuk submission "Belajar Android Jetpack Pro" di Dicoding.
 
+## Version History
+
+* [Submission 1](https://github.com/lepiku/Moviet/tree/v1): Fri May 7 10:20:28 2021
+* [Submission 2](https://github.com/lepiku/Moviet/tree/submission-2): Mon May 10 22:32:35 2021
+
 ## Skenario Pengujian Instrumentation Test
 
 * ui.HomeActivityTest:
