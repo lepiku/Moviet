@@ -1,26 +1,29 @@
-package id.oktoluqman.moviet.di
+package id.oktoluqman.moviet
 
 import dagger.Module
 import dagger.Provides
-import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
+import dagger.hilt.testing.TestInstallIn
+import id.oktoluqman.moviet.di.AppModule
 import id.oktoluqman.moviet.utils.TMDBConstants
 import okhttp3.OkHttpClient
-import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import javax.inject.Inject
 
 @Module
-@InstallIn(SingletonComponent::class)
-class AppModule {
+@TestInstallIn(
+    components = [SingletonComponent::class],
+    replaces = [AppModule::class]
+)
+class FakeAppModule {
+    companion object {
+        private const val TAG = "FakeAppModule"
+    }
+
     @Provides
     fun provideOkHttpClient(): OkHttpClient {
-        val loggingInterceptor =
-            HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY)
-        return OkHttpClient.Builder()
-            .addInterceptor(loggingInterceptor)
-            .build()
+        return OkHttpClientProvider.instance
     }
 
     @Provides
