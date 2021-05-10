@@ -2,7 +2,7 @@ package id.oktoluqman.moviet.ui.tv.list
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import id.oktoluqman.moviet.data.TvItem
-import id.oktoluqman.moviet.services.TMDBRepository
+import id.oktoluqman.moviet.data.source.TMDBRepository
 import id.oktoluqman.moviet.utils.CoroutinesTestRule
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runBlockingTest

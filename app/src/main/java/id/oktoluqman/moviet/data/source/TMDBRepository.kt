@@ -1,8 +1,9 @@
-package id.oktoluqman.moviet.services
+package id.oktoluqman.moviet.data.source
 
 import android.util.Log
 import id.oktoluqman.moviet.BuildConfig.TMDB_TOKEN
 import id.oktoluqman.moviet.data.*
+import id.oktoluqman.moviet.services.TMDBService
 import retrofit2.Response
 import retrofit2.Retrofit
 import javax.inject.Inject

@@ -6,7 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import id.oktoluqman.moviet.data.MovieItem
-import id.oktoluqman.moviet.services.TMDBRepository
+import id.oktoluqman.moviet.data.source.TMDBRepository
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
