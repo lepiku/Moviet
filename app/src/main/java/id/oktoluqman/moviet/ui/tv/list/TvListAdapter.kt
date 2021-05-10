@@ -8,6 +8,7 @@ import com.bumptech.glide.Glide
 import id.oktoluqman.moviet.R
 import id.oktoluqman.moviet.data.TvItem
 import id.oktoluqman.moviet.databinding.ItemBinding
+import id.oktoluqman.moviet.utils.TMDBConstants
 
 class TvListAdapter(val onClick: (id: Int) -> Unit) :
     RecyclerView.Adapter<TvListAdapter.ListViewHolder>() {
@@ -18,7 +19,7 @@ class TvListAdapter(val onClick: (id: Int) -> Unit) :
 
         fun bind(tvItem: TvItem) {
             Glide.with(itemView.context)
-                .load("https://image.tmdb.org/t/p/w92${tvItem.posterPath}")
+                .load(TMDBConstants.POSTER_SMALL_URL + tvItem.posterPath)
                 .into(binding.imgThumbnail)
             binding.tvTvDetailName.text = tvItem.name
             binding.tvOverview.text = tvItem.overview

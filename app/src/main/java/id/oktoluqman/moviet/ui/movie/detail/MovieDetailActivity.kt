@@ -5,7 +5,9 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
 import dagger.hilt.android.AndroidEntryPoint
+import id.oktoluqman.moviet.R
 import id.oktoluqman.moviet.databinding.ActivityMovieDetailBinding
+import id.oktoluqman.moviet.utils.TMDBConstants
 
 @AndroidEntryPoint
 class MovieDetailActivity : AppCompatActivity() {
@@ -26,7 +28,7 @@ class MovieDetailActivity : AppCompatActivity() {
         viewModel.setMovie(movieId)
         viewModel.getMovie().observe(this) { movie ->
             Glide.with(this)
-                .load("https://image.tmdb.org/t/p/w185${movie.posterPath}")
+                .load(TMDBConstants.POSTER_BIG_URL + movie.posterPath)
                 .into(binding.imgPoster)
             binding.tvMovieDetailTitle.text = movie.title
             binding.tvReleaseDate.text = movie.releaseDate
@@ -38,7 +40,7 @@ class MovieDetailActivity : AppCompatActivity() {
             binding.tvRevenue.text = movie.revenue.toString()
         }
 
-        supportActionBar?.title = "Movie Detail"
+        supportActionBar?.title = getString(R.string.movie_detail)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
     }
 

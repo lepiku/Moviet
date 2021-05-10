@@ -1,16 +1,13 @@
 package id.oktoluqman.moviet.services
 
 import id.oktoluqman.moviet.data.*
+import id.oktoluqman.moviet.utils.TMDBConstants
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Query
 
 interface TMDBService {
-    companion object {
-        const val BASE_URL = "https://api.themoviedb.org/3/"
-    }
-
     @GET("discover/movie")
     suspend fun discoverMovies(@Query("api_key") apiKey: String): Response<DiscoverQuery<MovieItem>>
 
