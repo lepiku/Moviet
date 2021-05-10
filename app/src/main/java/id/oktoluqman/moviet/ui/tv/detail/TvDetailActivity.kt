@@ -30,6 +30,8 @@ class TvDetailActivity : AppCompatActivity() {
         viewModel.getTv().observe(this) { tv ->
             Glide.with(this)
                 .load(TMDBConstants.POSTER_BIG_URL + tv.posterPath)
+                .placeholder(R.drawable.ic_baseline_refresh_24).centerCrop()
+                .error(R.drawable.ic_baseline_broken_image_24).centerCrop()
                 .into(binding.imgPoster)
             binding.tvTvDetailName.text = tv.name
             binding.tvReleaseDate.text =

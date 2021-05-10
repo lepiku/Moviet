@@ -20,6 +20,8 @@ class MovieListAdapter(val onClick: (id: Int) -> Unit) :
         fun bind(movieItem: MovieItem) {
             Glide.with(itemView.context)
                 .load(TMDBConstants.POSTER_SMALL_URL + movieItem.posterPath)
+                .placeholder(R.drawable.ic_baseline_refresh_24).centerCrop()
+                .error(R.drawable.ic_baseline_broken_image_24).centerCrop()
                 .into(binding.imgThumbnail)
             binding.tvTvDetailName.text = movieItem.title
             binding.tvOverview.text = movieItem.overview

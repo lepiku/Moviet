@@ -29,6 +29,8 @@ class MovieDetailActivity : AppCompatActivity() {
         viewModel.getMovie().observe(this) { movie ->
             Glide.with(this)
                 .load(TMDBConstants.POSTER_BIG_URL + movie.posterPath)
+                .placeholder(R.drawable.ic_baseline_refresh_24).centerCrop()
+                .error(R.drawable.ic_baseline_broken_image_24).centerCrop()
                 .into(binding.imgPoster)
             binding.tvMovieDetailTitle.text = movie.title
             binding.tvReleaseDate.text = movie.releaseDate
