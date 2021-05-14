@@ -1,12 +1,12 @@
-package id.oktoluqman.moviet.data
+package id.oktoluqman.moviet.data.source.remote.response
 
 import com.google.gson.annotations.SerializedName
 
-data class MovieDetail(
+data class MovieDetailResponse(
     val id: Int,
     val title: String,
     val overview: String,
-    val genres: List<Genre>,
+    val genres: List<GenreResponse>,
     val status: String,
     val popularity: Float,
     @SerializedName("poster_path")
@@ -18,5 +18,5 @@ data class MovieDetail(
     @SerializedName("release_date")
     val releaseDate: String,
     val revenue: Int,
-    val credits: Credits,
+    val credits: CreditsResponse,
 )

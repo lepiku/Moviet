@@ -5,8 +5,8 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
-import id.oktoluqman.moviet.data.MovieDetail
-import id.oktoluqman.moviet.data.source.TMDBDataSource
+import id.oktoluqman.moviet.data.source.remote.response.MovieDetailResponse
+import id.oktoluqman.moviet.data.TMDBDataSource
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -15,7 +15,7 @@ class MovieDetailViewModel @Inject constructor(
     private val repository: TMDBDataSource
 ) : ViewModel() {
 
-    private val movie = MutableLiveData<MovieDetail>()
+    private val movie = MutableLiveData<MovieDetailResponse>()
 
     fun setMovie(id: Int) {
         viewModelScope.launch {
@@ -23,5 +23,5 @@ class MovieDetailViewModel @Inject constructor(
         }
     }
 
-    fun getMovie(): LiveData<MovieDetail> = movie
+    fun getMovie(): LiveData<MovieDetailResponse> = movie
 }

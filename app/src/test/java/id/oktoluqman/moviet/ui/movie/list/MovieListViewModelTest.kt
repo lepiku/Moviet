@@ -1,8 +1,8 @@
 package id.oktoluqman.moviet.ui.movie.list
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
-import id.oktoluqman.moviet.data.MovieItem
-import id.oktoluqman.moviet.data.source.TMDBRepository
+import id.oktoluqman.moviet.data.source.remote.response.MovieItemResponse
+import id.oktoluqman.moviet.data.TMDBRepository
 import id.oktoluqman.moviet.utils.CoroutinesTestRule
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runBlockingTest
@@ -32,7 +32,7 @@ class MovieListViewModelTest {
     @Test
     fun queryItemList() {
         coroutinesRule.testDispatcher.runBlockingTest {
-            val movieItem = MovieItem(1, "title", "overview", "/a.jpg", 0.2f)
+            val movieItem = MovieItemResponse(1, "title", "overview", "/a.jpg", 0.2f)
             val list = listOf(movieItem)
             `when`(repository.discoverMovies()).thenReturn(list)
 

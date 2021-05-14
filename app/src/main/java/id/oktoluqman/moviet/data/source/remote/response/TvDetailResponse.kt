@@ -1,16 +1,16 @@
-package id.oktoluqman.moviet.data
+package id.oktoluqman.moviet.data.source.remote.response
 
 import com.google.gson.annotations.SerializedName
 
-data class TvDetail(
+data class TvDetailResponse(
     val id: Int,
     val name: String,
     val overview: String,
-    val genres: List<Genre>,
+    val genres: List<GenreResponse>,
     val status: String,
     val popularity: Float,
     @SerializedName("created_by")
-    val createdBy: List<Creator>,
+    val createdBy: List<CreatorResponse>,
     @SerializedName("poster_path")
     val posterPath: String,
     @SerializedName("vote_average")
@@ -21,5 +21,5 @@ data class TvDetail(
     val firstAirDate: String,
     @SerializedName("last_air_date")
     val lastAirDate: String,
-    val credits: Credits,
+    val credits: CreditsResponse,
 )

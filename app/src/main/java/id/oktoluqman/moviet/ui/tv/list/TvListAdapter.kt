@@ -6,18 +6,18 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import id.oktoluqman.moviet.R
-import id.oktoluqman.moviet.data.TvItem
+import id.oktoluqman.moviet.data.source.remote.response.TvItemResponse
 import id.oktoluqman.moviet.databinding.ItemBinding
 import id.oktoluqman.moviet.utils.TMDBConstants
 
 class TvListAdapter(val onClick: (id: Int) -> Unit) :
     RecyclerView.Adapter<TvListAdapter.ListViewHolder>() {
-    private val tvItems = ArrayList<TvItem>()
+    private val tvItems = ArrayList<TvItemResponse>()
 
     inner class ListViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val binding = ItemBinding.bind(view)
 
-        fun bind(tvItem: TvItem) {
+        fun bind(tvItem: TvItemResponse) {
             Glide.with(itemView.context)
                 .load(TMDBConstants.POSTER_SMALL_URL + tvItem.posterPath)
                 .placeholder(R.drawable.ic_baseline_refresh_24).centerCrop()
@@ -42,7 +42,7 @@ class TvListAdapter(val onClick: (id: Int) -> Unit) :
         return tvItems.size
     }
 
-    fun setData(items: List<TvItem>) {
+    fun setData(items: List<TvItemResponse>) {
         tvItems.clear()
         tvItems.addAll(items)
         notifyDataSetChanged()

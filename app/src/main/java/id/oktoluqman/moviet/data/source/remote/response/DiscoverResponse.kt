@@ -1,8 +1,8 @@
-package id.oktoluqman.moviet.data
+package id.oktoluqman.moviet.data.source.remote.response
 
 import com.google.gson.annotations.SerializedName
 
-data class DiscoverQuery<T>(
+data class DiscoverResponse<T>(
     val page: Int,
     val results: List<T>,
     @SerializedName("total_results")

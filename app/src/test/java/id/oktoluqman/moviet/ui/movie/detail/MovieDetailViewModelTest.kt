@@ -1,9 +1,9 @@
 package id.oktoluqman.moviet.ui.movie.detail
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
-import id.oktoluqman.moviet.data.Credits
-import id.oktoluqman.moviet.data.MovieDetail
-import id.oktoluqman.moviet.data.source.TMDBRepository
+import id.oktoluqman.moviet.data.source.remote.response.CreditsResponse
+import id.oktoluqman.moviet.data.source.remote.response.MovieDetailResponse
+import id.oktoluqman.moviet.data.TMDBRepository
 import id.oktoluqman.moviet.utils.CoroutinesTestRule
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runBlockingTest
@@ -34,7 +34,7 @@ class MovieDetailViewModelTest {
     @Test
     fun setMovie() {
         coroutinesRule.testDispatcher.runBlockingTest {
-            val movie = MovieDetail(
+            val movie = MovieDetailResponse(
                 1,
                 "",
                 "",
@@ -46,7 +46,7 @@ class MovieDetailViewModelTest {
                 100,
                 "",
                 2000000,
-                Credits(1, emptyList()),
+                CreditsResponse(1, emptyList()),
             )
             `when`(repository.getMovie(1)).thenReturn(movie)
 

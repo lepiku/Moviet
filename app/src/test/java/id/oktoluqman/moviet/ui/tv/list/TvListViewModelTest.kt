@@ -1,8 +1,8 @@
 package id.oktoluqman.moviet.ui.tv.list
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
-import id.oktoluqman.moviet.data.TvItem
-import id.oktoluqman.moviet.data.source.TMDBRepository
+import id.oktoluqman.moviet.data.source.remote.response.TvItemResponse
+import id.oktoluqman.moviet.data.TMDBRepository
 import id.oktoluqman.moviet.utils.CoroutinesTestRule
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runBlockingTest
@@ -33,7 +33,7 @@ class TvListViewModelTest {
     @Test
     fun queryItemList() {
         coroutinesRule.testDispatcher.runBlockingTest {
-            val movieItem = TvItem(1, "title", "overview", "/a.jpg", 0.2f)
+            val movieItem = TvItemResponse(1, "title", "overview", "/a.jpg", 0.2f)
             val list = listOf(movieItem)
             Mockito.`when`(repository.discoverTv()).thenReturn(list)
 

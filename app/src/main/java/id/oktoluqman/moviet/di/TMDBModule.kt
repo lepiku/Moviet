@@ -4,8 +4,8 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
-import id.oktoluqman.moviet.data.source.TMDBDataSource
-import id.oktoluqman.moviet.data.source.TMDBRepository
+import id.oktoluqman.moviet.data.TMDBDataSource
+import id.oktoluqman.moviet.data.TMDBRepository
 import id.oktoluqman.moviet.data.source.remote.TMDBRemoteDataSource
 import javax.inject.Inject
 

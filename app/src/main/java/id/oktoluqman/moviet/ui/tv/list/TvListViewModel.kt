@@ -5,8 +5,8 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
-import id.oktoluqman.moviet.data.TvItem
-import id.oktoluqman.moviet.data.source.TMDBDataSource
+import id.oktoluqman.moviet.data.source.remote.response.TvItemResponse
+import id.oktoluqman.moviet.data.TMDBDataSource
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -14,7 +14,7 @@ import javax.inject.Inject
 class TvListViewModel @Inject constructor(
     private val repository: TMDBDataSource
 ) : ViewModel() {
-    private val tvList = MutableLiveData<List<TvItem>>()
+    private val tvList = MutableLiveData<List<TvItemResponse>>()
 
     fun queryItemList() {
         viewModelScope.launch {
@@ -22,5 +22,5 @@ class TvListViewModel @Inject constructor(
         }
     }
 
-    fun getItemList(): LiveData<List<TvItem>> = tvList
+    fun getItemList(): LiveData<List<TvItemResponse>> = tvList
 }

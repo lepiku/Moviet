@@ -1,8 +1,9 @@
 package id.oktoluqman.moviet.data.source
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
-import id.oktoluqman.moviet.data.*
+import id.oktoluqman.moviet.data.TMDBRepository
 import id.oktoluqman.moviet.data.source.remote.TMDBRemoteDataSource
+import id.oktoluqman.moviet.data.source.remote.response.*
 import id.oktoluqman.moviet.utils.CoroutinesTestRule
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runBlockingTest
@@ -28,14 +29,14 @@ class TMDBRepositoryTest {
     private lateinit var repository: TMDBRepository
 
     private val dummyMovies = listOf(
-        MovieItem(1, "a", "over", "/a.jpg", 8.4f),
-        MovieItem(2, "b", "here", "/b.jpg", 7.6f),
+        MovieItemResponse(1, "a", "over", "/a.jpg", 8.4f),
+        MovieItemResponse(2, "b", "here", "/b.jpg", 7.6f),
     )
     private val dummyTvs = listOf(
-        TvItem(1, "a", "over", "/a.jpg", 8.4f),
-        TvItem(2, "b", "here", "/b.jpg", 7.6f),
+        TvItemResponse(1, "a", "over", "/a.jpg", 8.4f),
+        TvItemResponse(2, "b", "here", "/b.jpg", 7.6f),
     )
-    private val dummyMovie = MovieDetail(
+    private val dummyMovie = MovieDetailResponse(
         1,
         "",
         "",
@@ -47,9 +48,9 @@ class TMDBRepositoryTest {
         100,
         "",
         2000000,
-        Credits(1, emptyList()),
+        CreditsResponse(1, emptyList()),
     )
-    private val dummyTv = TvDetail(
+    private val dummyTv = TvDetailResponse(
         1,
         "",
         "",
@@ -62,7 +63,7 @@ class TMDBRepositoryTest {
         100,
         "",
         "",
-        Credits(1, emptyList()),
+        CreditsResponse(1, emptyList()),
     )
 
     @Before

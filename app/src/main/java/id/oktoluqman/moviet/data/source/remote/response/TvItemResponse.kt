@@ -1,8 +1,8 @@
-package id.oktoluqman.moviet.data
+package id.oktoluqman.moviet.data.source.remote.response
 
 import com.google.gson.annotations.SerializedName
 
-data class TvItem(
+data class TvItemResponse(
     val id: Int,
     val name: String,
     val overview: String,
