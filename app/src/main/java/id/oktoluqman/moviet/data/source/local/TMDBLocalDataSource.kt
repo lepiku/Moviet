@@ -1,14 +1,19 @@
 package id.oktoluqman.moviet.data.source.local
 
-import androidx.paging.DataSource
-import id.oktoluqman.moviet.data.source.local.entity.MovieDetailWithAllData
-import id.oktoluqman.moviet.data.source.local.entity.MovieItem
+import androidx.lifecycle.LiveData
+import id.oktoluqman.moviet.data.source.local.entity.*
 import id.oktoluqman.moviet.data.source.local.room.MovieDao
 import javax.inject.Inject
 
 class TMDBLocalDataSource @Inject constructor(private val movieDao: MovieDao) {
-    fun getAllMovies(): DataSource.Factory<Int, MovieItem> = movieDao.getAll()
+    fun getAllMovies(): LiveData<List<MovieItem>> = movieDao.getAll()
 
-    fun getMovieDetail(movieId: Int): DataSource.Factory<Int, MovieDetailWithAllData> =
+    fun getMovieDetail(movieId: Int): LiveData<MovieDetailWithAllData> =
         movieDao.findMovieById(movieId)
+
+    fun insertMovie(movie: MovieDetailEntity) = movieDao.insertMovie(movie)
+
+    fun insertGenres(genres: List<MovieGenreEntity>) = movieDao.insertMovieGenres(genres)
+
+    fun insertCrews(crews: List<CrewEntity>) = movieDao.insertCrews(crews)
 }

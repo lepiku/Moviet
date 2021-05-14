@@ -15,4 +15,5 @@ data class MovieDetailEntity(
     val voteCount: Int,
     val releaseDate: String,
     val revenue: Int,
+    var favorite: Boolean,
 )
