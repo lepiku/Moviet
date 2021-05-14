@@ -6,7 +6,7 @@ import id.oktoluqman.moviet.data.source.local.entity.*
 
 @Dao
 interface MovieDao {
-    @Query("SELECT title, overview, posterPath FROM MovieDetailEntity")
+    @Query("SELECT movieId, title, overview, posterPath FROM MovieDetailEntity WHERE favorite = 1")
     fun getAll(): LiveData<List<MovieItem>>
 
     @Transaction

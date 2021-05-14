@@ -1,4 +1,4 @@
-package id.oktoluqman.moviet.ui.movie.detail
+package id.oktoluqman.moviet.ui.favorite.movie.detail
 
 import android.os.Bundle
 import androidx.activity.viewModels
@@ -17,7 +17,6 @@ class MovieDetailActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMovieDetailBinding
     private val viewModel by viewModels<MovieDetailViewModel>()
-    private var statusFavorite: Boolean = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -29,25 +28,18 @@ class MovieDetailActivity : AppCompatActivity() {
         viewModel.setMovie(movieId)
         viewModel.getMovie().observe(this) { movie ->
             Glide.with(this)
-                .load(TMDBConstants.POSTER_BIG_URL + movie.posterPath)
+                .load(TMDBConstants.POSTER_BIG_URL + movie.movieDetail.posterPath)
                 .placeholder(R.drawable.ic_baseline_refresh_24).centerCrop()
                 .error(R.drawable.ic_baseline_broken_image_24).centerCrop()
                 .into(binding.imgPoster)
-            binding.tvMovieDetailTitle.text = movie.title
-            binding.tvReleaseDate.text = movie.releaseDate
+            binding.tvMovieDetailTitle.text = movie.movieDetail.title
+            binding.tvReleaseDate.text = movie.movieDetail.releaseDate
             binding.tvGenre.text = movie.genres.joinToString { it.name }
-            binding.tvVoteAverage.text = movie.voteAverage.toString()
-            binding.tvDirector.text = movie.credits.crew.find { it.job == "Director" }?.name
-            binding.tvOverview.text = movie.overview
-            binding.tvStatus.text = movie.status
-            binding.tvRevenue.text = movie.revenue.toString()
-        }
-
-        binding.btnFavorite.setOnClickListener {
-            viewModel.getMovie().value?.let {
-                viewModel.setFavorite(!statusFavorite)
-                setStatusFavorite(!statusFavorite)
-            }
+            binding.tvVoteAverage.text = movie.movieDetail.voteAverage.toString()
+            binding.tvDirector.text = movie.crews.find { it.job == "Director" }?.name
+            binding.tvOverview.text = movie.movieDetail.overview
+            binding.tvStatus.text = movie.movieDetail.status
+            binding.tvRevenue.text = movie.movieDetail.revenue.toString()
         }
 
         supportActionBar?.title = getString(R.string.movie_detail)
@@ -57,13 +49,5 @@ class MovieDetailActivity : AppCompatActivity() {
     override fun onSupportNavigateUp(): Boolean {
         finish()
         return super.onSupportNavigateUp()
-    }
-
-    private fun setStatusFavorite(status: Boolean) {
-        statusFavorite = status
-        if (status)
-            binding.btnFavorite.setImageResource(R.drawable.ic_baseline_favorite_24)
-        else
-            binding.btnFavorite.setImageResource(R.drawable.ic_baseline_favorite_border_24)
     }
 }

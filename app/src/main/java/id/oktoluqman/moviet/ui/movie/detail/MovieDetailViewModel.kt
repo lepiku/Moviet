@@ -23,5 +23,9 @@ class MovieDetailViewModel @Inject constructor(
         }
     }
 
+    fun setFavorite(state: Boolean) {
+        repository.setMovieFavorite(movie.value!!, state)
+    }
+
     fun getMovie(): LiveData<MovieDetailResponse> = movie
 }
