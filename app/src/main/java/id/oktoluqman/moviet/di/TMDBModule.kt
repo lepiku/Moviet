@@ -52,4 +52,10 @@ class TMDBModule {
     fun provideTvDao(database: TMDBDatabase): TvDao {
         return database.TvDao()
     }
+
+    @Singleton
+    @Provides
+    fun provideAppExecutors(): AppExecutors {
+        return AppExecutors()
+    }
 }

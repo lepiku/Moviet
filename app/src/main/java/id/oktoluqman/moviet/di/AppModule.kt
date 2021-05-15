@@ -34,10 +34,4 @@ class AppModule {
             .client(client)
             .build()
     }
-
-    @Singleton
-    @Provides
-    fun provideAppExecutors(): AppExecutors {
-        return AppExecutors()
-    }
 }
