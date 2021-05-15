@@ -38,6 +38,10 @@ class TMDBRepository @Inject constructor(
         return localDataSource.getAllMovies()
     }
 
+    override fun isFavoriteMovieById(movieId: Int): LiveData<Boolean> {
+        return localDataSource.isFavoriteMovie(movieId)
+    }
+
     override fun setMovieFavorite(movie: MovieDetailResponse, state: Boolean) {
         appExecutors.diskIO().execute {
             val movieEntity = MovieItemEntity(

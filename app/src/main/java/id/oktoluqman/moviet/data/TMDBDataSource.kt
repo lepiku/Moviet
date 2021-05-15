@@ -13,5 +13,6 @@ interface TMDBDataSource {
     suspend fun getMovie(id: Int): MovieDetailResponse
     suspend fun getTv(id: Int): TvDetailResponse
     fun getAllFavoriteMovies(): LiveData<List<MovieItemEntity>>
+    fun isFavoriteMovieById(movieId: Int): LiveData<Boolean>
     fun setMovieFavorite(movie: MovieDetailResponse, state: Boolean)
 }

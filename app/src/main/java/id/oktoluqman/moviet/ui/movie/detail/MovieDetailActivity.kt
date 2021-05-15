@@ -17,13 +17,28 @@ class MovieDetailActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMovieDetailBinding
     private val viewModel by viewModels<MovieDetailViewModel>()
-    private var statusFavorite: Boolean = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMovieDetailBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        supportActionBar?.title = getString(R.string.movie_detail)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+
+        setUpViewModel()
+
+        binding.btnFavorite.setOnClickListener {
+            viewModel.toggleFavorite()
+        }
+    }
+
+    override fun onSupportNavigateUp(): Boolean {
+        finish()
+        return super.onSupportNavigateUp()
+    }
+
+    private fun setUpViewModel() {
         val movieId = intent.getIntExtra(EXTRA_ID, 0)
 
         viewModel.setMovie(movieId)
@@ -43,27 +58,11 @@ class MovieDetailActivity : AppCompatActivity() {
             binding.tvRevenue.text = movie.revenue.toString()
         }
 
-        binding.btnFavorite.setOnClickListener {
-            viewModel.getMovie().value?.let {
-                viewModel.setFavorite(!statusFavorite)
-                setStatusFavorite(!statusFavorite)
-            }
+        viewModel.favorite.observe(this) { status ->
+            if (status)
+                binding.btnFavorite.setImageResource(R.drawable.ic_baseline_favorite_24)
+            else
+                binding.btnFavorite.setImageResource(R.drawable.ic_baseline_favorite_border_24)
         }
-
-        supportActionBar?.title = getString(R.string.movie_detail)
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
-    }
-
-    override fun onSupportNavigateUp(): Boolean {
-        finish()
-        return super.onSupportNavigateUp()
-    }
-
-    private fun setStatusFavorite(status: Boolean) {
-        statusFavorite = status
-        if (status)
-            binding.btnFavorite.setImageResource(R.drawable.ic_baseline_favorite_24)
-        else
-            binding.btnFavorite.setImageResource(R.drawable.ic_baseline_favorite_border_24)
     }
 }
