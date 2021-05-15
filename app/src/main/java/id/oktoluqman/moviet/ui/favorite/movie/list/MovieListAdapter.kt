@@ -3,6 +3,8 @@ package id.oktoluqman.moviet.ui.favorite.movie.list
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.paging.PagingDataAdapter
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import id.oktoluqman.moviet.R
@@ -11,8 +13,7 @@ import id.oktoluqman.moviet.databinding.ItemBinding
 import id.oktoluqman.moviet.utils.TMDBConstants
 
 class MovieListAdapter(val onClick: (id: Int) -> Unit) :
-    RecyclerView.Adapter<MovieListAdapter.ListViewHolder>() {
-    private val movieItems = ArrayList<MovieItemEntity>()
+    PagingDataAdapter<MovieItemEntity, MovieListAdapter.ListViewHolder>(diffCallback) {
 
     inner class ListViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val binding = ItemBinding.bind(view)
@@ -35,16 +36,26 @@ class MovieListAdapter(val onClick: (id: Int) -> Unit) :
     }
 
     override fun onBindViewHolder(holder: ListViewHolder, position: Int) {
-        holder.bind(movieItems[position])
+        val movie = getItem(position)
+        if (movie != null)
+            holder.bind(movie)
     }
 
-    override fun getItemCount(): Int {
-        return movieItems.size
-    }
+    companion object {
+        private val diffCallback = object : DiffUtil.ItemCallback<MovieItemEntity>() {
+            override fun areItemsTheSame(
+                oldItem: MovieItemEntity,
+                newItem: MovieItemEntity
+            ): Boolean {
+                return oldItem.movieId == newItem.movieId
+            }
 
-    fun setData(items: List<MovieItemEntity>) {
-        movieItems.clear()
-        movieItems.addAll(items)
-        notifyDataSetChanged()
+            override fun areContentsTheSame(
+                oldItem: MovieItemEntity,
+                newItem: MovieItemEntity
+            ): Boolean {
+                return oldItem == newItem
+            }
+        }
     }
 }

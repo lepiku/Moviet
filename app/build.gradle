@@ -81,12 +81,13 @@ dependencies {
 
     // room
     def room_version = "2.3.0"
+    implementation "androidx.room:room-ktx:$room_version"
     implementation "androidx.room:room-runtime:$room_version"
     kapt "androidx.room:room-compiler:$room_version"
 
     // paging
     def paging_version = "3.0.0"
-    implementation "androidx.paging:paging-runtime:$paging_version"
+    implementation "androidx.paging:paging-runtime-ktx:$paging_version"
 
     testImplementation 'junit:junit:4.13.2'
     testImplementation 'org.mockito:mockito-core:3.6.0'

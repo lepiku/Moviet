@@ -1,6 +1,7 @@
 package id.oktoluqman.moviet.data.source.local
 
 import androidx.lifecycle.LiveData
+import androidx.paging.PagingSource
 import id.oktoluqman.moviet.data.source.local.entity.MovieItemEntity
 import id.oktoluqman.moviet.data.source.local.entity.TvItemEntity
 import id.oktoluqman.moviet.data.source.local.room.MovieDao
@@ -11,7 +12,7 @@ class TMDBLocalDataSource @Inject constructor(
     private val movieDao: MovieDao,
     private val tvDao: TvDao
 ) {
-    fun getAllFavoriteMovies(): LiveData<List<MovieItemEntity>> = movieDao.getAllFavorites()
+    fun getAllFavoriteMovies(): PagingSource<Int, MovieItemEntity> = movieDao.getAllFavorites()
 
     fun isFavoriteMovie(movieId: Int): LiveData<Boolean> = movieDao.isFavoriteById(movieId)
 

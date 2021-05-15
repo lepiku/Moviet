@@ -19,5 +19,11 @@ class FavoriteActivity : AppCompatActivity() {
 
         supportActionBar?.elevation = 0F
         supportActionBar?.title = getString(R.string.favorites)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+    }
+
+    override fun onSupportNavigateUp(): Boolean {
+        finish()
+        return super.onSupportNavigateUp()
     }
 }

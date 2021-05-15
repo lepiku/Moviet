@@ -1,6 +1,7 @@
 package id.oktoluqman.moviet.data
 
 import androidx.lifecycle.LiveData
+import androidx.paging.PagingSource
 import id.oktoluqman.moviet.data.source.local.TMDBLocalDataSource
 import id.oktoluqman.moviet.data.source.local.entity.MovieItemEntity
 import id.oktoluqman.moviet.data.source.local.entity.TvItemEntity
@@ -35,7 +36,7 @@ class TMDBRepository @Inject constructor(
         return remoteDataSource.getTv(id)
     }
 
-    override fun getAllFavoriteMovies(): LiveData<List<MovieItemEntity>> {
+    override fun getAllFavoriteMovies(): PagingSource<Int, MovieItemEntity> {
         return localDataSource.getAllFavoriteMovies()
     }
 
