@@ -6,19 +6,9 @@ import id.oktoluqman.moviet.data.source.local.entity.*
 
 @Dao
 interface MovieDao {
-    @Query("SELECT movieId, title, overview, posterPath FROM MovieDetailEntity WHERE favorite = 1")
-    fun getAll(): LiveData<List<MovieItem>>
-
-    @Transaction
-    @Query("SELECT * FROM MovieDetailEntity WHERE movieId = :movieId")
-    fun findMovieById(movieId: Int): LiveData<MovieDetailWithAllData>
+    @Query("SELECT * FROM MovieItemEntity WHERE favorite = 1")
+    fun getAll(): LiveData<List<MovieItemEntity>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertMovie(movie: MovieDetailEntity)
-
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertMovieGenres(genres: List<MovieGenreEntity>)
-
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertCrews(crews: List<CrewEntity>)
+    fun insertMovie(movie: MovieItemEntity)
 }

@@ -6,19 +6,18 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import id.oktoluqman.moviet.R
-import id.oktoluqman.moviet.data.source.local.entity.MovieItem
-import id.oktoluqman.moviet.data.source.remote.response.MovieItemResponse
+import id.oktoluqman.moviet.data.source.local.entity.MovieItemEntity
 import id.oktoluqman.moviet.databinding.ItemBinding
 import id.oktoluqman.moviet.utils.TMDBConstants
 
 class MovieListAdapter(val onClick: (id: Int) -> Unit) :
     RecyclerView.Adapter<MovieListAdapter.ListViewHolder>() {
-    private val movieItems = ArrayList<MovieItem>()
+    private val movieItems = ArrayList<MovieItemEntity>()
 
     inner class ListViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val binding = ItemBinding.bind(view)
 
-        fun bind(movieItem: MovieItem) {
+        fun bind(movieItem: MovieItemEntity) {
             Glide.with(itemView.context)
                 .load(TMDBConstants.POSTER_SMALL_URL + movieItem.posterPath)
                 .placeholder(R.drawable.ic_baseline_refresh_24).centerCrop()
@@ -43,7 +42,7 @@ class MovieListAdapter(val onClick: (id: Int) -> Unit) :
         return movieItems.size
     }
 
-    fun setData(items: List<MovieItem>) {
+    fun setData(items: List<MovieItemEntity>) {
         movieItems.clear()
         movieItems.addAll(items)
         notifyDataSetChanged()

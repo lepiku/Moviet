@@ -11,15 +11,11 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
 import id.oktoluqman.moviet.databinding.FragmentItemListBinding
-import id.oktoluqman.moviet.ui.favorite.movie.detail.MovieDetailActivity
+import id.oktoluqman.moviet.ui.movie.detail.MovieDetailActivity
 
 @AndroidEntryPoint
 class MovieListFragment : Fragment() {
-    companion object {
-        private const val TAG = "MovieListFragment"
-    }
-    private lateinit var binding: FragmentItemListBinding
-
+    private var binding: FragmentItemListBinding? = null
     private val viewModel by viewModels<MovieListViewModel>()
 
     override fun onCreateView(
@@ -27,15 +23,15 @@ class MovieListFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentItemListBinding.inflate(layoutInflater, container, false)
-        binding.rvItems.contentDescription = TAG
+        binding!!.rvItems.contentDescription = TAG
 
-        return binding.root
+        return binding!!.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        if (activity != null) {
+        binding?.let { binding ->
             val adapter = MovieListAdapter { onClickItem(it) }
 
             binding.rvItems.apply {
@@ -55,5 +51,9 @@ class MovieListFragment : Fragment() {
         val intent = Intent(requireContext(), MovieDetailActivity::class.java)
         intent.putExtra(MovieDetailActivity.EXTRA_ID, id)
         startActivity(intent)
+    }
+
+    companion object {
+        private const val TAG = "MovieListFragment"
     }
 }

@@ -6,14 +6,7 @@ import id.oktoluqman.moviet.data.source.local.room.MovieDao
 import javax.inject.Inject
 
 class TMDBLocalDataSource @Inject constructor(private val movieDao: MovieDao) {
-    fun getAllMovies(): LiveData<List<MovieItem>> = movieDao.getAll()
+    fun getAllMovies(): LiveData<List<MovieItemEntity>> = movieDao.getAll()
 
-    fun getMovieDetail(movieId: Int): LiveData<MovieDetailWithAllData> =
-        movieDao.findMovieById(movieId)
-
-    fun insertMovie(movie: MovieDetailEntity) = movieDao.insertMovie(movie)
-
-    fun insertGenres(genres: List<MovieGenreEntity>) = movieDao.insertMovieGenres(genres)
-
-    fun insertCrews(crews: List<CrewEntity>) = movieDao.insertCrews(crews)
+    fun insertMovie(movie: MovieItemEntity) = movieDao.insertMovie(movie)
 }

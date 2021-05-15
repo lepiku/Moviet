@@ -2,16 +2,10 @@ package id.oktoluqman.moviet.data.source.local.room
 
 import androidx.room.Database
 import androidx.room.RoomDatabase
-import id.oktoluqman.moviet.data.source.local.entity.*
+import id.oktoluqman.moviet.data.source.local.entity.MovieItemEntity
 
 @Database(
-    entities = [
-        MovieDetailEntity::class,
-        MovieGenreEntity::class,
-        CrewEntity::class,
-        MovieDetailGenreCrossRef::class,
-        MovieDetailCrewCrossRef::class,
-    ],
+    entities = [MovieItemEntity::class],
     version = 1,
     exportSchema = false
 )
