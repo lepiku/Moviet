@@ -3,6 +3,7 @@ package id.oktoluqman.moviet.data
 import androidx.lifecycle.LiveData
 import id.oktoluqman.moviet.data.source.local.TMDBLocalDataSource
 import id.oktoluqman.moviet.data.source.local.entity.MovieItemEntity
+import id.oktoluqman.moviet.data.source.local.entity.TvItemEntity
 import id.oktoluqman.moviet.data.source.remote.TMDBRemoteDataSource
 import id.oktoluqman.moviet.data.source.remote.response.MovieDetailResponse
 import id.oktoluqman.moviet.data.source.remote.response.MovieItemResponse
@@ -35,7 +36,7 @@ class TMDBRepository @Inject constructor(
     }
 
     override fun getAllFavoriteMovies(): LiveData<List<MovieItemEntity>> {
-        return localDataSource.getAllMovies()
+        return localDataSource.getAllFavoriteMovies()
     }
 
     override fun isFavoriteMovieById(movieId: Int): LiveData<Boolean> {
@@ -52,6 +53,27 @@ class TMDBRepository @Inject constructor(
                 favorite = state
             )
             localDataSource.insertMovie(movieEntity)
+        }
+    }
+
+    override fun getAllFavoriteTvs(): LiveData<List<TvItemEntity>> {
+        return localDataSource.getAllFavoriteTvs()
+    }
+
+    override fun isFavoriteTvById(tvId: Int): LiveData<Boolean> {
+        return localDataSource.isFavoriteTv(tvId)
+    }
+
+    override fun setTvFavorite(tv: TvItemResponse, state: Boolean) {
+        appExecutors.diskIO().execute {
+            val tvEntity = TvItemEntity(
+                tvId = tv.id,
+                name = tv.name,
+                overview = tv.overview,
+                posterPath = tv.posterPath,
+                favorite = state
+            )
+            localDataSource.insertTv(tvEntity)
         }
     }
 }

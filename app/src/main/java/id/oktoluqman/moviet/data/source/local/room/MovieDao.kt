@@ -10,11 +10,11 @@ import id.oktoluqman.moviet.data.source.local.entity.MovieItemEntity
 @Dao
 interface MovieDao {
     @Query("SELECT * FROM MovieItemEntity WHERE favorite = 1")
-    fun getAll(): LiveData<List<MovieItemEntity>>
+    fun getAllFavorites(): LiveData<List<MovieItemEntity>>
 
     @Query("SELECT EXISTS(SELECT movieId FROM MovieItemEntity WHERE movieId = :movieId AND favorite = 1)")
-    fun isFavoriteMovieById(movieId: Int): LiveData<Boolean>
+    fun isFavoriteById(movieId: Int): LiveData<Boolean>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertMovie(movie: MovieItemEntity)
+    fun insert(movie: MovieItemEntity)
 }

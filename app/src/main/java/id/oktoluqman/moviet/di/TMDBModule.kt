@@ -12,6 +12,7 @@ import id.oktoluqman.moviet.data.TMDBRepository
 import id.oktoluqman.moviet.data.source.local.TMDBLocalDataSource
 import id.oktoluqman.moviet.data.source.local.room.MovieDao
 import id.oktoluqman.moviet.data.source.local.room.TMDBDatabase
+import id.oktoluqman.moviet.data.source.local.room.TvDao
 import id.oktoluqman.moviet.data.source.remote.TMDBRemoteDataSource
 import id.oktoluqman.moviet.utils.AppExecutors
 import id.oktoluqman.moviet.utils.TMDBConstants
@@ -44,5 +45,11 @@ class TMDBModule {
     @Provides
     fun provideMovieDao(database: TMDBDatabase): MovieDao {
         return database.MovieDao()
+    }
+
+    @Singleton
+    @Provides
+    fun provideTvDao(database: TMDBDatabase): TvDao {
+        return database.TvDao()
     }
 }
