@@ -1,8 +1,11 @@
-package id.oktoluqman.moviet.data.source
+package id.oktoluqman.moviet.data
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
-import id.oktoluqman.moviet.data.TMDBRepository
+import androidx.lifecycle.MutableLiveData
+import androidx.paging.PagingSource
 import id.oktoluqman.moviet.data.source.local.TMDBLocalDataSource
+import id.oktoluqman.moviet.data.source.local.entity.MovieItemEntity
+import id.oktoluqman.moviet.data.source.local.entity.TvItemEntity
 import id.oktoluqman.moviet.data.source.remote.TMDBRemoteDataSource
 import id.oktoluqman.moviet.data.source.remote.response.*
 import id.oktoluqman.moviet.utils.AppExecutors
@@ -16,6 +19,8 @@ import org.junit.Test
 import org.mockito.Mockito
 import org.mockito.Mockito.`when`
 import org.mockito.Mockito.verify
+import java.util.concurrent.Executors
+import java.util.concurrent.TimeUnit
 
 
 @ExperimentalCoroutinesApi
@@ -121,5 +126,87 @@ class TMDBRepositoryTest {
             verify(remote).getTv(2048)
             assertEquals(dummyTv, result)
         }
+    }
+
+    @Test
+    fun getAllFavoriteMovies() {
+        val pagingSource = Mockito.mock(PagingSource::class.java) as PagingSource<Int, MovieItemEntity>
+        `when`(local.getAllFavoriteMovies()).thenReturn(pagingSource)
+
+        val result = repository.getAllFavoriteMovies()
+
+        verify(local).getAllFavoriteMovies()
+        assertEquals(pagingSource, result)
+    }
+
+    @Test
+    fun isFavoriteMovieById() {
+        val dummyFavorite = MutableLiveData<Boolean>()
+        dummyFavorite.value = true
+        `when`(local.isFavoriteMovie(1)).thenReturn(dummyFavorite)
+
+        val result = repository.isFavoriteMovieById(1)
+
+        verify(local).isFavoriteMovie(1)
+        assertEquals(dummyFavorite, result)
+    }
+
+    @Test
+    fun setMovieFavorite() {
+        val executor = Executors.newSingleThreadExecutor()
+        `when`(appExecutors.diskIO()).thenReturn(executor)
+
+        repository.setMovieFavorite(dummyMovie, true)
+        executor.awaitTermination(100, TimeUnit.MILLISECONDS)
+
+        val movieEntity = MovieItemEntity(
+            movieId = dummyMovie.id,
+            title = dummyMovie.title,
+            overview = dummyMovie.overview,
+            posterPath = dummyMovie.posterPath,
+            favorite = true
+        )
+        verify(local).insertMovie(movieEntity)
+    }
+
+    @Test
+    fun getAllFavoriteTvs() {
+        val pagingSource = Mockito.mock(PagingSource::class.java) as PagingSource<Int, TvItemEntity>
+        `when`(local.getAllFavoriteTvs()).thenReturn(pagingSource)
+
+        val result = repository.getAllFavoriteTvs()
+
+        verify(local).getAllFavoriteTvs()
+        assertEquals(pagingSource, result)
+    }
+
+    @Test
+    fun isFavoriteTvById() {
+        val dummyFavorite = MutableLiveData<Boolean>()
+        dummyFavorite.value = true
+        `when`(local.isFavoriteTv(1)).thenReturn(dummyFavorite)
+
+        val result = repository.isFavoriteTvById(1)
+
+        verify(local).isFavoriteTv(1)
+        assertEquals(dummyFavorite, result)
+    }
+
+    @Test
+    fun setTvFavorite() {
+        val executor = Executors.newSingleThreadExecutor()
+        `when`(appExecutors.diskIO()).thenReturn(executor)
+
+        repository.setTvFavorite(dummyTv, true)
+        executor.awaitTermination(100, TimeUnit.MILLISECONDS)
+
+        val tvEntity = TvItemEntity(
+            tvId = dummyTv.id,
+            name = dummyTv.name,
+            overview = dummyTv.overview,
+            posterPath = dummyTv.posterPath,
+            favorite = true
+        )
+        verify(local).insertTv(tvEntity)
     }
 }
