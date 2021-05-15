@@ -17,10 +17,6 @@ import javax.inject.Inject
     replaces = [AppModule::class]
 )
 class FakeAppModule {
-    companion object {
-        private const val TAG = "FakeAppModule"
-    }
-
     @Provides
     fun provideOkHttpClient(): OkHttpClient {
         return OkHttpClientProvider.instance

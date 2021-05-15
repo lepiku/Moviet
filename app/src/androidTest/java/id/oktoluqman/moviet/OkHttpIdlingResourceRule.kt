@@ -8,7 +8,7 @@ import org.junit.runner.Description
 import org.junit.runners.model.Statement
 
 // modified from: https://medium.com/insiden26/okhttp-idling-resource-for-espresso-462ef2417049
-class OkHttpIdlingResourceRule constructor() : TestRule {
+class OkHttpIdlingResourceRule : TestRule {
     private val resource: IdlingResource = OkHttp3IdlingResource.create(
         "okhttp",
         OkHttpClientProvider.instance

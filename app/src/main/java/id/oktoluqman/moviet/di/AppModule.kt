@@ -4,7 +4,6 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
-import id.oktoluqman.moviet.utils.AppExecutors
 import id.oktoluqman.moviet.utils.TMDBConstants
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
