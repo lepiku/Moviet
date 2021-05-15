@@ -57,7 +57,7 @@ class TMDBRepository @Inject constructor(
         }
     }
 
-    override fun getAllFavoriteTvs(): LiveData<List<TvItemEntity>> {
+    override fun getAllFavoriteTvs(): PagingSource<Int, TvItemEntity> {
         return localDataSource.getAllFavoriteTvs()
     }
 

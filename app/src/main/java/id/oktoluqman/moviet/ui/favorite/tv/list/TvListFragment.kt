@@ -7,11 +7,14 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
 import id.oktoluqman.moviet.databinding.FragmentItemListBinding
 import id.oktoluqman.moviet.ui.tv.detail.TvDetailActivity
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class TvListFragment : Fragment() {
@@ -42,8 +45,10 @@ class TvListFragment : Fragment() {
                 )
             }
 
-            viewModel.tvList.observe(viewLifecycleOwner) {
-                adapter.setData(it)
+            viewLifecycleOwner.lifecycleScope.launch {
+                viewModel.flow.collectLatest {
+                    adapter.submitData(it)
+                }
             }
         }
     }

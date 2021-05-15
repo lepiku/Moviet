@@ -18,7 +18,7 @@ class TMDBLocalDataSource @Inject constructor(
 
     fun insertMovie(movie: MovieItemEntity) = movieDao.insert(movie)
 
-    fun getAllFavoriteTvs(): LiveData<List<TvItemEntity>> = tvDao.getAllFavorites()
+    fun getAllFavoriteTvs(): PagingSource<Int, TvItemEntity> = tvDao.getAllFavorites()
 
     fun isFavoriteTv(tvId: Int): LiveData<Boolean> = tvDao.isFavoriteById(tvId)
 

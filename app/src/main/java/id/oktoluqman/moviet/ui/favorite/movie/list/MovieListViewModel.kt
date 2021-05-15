@@ -10,7 +10,7 @@ import id.oktoluqman.moviet.data.TMDBDataSource
 import javax.inject.Inject
 
 @HiltViewModel
-class MovieListViewModel @Inject constructor(private val repository: TMDBDataSource) : ViewModel() {
+class MovieListViewModel @Inject constructor(repository: TMDBDataSource) : ViewModel() {
     val flow = Pager(PagingConfig(pageSize = 4)) {
         repository.getAllFavoriteMovies()
     }.flow.cachedIn(viewModelScope)
