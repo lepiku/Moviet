@@ -8,6 +8,6 @@ import id.oktoluqman.moviet.data.source.local.entity.MovieItemEntity
 import javax.inject.Inject
 
 @HiltViewModel
-class MovieListViewModel @Inject constructor(private val repository: TMDBDataSource) : ViewModel() {
-    fun getItemList(): LiveData<List<MovieItemEntity>> = repository.getAllFavoriteMovies()
+class MovieListViewModel @Inject constructor(repository: TMDBDataSource) : ViewModel() {
+    val movieList: LiveData<List<MovieItemEntity>> = repository.getAllFavoriteMovies()
 }

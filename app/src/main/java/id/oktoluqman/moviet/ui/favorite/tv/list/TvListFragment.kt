@@ -1,4 +1,4 @@
-package id.oktoluqman.moviet.ui.favorite.movie.list
+package id.oktoluqman.moviet.ui.favorite.tv.list
 
 import android.content.Intent
 import android.os.Bundle
@@ -11,12 +11,12 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
 import id.oktoluqman.moviet.databinding.FragmentItemListBinding
-import id.oktoluqman.moviet.ui.movie.detail.MovieDetailActivity
+import id.oktoluqman.moviet.ui.tv.detail.TvDetailActivity
 
 @AndroidEntryPoint
-class MovieListFragment : Fragment() {
+class TvListFragment : Fragment() {
     private var binding: FragmentItemListBinding? = null
-    private val viewModel by viewModels<MovieListViewModel>()
+    private val viewModel by viewModels<TvListViewModel>()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -32,7 +32,7 @@ class MovieListFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         binding?.let { binding ->
-            val adapter = MovieListAdapter { onClickItem(it) }
+            val adapter = TvListAdapter { onClickItem(it) }
 
             binding.rvItems.apply {
                 layoutManager = LinearLayoutManager(requireContext())
@@ -42,15 +42,15 @@ class MovieListFragment : Fragment() {
                 )
             }
 
-            viewModel.movieList.observe(viewLifecycleOwner) {
+            viewModel.tvList.observe(viewLifecycleOwner) {
                 adapter.setData(it)
             }
         }
     }
 
     private fun onClickItem(id: Int) {
-        val intent = Intent(requireContext(), MovieDetailActivity::class.java)
-        intent.putExtra(MovieDetailActivity.EXTRA_ID, id)
+        val intent = Intent(requireContext(), TvDetailActivity::class.java)
+        intent.putExtra(TvDetailActivity.EXTRA_ID, id)
         startActivity(intent)
     }
 
@@ -60,6 +60,6 @@ class MovieListFragment : Fragment() {
     }
 
     companion object {
-        private const val TAG = "MovieListFragment"
+        private const val TAG = "TvListFragment"
     }
 }
