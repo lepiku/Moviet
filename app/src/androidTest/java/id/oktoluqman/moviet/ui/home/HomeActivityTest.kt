@@ -12,6 +12,7 @@ import dagger.hilt.android.testing.HiltAndroidTest
 import id.oktoluqman.moviet.OkHttpIdlingResourceRule
 import id.oktoluqman.moviet.R
 import org.hamcrest.Matchers.allOf
+import org.hamcrest.Matchers.not
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -33,8 +34,32 @@ class HomeActivityTest {
     }
 
     @Test
+    fun loadListMovies() {
+        onView(withContentDescription("MovieListFragment")).check(matches(isDisplayed()))
+        onView(withContentDescription("TvListFragment")).check(matches(not(isDisplayed())))
+        onView(
+            allOf(
+                withId(R.id.rv_items),
+                isDescendantOfA(withContentDescription("MovieListFragment"))
+            )
+        )
+    }
+
+    @Test
+    fun loadListTv() {
+        onView(withText("TV SHOWS")).perform(click())
+        onView(withContentDescription("MovieListFragment")).check(matches(not(isDisplayed())))
+        onView(withContentDescription("TvListFragment")).check(matches(isDisplayed()))
+        onView(
+            allOf(
+                withId(R.id.rv_items),
+                isDescendantOfA(withContentDescription("TvListFragment"))
+            )
+        )
+    }
+
+    @Test
     fun loadDetailMovie() {
-        onView(allOf(withId(R.id.rv_items), isDisplayed()))
         onView(withContentDescription("MovieListFragment")).perform(
             RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(0, click())
         )
@@ -51,7 +76,6 @@ class HomeActivityTest {
 
     @Test
     fun loadDetailTv() {
-        onView(allOf(withId(R.id.rv_items), isDisplayed()))
         onView(withText("TV SHOWS")).perform(click())
         onView(withContentDescription("TvListFragment")).perform(
             RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(0, click())

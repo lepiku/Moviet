@@ -15,13 +15,11 @@ Project ini dibuat untuk submission "Belajar Android Jetpack Pro" di Dicoding.
     * Memastikan RecyclerView dengan description **MovieListFragment** ditampilkan
     * Memastikan RecyclerView dengan description **TvListFragment** tidak ditampilkan
     * Memastikan RecyclerView **rv_items** descendant dari **MovieListFragment**
-    
   * Menampilkan **List TV Shows**
     * Klik TabLayout dengan text **TV SHOWS**
     * Memastikan RecyclerView dengan description **MovieListFragment** tidak ditampilkan
     * Memastikan RecyclerView dengan description **TvListFragment** ditampilkan
     * Memastikan RecyclerView **rv_items** descendant dari **TvListFragment**
-    
   * Menampilkan **Detail Movie**
     * Klik item pertama dari RecyclerView **MovieListFragment**
     * Memastikan **img_poster** ditampilkan
@@ -33,7 +31,6 @@ Project ini dibuat untuk submission "Belajar Android Jetpack Pro" di Dicoding.
     * Memastikan **tv_overview** ditampilkan
     * Memastikan **tv_status** ditampilkan
     * Memastikan **tv_revenue** ditampilkan
-    
   * Menampilkan **Detail TV Show**
     * Klik TabLayout dengan text **TV SHOWS**
     * Klik item pertama dari RecyclerView **TvListFragment**
@@ -45,3 +42,26 @@ Project ini dibuat untuk submission "Belajar Android Jetpack Pro" di Dicoding.
     * Memastikan **tv_creator** ditampilkan
     * Memastikan **tv_overview** ditampilkan
     * Memastikan **tv_status** ditampilkan
+* ui.FavoriteActivityTest
+  * Favorite dan un-favorite **Movies**
+    * Klik item pertama pada list untuk masuk ke **Detail Movie**
+    * Klik tombol **Favorite** untuk **menambah** movie ke favorites
+    * Kembali ke halaman **List Movies**
+    * Klik tombol **Menu Favorite** untuk masuk ke halaman **Favorites**
+    * Memastikan ada **1 item** pada **List Favorite Movies**
+    * Klik item pertama pada list untuk masuk ke **Detail Movie**
+    * Klik tombol **Favorite** untuk **menghapus** movie dari favorites
+    * Kembali ke halaman **List Favorite Movies**
+    * Memastikan ada **0 item** pada **List Favorite Movies**
+  * Favorite dan un-favorite **TV Shows**
+    * Klik TabLayout dengan text **TV SHOWS**
+    * Klik item pertama pada list untuk masuk ke **Detail TV Show**
+    * Klik tombol **Favorite** untuk **menambah** TV show ke favorites
+    * Kembali ke halaman **List TV Shows**
+    * Klik tombol **Menu Favorite** untuk masuk ke halaman **Favorites**
+    * Klik TabLayout dengan text **TV SHOWS**
+    * Memastikan ada **1 item** pada **List Favorite TV Shows**
+    * Klik item pertama pada list untuk masuk ke **Detail TV Show**
+    * Klik tombol **Favorite** untuk **menghapus** TV show dari favorites
+    * Kembali ke halaman **List Favorite TV Shows**
+    * Memastikan ada **0 item** pada **List Favorite TV Shows**
