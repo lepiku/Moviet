@@ -2,8 +2,10 @@ package id.oktoluqman.moviet.data.source
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import id.oktoluqman.moviet.data.TMDBRepository
+import id.oktoluqman.moviet.data.source.local.TMDBLocalDataSource
 import id.oktoluqman.moviet.data.source.remote.TMDBRemoteDataSource
 import id.oktoluqman.moviet.data.source.remote.response.*
+import id.oktoluqman.moviet.utils.AppExecutors
 import id.oktoluqman.moviet.utils.CoroutinesTestRule
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runBlockingTest
@@ -26,6 +28,8 @@ class TMDBRepositoryTest {
     val coroutinesRule = CoroutinesTestRule()
 
     private val remote = Mockito.mock(TMDBRemoteDataSource::class.java)
+    private val local = Mockito.mock(TMDBLocalDataSource::class.java)
+    private val appExecutors = Mockito.mock(AppExecutors::class.java)
     private lateinit var repository: TMDBRepository
 
     private val dummyMovies = listOf(
@@ -68,7 +72,7 @@ class TMDBRepositoryTest {
 
     @Before
     fun setUp() {
-        repository = TMDBRepository(remote)
+        repository = TMDBRepository(remote, local, appExecutors)
     }
 
     @Test
