@@ -12,10 +12,6 @@ import id.oktoluqman.moviet.utils.TMDBConstants
 
 @AndroidEntryPoint
 class TvDetailActivity : AppCompatActivity() {
-    companion object {
-        const val EXTRA_ID = "extra_id"
-    }
-
     private lateinit var binding: ActivityTvDetailBinding
     private val viewModel by viewModels<TvDetailViewModel>()
 
@@ -24,6 +20,22 @@ class TvDetailActivity : AppCompatActivity() {
         binding = ActivityTvDetailBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        supportActionBar?.title = getString(R.string.tv_show_detail)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+
+        setUpViewModel()
+
+        binding.btnFavorite.setOnClickListener {
+            viewModel.toggleFavorite()
+        }
+    }
+
+    override fun onSupportNavigateUp(): Boolean {
+        finish()
+        return super.onSupportNavigateUp()
+    }
+
+    private fun setUpViewModel() {
         val tvId = intent.getIntExtra(EXTRA_ID, 0)
 
         viewModel.setTv(tvId)
@@ -48,12 +60,15 @@ class TvDetailActivity : AppCompatActivity() {
             binding.tvStatus.text = tv.status
         }
 
-        supportActionBar?.title = getString(R.string.tv_show_detail)
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        viewModel.favorite.observe(this) { status ->
+            if (status)
+                binding.btnFavorite.setImageResource(R.drawable.ic_baseline_favorite_24)
+            else
+                binding.btnFavorite.setImageResource(R.drawable.ic_baseline_favorite_border_24)
+        }
     }
 
-    override fun onSupportNavigateUp(): Boolean {
-        finish()
-        return super.onSupportNavigateUp()
+    companion object {
+        const val EXTRA_ID = "extra_id"
     }
 }

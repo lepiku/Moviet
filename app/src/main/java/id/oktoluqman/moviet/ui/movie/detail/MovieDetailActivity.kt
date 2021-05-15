@@ -11,10 +11,6 @@ import id.oktoluqman.moviet.utils.TMDBConstants
 
 @AndroidEntryPoint
 class MovieDetailActivity : AppCompatActivity() {
-    companion object {
-        const val EXTRA_ID = "extra_id"
-    }
-
     private lateinit var binding: ActivityMovieDetailBinding
     private val viewModel by viewModels<MovieDetailViewModel>()
 
@@ -64,5 +60,9 @@ class MovieDetailActivity : AppCompatActivity() {
             else
                 binding.btnFavorite.setImageResource(R.drawable.ic_baseline_favorite_border_24)
         }
+    }
+
+    companion object {
+        const val EXTRA_ID = "extra_id"
     }
 }

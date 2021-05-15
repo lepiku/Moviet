@@ -163,5 +163,4 @@
         app:layout_constraintEnd_toEndOf="parent"
         tools:ignore="ContentDescription"
         tools:src="@drawable/ic_baseline_favorite_24" />
-
 </androidx.constraintlayout.widget.ConstraintLayout>
