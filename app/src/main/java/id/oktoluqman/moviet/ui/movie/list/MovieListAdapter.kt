@@ -23,7 +23,7 @@ class MovieListAdapter(val onClick: (id: Int) -> Unit) :
                 .placeholder(R.drawable.ic_baseline_refresh_24).centerCrop()
                 .error(R.drawable.ic_baseline_broken_image_24).centerCrop()
                 .into(binding.imgThumbnail)
-            binding.tvTvDetailName.text = movieItem.title
+            binding.tvName.text = movieItem.title
             binding.tvOverview.text = movieItem.overview
             binding.card.setOnClickListener { onClick(movieItem.id) }
         }

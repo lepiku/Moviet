@@ -11,18 +11,13 @@ import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
 import id.oktoluqman.moviet.OkHttpIdlingResourceRule
 import id.oktoluqman.moviet.R
-import okhttp3.OkHttpClient
 import org.hamcrest.Matchers.allOf
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
-import javax.inject.Inject
 
 @HiltAndroidTest
 class HomeActivityTest {
-    @Inject
-    lateinit var client: OkHttpClient
-
     @get:Rule
     val hiltRule: HiltAndroidRule = HiltAndroidRule(this)
 

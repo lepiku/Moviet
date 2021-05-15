@@ -13,7 +13,6 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Moviet">
         <activity android:name=".ui.favorite.FavoriteActivity" />
-        <activity android:name=".ui.favorite.movie.detail.MovieDetailActivity" />
         <activity android:name=".ui.tv.detail.TvDetailActivity" />
         <activity android:name=".ui.movie.detail.MovieDetailActivity" />
         <activity android:name=".ui.home.HomeActivity">
