@@ -10,10 +10,6 @@ import java.net.UnknownHostException
 import javax.inject.Inject
 
 class TMDBRemoteDataSource @Inject constructor(private val retrofit: Retrofit) {
-    companion object {
-        private const val TAG = "TMDBRemoteDataSource"
-    }
-
     suspend fun discoverMovies(): List<MovieItemResponse> {
         Log.d(TAG, "discoverMovies: a")
         val service = retrofit.create(TMDBService::class.java)
@@ -23,8 +19,9 @@ class TMDBRemoteDataSource @Inject constructor(private val retrofit: Retrofit) {
             getResponse { response }!!.results
         } catch (e: UnknownHostException) {
             listOf(MovieItemResponse(0, "No Internet", "", "/a.jpg", 0f))
+        } catch (e: NullPointerException) {
+            listOf(MovieItemResponse(0, "No result", "", "/a.jpg", 0f))
         }
-
     }
 
     suspend fun discoverTv(): List<TvItemResponse> {
@@ -34,6 +31,8 @@ class TMDBRemoteDataSource @Inject constructor(private val retrofit: Retrofit) {
             getResponse { response }!!.results
         } catch (e: UnknownHostException) {
             listOf(TvItemResponse(0, "No Internet", "", "/a.jpg", 0f))
+        } catch (e: NullPointerException) {
+            listOf(TvItemResponse(0, "No result", "", "/a.jpg", 0f))
         }
     }
 
@@ -57,7 +56,21 @@ class TMDBRemoteDataSource @Inject constructor(private val retrofit: Retrofit) {
                 0,
                 CreditsResponse(0, listOf())
             )
-
+        } catch (e: NullPointerException) {
+            MovieDetailResponse(
+                0,
+                "No Result",
+                "",
+                listOf(),
+                "",
+                0f,
+                "/a.jpg",
+                0f,
+                0,
+                "",
+                0,
+                CreditsResponse(0, listOf())
+            )
         }
     }
 
@@ -82,6 +95,22 @@ class TMDBRemoteDataSource @Inject constructor(private val retrofit: Retrofit) {
                 "",
                 CreditsResponse(0, listOf())
             )
+        } catch (e: NullPointerException) {
+            TvDetailResponse(
+                0,
+                "No Result",
+                "",
+                listOf(),
+                "",
+                0f,
+                listOf(),
+                "/a.jpg",
+                0f,
+                0,
+                "",
+                "",
+                CreditsResponse(0, listOf())
+            )
 
         }
     }
@@ -92,13 +121,16 @@ class TMDBRemoteDataSource @Inject constructor(private val retrofit: Retrofit) {
             if (result.isSuccessful) {
                 result.body()
             } else {
-                Log.d(TAG, "getResponse: not success?")
+                Log.d(TAG, "getResponse: not success")
                 null
             }
         } catch (e: Throwable) {
-            Log.d(TAG, "getResponse: nani?")
-
+            Log.d(TAG, "getResponse: error throwable")
             null
         }
+    }
+
+    companion object {
+        private const val TAG = "TMDBRemoteDataSource"
     }
 }

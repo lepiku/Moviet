@@ -16,7 +16,7 @@
             android:layout_height="match_parent"
             app:layout_constraintLeft_toLeftOf="parent"
             tools:background="@android:color/darker_gray"
-            tools:ignore="ContentDescription" />
+            android:contentDescription="@string/poster" />
 
         <TextView
             android:id="@+id/tv_name"

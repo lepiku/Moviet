@@ -26,8 +26,6 @@ class TvListFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentItemListBinding.inflate(layoutInflater, container, false)
-        binding.rvItems.contentDescription = TAG
-
         return binding.root
     }
 
@@ -42,6 +40,7 @@ class TvListFragment : Fragment() {
                 addItemDecoration(
                     DividerItemDecoration(binding.rvItems.context, DividerItemDecoration.VERTICAL)
                 )
+                contentDescription = TAG
             }
 
             viewModel.queryItemList()
@@ -52,8 +51,9 @@ class TvListFragment : Fragment() {
     }
 
     private fun onClickItem(id: Int) {
-        val intent = Intent(requireContext(), TvDetailActivity::class.java)
-        intent.putExtra(TvDetailActivity.EXTRA_ID, id)
-        startActivity(intent)
+        Intent(requireContext(), TvDetailActivity::class.java).apply {
+            putExtra(TvDetailActivity.EXTRA_ID, id)
+            startActivity(this)
+        }
     }
 }

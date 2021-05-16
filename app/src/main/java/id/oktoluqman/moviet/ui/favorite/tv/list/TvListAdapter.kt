@@ -6,24 +6,20 @@ import android.view.ViewGroup
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
 import id.oktoluqman.moviet.R
 import id.oktoluqman.moviet.data.source.local.entity.TvItemEntity
 import id.oktoluqman.moviet.databinding.ItemBinding
+import id.oktoluqman.moviet.utils.Extensions.loadImage
 import id.oktoluqman.moviet.utils.TMDBConstants
 
 class TvListAdapter(val onClick: (id: Int) -> Unit) :
     PagingDataAdapter<TvItemEntity, TvListAdapter.ListViewHolder>(diffCallback) {
 
     inner class ListViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        val binding = ItemBinding.bind(view)
+        private val binding = ItemBinding.bind(view)
 
         fun bind(tvItem: TvItemEntity) {
-            Glide.with(itemView.context)
-                .load(TMDBConstants.POSTER_SMALL_URL + tvItem.posterPath)
-                .placeholder(R.drawable.ic_baseline_refresh_24).centerCrop()
-                .error(R.drawable.ic_baseline_broken_image_24).centerCrop()
-                .into(binding.imgThumbnail)
+            binding.imgThumbnail.loadImage(TMDBConstants.POSTER_SMALL_URL + tvItem.posterPath)
             binding.tvName.text = tvItem.name
             binding.tvOverview.text = tvItem.overview
             binding.card.setOnClickListener { onClick(tvItem.tvId) }

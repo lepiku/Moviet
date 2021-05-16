@@ -26,8 +26,6 @@ class MovieListFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentItemListBinding.inflate(layoutInflater, container, false)
-        binding!!.rvItems.contentDescription = TAG
-
         return binding!!.root
     }
 
@@ -43,6 +41,7 @@ class MovieListFragment : Fragment() {
                 addItemDecoration(
                     DividerItemDecoration(binding.rvItems.context, DividerItemDecoration.VERTICAL)
                 )
+                contentDescription = TAG
             }
 
             viewLifecycleOwner.lifecycleScope.launch {
@@ -54,9 +53,10 @@ class MovieListFragment : Fragment() {
     }
 
     private fun onClickItem(id: Int) {
-        val intent = Intent(requireContext(), MovieDetailActivity::class.java)
-        intent.putExtra(MovieDetailActivity.EXTRA_ID, id)
-        startActivity(intent)
+        Intent(requireContext(), MovieDetailActivity::class.java).apply {
+            putExtra(MovieDetailActivity.EXTRA_ID, id)
+            startActivity(this)
+        }
     }
 
     override fun onDestroyView() {

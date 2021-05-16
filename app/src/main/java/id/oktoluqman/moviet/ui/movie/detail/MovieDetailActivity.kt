@@ -3,10 +3,10 @@ package id.oktoluqman.moviet.ui.movie.detail
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import com.bumptech.glide.Glide
 import dagger.hilt.android.AndroidEntryPoint
 import id.oktoluqman.moviet.R
 import id.oktoluqman.moviet.databinding.ActivityMovieDetailBinding
+import id.oktoluqman.moviet.utils.Extensions.loadImage
 import id.oktoluqman.moviet.utils.TMDBConstants
 
 @AndroidEntryPoint
@@ -39,11 +39,7 @@ class MovieDetailActivity : AppCompatActivity() {
 
         viewModel.setMovie(movieId)
         viewModel.getMovie().observe(this) { movie ->
-            Glide.with(this)
-                .load(TMDBConstants.POSTER_BIG_URL + movie.posterPath)
-                .placeholder(R.drawable.ic_baseline_refresh_24).centerCrop()
-                .error(R.drawable.ic_baseline_broken_image_24).centerCrop()
-                .into(binding.imgPoster)
+            binding.imgPoster.loadImage(TMDBConstants.POSTER_BIG_URL + movie.posterPath)
             binding.tvMovieDetailTitle.text = movie.title
             binding.tvReleaseDate.text = movie.releaseDate
             binding.tvGenre.text = movie.genres.joinToString { it.name }
