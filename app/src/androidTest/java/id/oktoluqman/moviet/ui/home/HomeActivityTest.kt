@@ -3,6 +3,7 @@ package id.oktoluqman.moviet.ui.home
 import androidx.recyclerview.widget.RecyclerView
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.action.ViewActions.click
+import androidx.test.espresso.assertion.ViewAssertions.doesNotExist
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.contrib.RecyclerViewActions
 import androidx.test.espresso.matcher.ViewMatchers.*
@@ -12,7 +13,6 @@ import dagger.hilt.android.testing.HiltAndroidTest
 import id.oktoluqman.moviet.OkHttpIdlingResourceRule
 import id.oktoluqman.moviet.R
 import org.hamcrest.Matchers.allOf
-import org.hamcrest.Matchers.not
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -36,7 +36,7 @@ class HomeActivityTest {
     @Test
     fun loadListMovies() {
         onView(withContentDescription("MovieListFragment")).check(matches(isDisplayed()))
-        onView(withContentDescription("TvListFragment")).check(matches(not(isDisplayed())))
+        onView(withContentDescription("TvListFragment")).check(doesNotExist())
         onView(
             allOf(
                 withId(R.id.rv_items),
@@ -48,7 +48,7 @@ class HomeActivityTest {
     @Test
     fun loadListTv() {
         onView(withText("TV SHOWS")).perform(click())
-        onView(withContentDescription("MovieListFragment")).check(matches(not(isDisplayed())))
+        onView(withContentDescription("MovieListFragment")).check(doesNotExist())
         onView(withContentDescription("TvListFragment")).check(matches(isDisplayed()))
         onView(
             allOf(
