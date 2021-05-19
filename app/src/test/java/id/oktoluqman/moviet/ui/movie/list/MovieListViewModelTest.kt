@@ -1,8 +1,8 @@
 package id.oktoluqman.moviet.ui.movie.list
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
-import id.oktoluqman.moviet.data.source.remote.response.MovieItemResponse
 import id.oktoluqman.moviet.data.TMDBRepository
+import id.oktoluqman.moviet.data.source.remote.response.MovieItemResponse
 import id.oktoluqman.moviet.utils.CoroutinesTestRule
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runBlockingTest
