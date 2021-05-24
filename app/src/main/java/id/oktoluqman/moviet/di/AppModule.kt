@@ -4,6 +4,7 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
+import id.oktoluqman.moviet.BuildConfig
 import id.oktoluqman.moviet.utils.TMDBConstants
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -17,11 +18,15 @@ class AppModule {
     @Singleton
     @Provides
     fun provideOkHttpClient(): OkHttpClient {
-        val loggingInterceptor =
-            HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY)
-        return OkHttpClient.Builder()
-            .addInterceptor(loggingInterceptor)
-            .build()
+        val clientBuilder = OkHttpClient.Builder()
+
+        if (BuildConfig.DEBUG) {
+            val loggingInterceptor =
+                HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY)
+            clientBuilder.addInterceptor(loggingInterceptor)
+        }
+
+        return clientBuilder.build()
     }
 
     @Singleton
