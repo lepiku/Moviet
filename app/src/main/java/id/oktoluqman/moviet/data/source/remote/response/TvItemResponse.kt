@@ -8,6 +8,4 @@ data class TvItemResponse(
     val overview: String,
     @SerializedName("poster_path")
     val posterPath: String,
-    @SerializedName("vote_average")
-    val voteAverage: Float,
 )
