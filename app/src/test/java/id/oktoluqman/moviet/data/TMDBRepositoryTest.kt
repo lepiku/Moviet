@@ -16,14 +16,17 @@ import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
-import org.mockito.Mockito
+import org.junit.runner.RunWith
+import org.mockito.Mock
 import org.mockito.Mockito.`when`
 import org.mockito.Mockito.verify
+import org.mockito.junit.MockitoJUnitRunner
 import java.util.concurrent.Executors
 import java.util.concurrent.TimeUnit
 
 
 @ExperimentalCoroutinesApi
+@RunWith(MockitoJUnitRunner::class)
 class TMDBRepositoryTest {
 
     @get:Rule
@@ -32,9 +35,21 @@ class TMDBRepositoryTest {
     @get:Rule
     val coroutinesRule = CoroutinesTestRule()
 
-    private val remote = Mockito.mock(TMDBRemoteDataSource::class.java)
-    private val local = Mockito.mock(TMDBLocalDataSource::class.java)
-    private val appExecutors = Mockito.mock(AppExecutors::class.java)
+    @Mock
+    lateinit var pagingSourceMovie: PagingSource<Int, MovieItemEntity>
+
+    @Mock
+    lateinit var pagingSourceTv: PagingSource<Int, TvItemEntity>
+
+    @Mock
+    lateinit var remote: TMDBRemoteDataSource
+
+    @Mock
+    lateinit var local: TMDBLocalDataSource
+
+    @Mock
+    lateinit var appExecutors: AppExecutors
+
     private lateinit var repository: TMDBRepository
 
     private val dummyMovies = listOf(
@@ -126,13 +141,12 @@ class TMDBRepositoryTest {
 
     @Test
     fun getAllFavoriteMovies() {
-        val pagingSource = Mockito.mock(PagingSource::class.java) as PagingSource<Int, MovieItemEntity>
-        `when`(local.getAllFavoriteMovies()).thenReturn(pagingSource)
+        `when`(local.getAllFavoriteMovies()).thenReturn(pagingSourceMovie)
 
         val result = repository.getAllFavoriteMovies()
 
         verify(local).getAllFavoriteMovies()
-        assertEquals(pagingSource, result)
+        assertEquals(pagingSourceMovie, result)
     }
 
     @Test
@@ -167,13 +181,12 @@ class TMDBRepositoryTest {
 
     @Test
     fun getAllFavoriteTvs() {
-        val pagingSource = Mockito.mock(PagingSource::class.java) as PagingSource<Int, TvItemEntity>
-        `when`(local.getAllFavoriteTvs()).thenReturn(pagingSource)
+        `when`(local.getAllFavoriteTvs()).thenReturn(pagingSourceTv)
 
         val result = repository.getAllFavoriteTvs()
 
         verify(local).getAllFavoriteTvs()
-        assertEquals(pagingSource, result)
+        assertEquals(pagingSourceTv, result)
     }
 
     @Test
