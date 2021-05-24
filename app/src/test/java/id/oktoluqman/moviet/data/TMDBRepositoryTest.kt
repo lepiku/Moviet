@@ -38,12 +38,12 @@ class TMDBRepositoryTest {
     private lateinit var repository: TMDBRepository
 
     private val dummyMovies = listOf(
-        MovieItemResponse(1, "a", "over", "/a.jpg", 8.4f),
-        MovieItemResponse(2, "b", "here", "/b.jpg", 7.6f),
+        MovieItemResponse(1, "a", "over", "/a.jpg"),
+        MovieItemResponse(2, "b", "here", "/b.jpg"),
     )
     private val dummyTvs = listOf(
-        TvItemResponse(1, "a", "over", "/a.jpg", 8.4f),
-        TvItemResponse(2, "b", "here", "/b.jpg", 7.6f),
+        TvItemResponse(1, "a", "over", "/a.jpg"),
+        TvItemResponse(2, "b", "here", "/b.jpg"),
     )
     private val dummyMovie = MovieDetailResponse(
         1,
@@ -51,13 +51,11 @@ class TMDBRepositoryTest {
         "",
         emptyList(),
         "",
-        0.2f,
         "a.jpg",
         0.2f,
-        100,
         "",
         2000000,
-        CreditsResponse(1, emptyList()),
+        CreditsResponse(emptyList()),
     )
     private val dummyTv = TvDetailResponse(
         1,
@@ -65,14 +63,12 @@ class TMDBRepositoryTest {
         "",
         emptyList(),
         "",
-        0.2f,
         emptyList(),
         "a.jpg",
         0.2f,
-        100,
         "",
         "",
-        CreditsResponse(1, emptyList()),
+        CreditsResponse(emptyList()),
     )
 
     @Before

@@ -47,14 +47,12 @@ class TvDetailViewModelTest {
                 "",
                 emptyList(),
                 "",
-                0.2f,
                 emptyList(),
                 "a.jpg",
                 0.2f,
-                100,
                 "",
                 "",
-                CreditsResponse(1, emptyList()),
+                CreditsResponse(emptyList()),
             )
             Mockito.`when`(repository.getTv(1)).thenReturn(tv)
 
@@ -74,14 +72,12 @@ class TvDetailViewModelTest {
                 "",
                 emptyList(),
                 "",
-                0.2f,
                 emptyList(),
                 "a.jpg",
                 0.2f,
-                100,
                 "",
                 "",
-                CreditsResponse(1, emptyList()),
+                CreditsResponse(emptyList()),
             )
 
             Mockito.`when`(repository.getTv(1)).thenReturn(tv)
@@ -107,14 +103,12 @@ class TvDetailViewModelTest {
                 "",
                 emptyList(),
                 "",
-                0.2f,
                 emptyList(),
                 "a.jpg",
                 0.2f,
-                100,
                 "",
                 "",
-                CreditsResponse(1, emptyList()),
+                CreditsResponse(emptyList()),
             )
 
             Mockito.`when`(repository.getTv(1)).thenReturn(tv)

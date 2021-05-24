@@ -15,9 +15,6 @@ import id.oktoluqman.moviet.ui.movie.detail.MovieDetailActivity
 
 @AndroidEntryPoint
 class MovieListFragment : Fragment() {
-    companion object {
-        private const val TAG = "MovieListFragment"
-    }
     private lateinit var binding: FragmentItemListBinding
 
     private val viewModel by viewModels<MovieListViewModel>()
@@ -56,5 +53,9 @@ class MovieListFragment : Fragment() {
             putExtra(MovieDetailActivity.EXTRA_ID, id)
             startActivity(this)
         }
+    }
+
+    companion object {
+        private const val TAG = "MovieListFragment"
     }
 }

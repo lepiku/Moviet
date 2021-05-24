@@ -15,9 +15,6 @@ import id.oktoluqman.moviet.ui.tv.detail.TvDetailActivity
 
 @AndroidEntryPoint
 class TvListFragment : Fragment() {
-    companion object {
-        private const val TAG = "TvListFragment"
-    }
     private lateinit var binding: FragmentItemListBinding
     private val viewModel by viewModels<TvListViewModel>()
 
@@ -55,5 +52,9 @@ class TvListFragment : Fragment() {
             putExtra(TvDetailActivity.EXTRA_ID, id)
             startActivity(this)
         }
+    }
+
+    companion object {
+        private const val TAG = "TvListFragment"
     }
 }

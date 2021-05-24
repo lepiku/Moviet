@@ -18,9 +18,9 @@ class TMDBRemoteDataSource @Inject constructor(private val retrofit: Retrofit) {
             val response = service.discoverMovies(BuildConfig.TMDB_TOKEN)
             getResponse { response }!!.results
         } catch (e: UnknownHostException) {
-            listOf(MovieItemResponse(0, "No Internet", "", "/a.jpg", 0f))
+            listOf(MovieItemResponse(0, "No Internet", "", "/a.jpg"))
         } catch (e: NullPointerException) {
-            listOf(MovieItemResponse(0, "No result", "", "/a.jpg", 0f))
+            listOf(MovieItemResponse(0, "No result", "", "/a.jpg"))
         }
     }
 
@@ -30,9 +30,9 @@ class TMDBRemoteDataSource @Inject constructor(private val retrofit: Retrofit) {
             val response = service.discoverTv(BuildConfig.TMDB_TOKEN)
             getResponse { response }!!.results
         } catch (e: UnknownHostException) {
-            listOf(TvItemResponse(0, "No Internet", "", "/a.jpg", 0f))
+            listOf(TvItemResponse(0, "No Internet", "", "/a.jpg"))
         } catch (e: NullPointerException) {
-            listOf(TvItemResponse(0, "No result", "", "/a.jpg", 0f))
+            listOf(TvItemResponse(0, "No result", "", "/a.jpg"))
         }
     }
 
@@ -48,28 +48,24 @@ class TMDBRemoteDataSource @Inject constructor(private val retrofit: Retrofit) {
                 "",
                 listOf(),
                 "",
-                0f,
                 "/a.jpg",
                 0f,
-                0,
                 "",
                 0,
-                CreditsResponse(0, listOf())
+                CreditsResponse(listOf())
             )
         } catch (e: NullPointerException) {
             MovieDetailResponse(
                 0,
-                "No Result",
+                "No Internet",
                 "",
                 listOf(),
                 "",
-                0f,
                 "/a.jpg",
                 0f,
-                0,
                 "",
                 0,
-                CreditsResponse(0, listOf())
+                CreditsResponse(listOf())
             )
         }
     }
@@ -86,30 +82,26 @@ class TMDBRemoteDataSource @Inject constructor(private val retrofit: Retrofit) {
                 "",
                 listOf(),
                 "",
-                0f,
                 listOf(),
                 "/a.jpg",
                 0f,
-                0,
                 "",
                 "",
-                CreditsResponse(0, listOf())
+                CreditsResponse(listOf())
             )
         } catch (e: NullPointerException) {
             TvDetailResponse(
                 0,
-                "No Result",
+                "No Internet",
                 "",
                 listOf(),
                 "",
-                0f,
                 listOf(),
                 "/a.jpg",
                 0f,
-                0,
                 "",
                 "",
-                CreditsResponse(0, listOf())
+                CreditsResponse(listOf())
             )
 
         }

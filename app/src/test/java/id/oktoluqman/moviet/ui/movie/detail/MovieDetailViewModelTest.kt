@@ -47,13 +47,11 @@ class MovieDetailViewModelTest {
                 "",
                 emptyList(),
                 "",
-                0.2f,
                 "a.jpg",
                 0.2f,
-                100,
                 "",
                 2000000,
-                CreditsResponse(1, emptyList()),
+                CreditsResponse(emptyList()),
             )
             `when`(repository.getMovie(1)).thenReturn(movie)
 
@@ -73,13 +71,11 @@ class MovieDetailViewModelTest {
                 "o",
                 emptyList(),
                 "s",
-                0.2f,
                 "a.jpg",
                 0.2f,
-                100,
                 "r",
                 2000000,
-                CreditsResponse(1, emptyList()),
+                CreditsResponse(emptyList()),
             )
 
             `when`(repository.getMovie(1)).thenReturn(movie)
@@ -105,13 +101,11 @@ class MovieDetailViewModelTest {
                 "o",
                 emptyList(),
                 "s",
-                0.2f,
                 "a.jpg",
                 0.2f,
-                100,
                 "r",
                 2000000,
-                CreditsResponse(1, emptyList()),
+                CreditsResponse(emptyList()),
             )
 
             `when`(repository.getMovie(1)).thenReturn(movie)
