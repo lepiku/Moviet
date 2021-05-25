@@ -1,13 +1,18 @@
 # Moviet
 
 Aplikasi menampilkan movies dan TV shows dari https://www.themoviedb.org/ .
-Project ini dibuat untuk submission "Belajar Android Jetpack Pro" di Dicoding.
+Project ini dibuat untuk submission
+[Belajar Android Jetpack Pro](https://www.dicoding.com/academies/129) dan
+[Menjadi Android Developer Expert](https://www.dicoding.com/academies/165) di Dicoding.
 
 ## Version History
 
-* [Submission 1](https://github.com/lepiku/Moviet/tree/v1): Fri May 7 2021
-* [Submission 2](https://github.com/lepiku/Moviet/tree/v2): Mon May 10 2021
-* [Submission 3](https://github.com/lepiku/Moviet/tree/submission-3): Sun May 16 2021
+* Belajar Android Jetpack Pro
+  * [Submission 1](https://github.com/lepiku/Moviet/tree/v1): Fri May 7 2021
+  * [Submission 2](https://github.com/lepiku/Moviet/tree/v2): Mon May 10 2021
+  * [Submission 3](https://github.com/lepiku/Moviet/tree/v3): Sun May 19 2021
+* Menjadi Android Developer Expert
+  * [Capstone](https://github.com/lepiku/Moviet/tree/capstone): Tue May 25 2021
 
 ## Skenario Pengujian Instrumentation Test
 
