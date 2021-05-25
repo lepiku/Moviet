@@ -18,9 +18,11 @@ import id.oktoluqman.moviet.ui.home.tv.detail.TvDetailActivity
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
-class TvListFragment(activity: FavoriteActivity) : Fragment() {
+class TvListFragment : Fragment() {
     private var binding: FragmentItemListBinding? = null
+
     private val viewModel by viewModels<TvListViewModel> {
+        val activity = requireActivity() as FavoriteActivity
         activity.factory
     }
 

@@ -18,9 +18,11 @@ import id.oktoluqman.moviet.ui.home.movie.detail.MovieDetailActivity
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
-class MovieListFragment(activity: FavoriteActivity) : Fragment() {
+class MovieListFragment : Fragment() {
     private var binding: FragmentItemListBinding? = null
+
     private val viewModel by viewModels<MovieListViewModel> {
+        val activity = requireActivity() as FavoriteActivity
         activity.factory
     }
 

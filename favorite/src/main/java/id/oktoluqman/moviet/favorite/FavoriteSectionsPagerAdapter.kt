@@ -5,12 +5,11 @@ import androidx.viewpager2.adapter.FragmentStateAdapter
 import id.oktoluqman.moviet.favorite.movie.list.MovieListFragment
 import id.oktoluqman.moviet.favorite.tv.list.TvListFragment
 
-class FavoriteSectionsPagerAdapter(private val activity: FavoriteActivity) :
-    FragmentStateAdapter(activity) {
+class FavoriteSectionsPagerAdapter(activity: FavoriteActivity) : FragmentStateAdapter(activity) {
     override fun createFragment(position: Int): Fragment {
         return when (position) {
-            0 -> MovieListFragment(activity)
-            1 -> TvListFragment(activity)
+            0 -> MovieListFragment()
+            1 -> TvListFragment()
             else -> Fragment()
         }
     }
