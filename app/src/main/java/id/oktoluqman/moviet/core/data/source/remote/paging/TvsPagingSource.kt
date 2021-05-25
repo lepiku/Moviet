@@ -3,8 +3,8 @@ package id.oktoluqman.moviet.core.data.source.remote.paging
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
 import id.oktoluqman.moviet.BuildConfig
-import id.oktoluqman.moviet.core.data.source.remote.response.TvItemResponse
 import id.oktoluqman.moviet.core.data.source.remote.network.TMDBService
+import id.oktoluqman.moviet.core.data.source.remote.response.TvItemResponse
 import retrofit2.HttpException
 import java.io.IOException
 
@@ -20,17 +20,12 @@ class TvsPagingSource(private val service: TMDBService) :
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, TvItemResponse> {
         return try {
             val response = service.discoverTv(BuildConfig.TMDB_TOKEN)
-            val body = response.body()
 
-            if (response.isSuccessful && body != null) {
-                LoadResult.Page(
-                    data = body.results,
-                    prevKey = null,
-                    nextKey = null
-                )
-            } else {
-                LoadResult.Error(Exception("not successful"))
-            }
+            LoadResult.Page(
+                data = response.results,
+                prevKey = null,
+                nextKey = null
+            )
         } catch (e: IOException) {
             LoadResult.Error(e)
         } catch (e: HttpException) {
