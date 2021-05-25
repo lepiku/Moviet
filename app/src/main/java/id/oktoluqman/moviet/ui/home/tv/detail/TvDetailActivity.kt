@@ -40,7 +40,7 @@ class TvDetailActivity : AppCompatActivity() {
         val tv = intent.getParcelableExtra<MovieTvItem>(EXTRA_ITEM)
 
         tv?.let {
-            viewModel.setTv(tv.id)
+            viewModel.setTv(tv)
             viewModel.getTv().observe(this) { tv ->
                 binding.imgPoster.loadImage(TMDBConstants.POSTER_BIG_URL + tv.posterPath)
                 binding.tvTvDetailName.text = tv.name

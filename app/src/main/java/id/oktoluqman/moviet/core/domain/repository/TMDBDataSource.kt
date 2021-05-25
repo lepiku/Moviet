@@ -17,5 +17,5 @@ interface TMDBDataSource {
     fun setMovieFavorite(movie: MovieTvItem, state: Boolean)
     fun getAllFavoriteTvs(): Flow<PagingData<MovieTvItem>>
     fun isFavoriteTvById(tvId: Int): LiveData<Boolean>
-    fun setTvFavorite(tv: TvDetail, state: Boolean)
+    fun setTvFavorite(tv: MovieTvItem, state: Boolean)
 }

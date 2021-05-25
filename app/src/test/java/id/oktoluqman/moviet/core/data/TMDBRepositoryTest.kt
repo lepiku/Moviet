@@ -76,6 +76,14 @@ class TMDBRepositoryTest {
         CreditsResponse(emptyList()),
     )
     private val dummyMovie = DataMapper.mapResponseToDomain(dummyMovieResponse)
+    private val dummyMovieItem = MovieTvItem(
+        dummyMovie.movieId,
+        dummyMovie.title,
+        dummyMovie.overview,
+        dummyMovie.posterPath,
+        ItemType.Movie
+    )
+
     private val dummyTvResponse = TvDetailResponse(
         1,
         "",
@@ -89,12 +97,12 @@ class TMDBRepositoryTest {
         ""
     )
     private val dummyTv = DataMapper.mapResponseToDomain(dummyTvResponse)
-    private val dummyMovieItem = MovieTvItem(
-        dummyMovie.movieId,
-        dummyMovie.title,
-        dummyMovie.overview,
-        dummyMovie.posterPath,
-        ItemType.Movie
+    private val dummyTvItem = MovieTvItem(
+        dummyTv.tvId,
+        dummyTv.name,
+        dummyTv.overview,
+        dummyTv.posterPath,
+        ItemType.Tv
     )
 
     @Before
@@ -217,7 +225,7 @@ class TMDBRepositoryTest {
         val executor = Executors.newSingleThreadExecutor()
         `when`(appExecutors.diskIO()).thenReturn(executor)
 
-        repository.setTvFavorite(dummyTv, true)
+        repository.setTvFavorite(dummyTvItem, true)
         executor.awaitTermination(100, TimeUnit.MILLISECONDS)
 
         val tvEntity = TvItemEntity(

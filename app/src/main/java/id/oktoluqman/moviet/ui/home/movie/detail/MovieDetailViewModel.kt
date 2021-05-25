@@ -25,9 +25,10 @@ class MovieDetailViewModel @Inject constructor(private val useCase: TMDBUseCase)
     }
 
     fun toggleFavorite() {
-        val value = movieItem.value
-        if (value != null)
-            useCase.setMovieFavorite(value, !favorite.value!!)
+        val itemValue = movieItem.value
+        val favoriteValue = favorite.value
+        if (itemValue != null && favoriteValue != null)
+            useCase.setMovieFavorite(itemValue, !favoriteValue)
     }
 
     fun getMovie(): LiveData<MovieDetail> = movie

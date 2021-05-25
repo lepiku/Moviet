@@ -30,8 +30,8 @@ object DataMapper {
         favorite
     )
 
-    fun mapDomainToEntity(input: TvDetail, favorite: Boolean) = TvItemEntity(
-        input.tvId,
+    fun mapDomainToTvEntity(input: MovieTvItem, favorite: Boolean) = TvItemEntity(
+        input.id,
         input.name,
         input.overview,
         input.posterPath,
