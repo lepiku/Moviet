@@ -1,29 +1,36 @@
-package id.oktoluqman.moviet
+package id.oktoluqman.moviet.core.di
 
 import dagger.Module
 import dagger.Provides
+import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
-import dagger.hilt.testing.TestInstallIn
-import id.oktoluqman.moviet.core.di.AppModule
+import id.oktoluqman.moviet.BuildConfig
 import id.oktoluqman.moviet.core.utils.TMDBConstants
 import okhttp3.OkHttpClient
+import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import javax.inject.Inject
+import javax.inject.Singleton
 
 @Module
-@TestInstallIn(
-    components = [SingletonComponent::class],
-    replaces = [AppModule::class]
-)
-class FakeAppModule {
+@InstallIn(SingletonComponent::class)
+class AppModule {
+    @Singleton
     @Provides
     fun provideOkHttpClient(): OkHttpClient {
-        return OkHttpClientProvider.instance
+        val clientBuilder = OkHttpClient.Builder()
+
+        if (BuildConfig.DEBUG) {
+            val loggingInterceptor =
+                HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY)
+            clientBuilder.addInterceptor(loggingInterceptor)
+        }
+
+        return clientBuilder.build()
     }
 
+    @Singleton
     @Provides
-    @Inject
     fun provideRetrofit(client: OkHttpClient): Retrofit {
         return Retrofit.Builder()
             .baseUrl(TMDBConstants.BASE_URL)

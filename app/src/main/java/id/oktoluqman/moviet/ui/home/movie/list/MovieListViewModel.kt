@@ -1,4 +1,4 @@
-package id.oktoluqman.moviet.ui.favorite.movie.list
+package id.oktoluqman.moviet.ui.home.movie.list
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -9,5 +9,5 @@ import javax.inject.Inject
 
 @HiltViewModel
 class MovieListViewModel @Inject constructor(useCase: TMDBUseCase) : ViewModel() {
-    val flow = useCase.getAllFavoriteMovies().cachedIn(viewModelScope)
+    val flow = useCase.discoverMovies().cachedIn(viewModelScope)
 }

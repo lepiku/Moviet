@@ -2,7 +2,7 @@ package id.oktoluqman.moviet.ui.favorite.tv.list
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.paging.PagingData
-import id.oktoluqman.moviet.domain.usecase.TMDBUseCase
+import id.oktoluqman.moviet.core.domain.usecase.TMDBUseCase
 import id.oktoluqman.moviet.utils.CoroutinesTestRule
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.first

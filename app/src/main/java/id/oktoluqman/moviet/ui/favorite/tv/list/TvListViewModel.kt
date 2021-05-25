@@ -4,7 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.cachedIn
 import dagger.hilt.android.lifecycle.HiltViewModel
-import id.oktoluqman.moviet.domain.usecase.TMDBUseCase
+import id.oktoluqman.moviet.core.domain.usecase.TMDBUseCase
 import javax.inject.Inject
 
 @HiltViewModel

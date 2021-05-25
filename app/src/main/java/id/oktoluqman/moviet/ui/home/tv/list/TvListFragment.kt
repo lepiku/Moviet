@@ -1,4 +1,4 @@
-package id.oktoluqman.moviet.ui.favorite.movie.list
+package id.oktoluqman.moviet.ui.home.tv.list
 
 import android.content.Intent
 import android.os.Bundle
@@ -13,29 +13,28 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
 import id.oktoluqman.moviet.databinding.FragmentItemListBinding
 import id.oktoluqman.moviet.core.ui.MovieTvItemListAdapter
-import id.oktoluqman.moviet.ui.home.movie.detail.MovieDetailActivity
+import id.oktoluqman.moviet.ui.home.tv.detail.TvDetailActivity
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
-class MovieListFragment : Fragment() {
-    private var binding: FragmentItemListBinding? = null
-    private val viewModel by viewModels<MovieListViewModel>()
+class TvListFragment : Fragment() {
+    private lateinit var binding: FragmentItemListBinding
+    private val viewModel by viewModels<TvListViewModel>()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentItemListBinding.inflate(layoutInflater, container, false)
-        return binding!!.root
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding?.let { binding ->
+        if (activity != null) {
             val adapter = MovieTvItemListAdapter { onClickItem(it) }
-
             binding.rvItems.apply {
                 layoutManager = LinearLayoutManager(requireContext())
                 this.adapter = adapter
@@ -54,18 +53,13 @@ class MovieListFragment : Fragment() {
     }
 
     private fun onClickItem(id: Int) {
-        Intent(requireContext(), MovieDetailActivity::class.java).apply {
-            putExtra(MovieDetailActivity.EXTRA_ID, id)
+        Intent(requireContext(), TvDetailActivity::class.java).apply {
+            putExtra(TvDetailActivity.EXTRA_ID, id)
             startActivity(this)
         }
     }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
-        binding = null
-    }
-
     companion object {
-        private const val TAG = "MovieListFragment"
+        private const val TAG = "TvListFragment"
     }
 }

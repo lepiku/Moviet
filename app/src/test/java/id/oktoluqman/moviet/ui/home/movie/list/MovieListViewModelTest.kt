@@ -1,4 +1,4 @@
-package id.oktoluqman.moviet.ui.favorite.movie.list
+package id.oktoluqman.moviet.ui.home.movie.list
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.paging.PagingData
@@ -11,13 +11,10 @@ import kotlinx.coroutines.test.runBlockingTest
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
-import org.mockito.Mockito
-import org.mockito.Mockito.`when`
-import org.mockito.Mockito.verify
+import org.mockito.Mockito.*
 
 @ExperimentalCoroutinesApi
 class MovieListViewModelTest {
-
     @get:Rule
     val instantTaskExecutorRule = InstantTaskExecutorRule()
 
@@ -25,19 +22,20 @@ class MovieListViewModelTest {
     val coroutinesRule = CoroutinesTestRule()
 
     private lateinit var viewModel: MovieListViewModel
-    private val useCase = Mockito.mock(TMDBUseCase::class.java)
+
+    private val useCase = mock(TMDBUseCase::class.java)
 
     @Before
     fun setUp() {
-        `when`(useCase.getAllFavoriteMovies()).thenReturn(flowOf(PagingData.from(emptyList())))
+        `when`(useCase.discoverMovies()).thenReturn(flowOf(PagingData.from(emptyList())))
         viewModel = MovieListViewModel(useCase)
     }
 
     @Test
-    fun getFlow() {
+    fun queryItemList() {
         coroutinesRule.testDispatcher.runBlockingTest {
             viewModel.flow.first()
-            verify(useCase).getAllFavoriteMovies()
+            verify(useCase).discoverMovies()
         }
     }
 }

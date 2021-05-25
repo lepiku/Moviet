@@ -1,4 +1,4 @@
-package id.oktoluqman.moviet.ui.favorite.movie.list
+package id.oktoluqman.moviet.ui.home.movie.list
 
 import android.content.Intent
 import android.os.Bundle
@@ -19,7 +19,8 @@ import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class MovieListFragment : Fragment() {
-    private var binding: FragmentItemListBinding? = null
+    private lateinit var binding: FragmentItemListBinding
+
     private val viewModel by viewModels<MovieListViewModel>()
 
     override fun onCreateView(
@@ -27,13 +28,13 @@ class MovieListFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentItemListBinding.inflate(layoutInflater, container, false)
-        return binding!!.root
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding?.let { binding ->
+        if (activity != null) {
             val adapter = MovieTvItemListAdapter { onClickItem(it) }
 
             binding.rvItems.apply {
@@ -44,7 +45,6 @@ class MovieListFragment : Fragment() {
                 )
                 contentDescription = TAG
             }
-
             viewLifecycleOwner.lifecycleScope.launch {
                 viewModel.flow.collectLatest {
                     adapter.submitData(it)
@@ -58,11 +58,6 @@ class MovieListFragment : Fragment() {
             putExtra(MovieDetailActivity.EXTRA_ID, id)
             startActivity(this)
         }
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        binding = null
     }
 
     companion object {
