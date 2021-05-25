@@ -1,4 +1,4 @@
-package id.oktoluqman.moviet.ui.favorite.movie.list
+package id.oktoluqman.moviet.ui.adapter
 
 import android.view.LayoutInflater
 import android.view.View

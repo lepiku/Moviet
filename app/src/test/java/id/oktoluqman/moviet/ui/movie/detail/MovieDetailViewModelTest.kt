@@ -3,9 +3,9 @@ package id.oktoluqman.moviet.ui.movie.detail
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
-import id.oktoluqman.moviet.data.TMDBRepository
-import id.oktoluqman.moviet.data.source.remote.response.CreditsResponse
-import id.oktoluqman.moviet.data.source.remote.response.MovieDetailResponse
+import id.oktoluqman.moviet.domain.model.Credits
+import id.oktoluqman.moviet.domain.model.MovieDetail
+import id.oktoluqman.moviet.domain.usecase.TMDBUseCase
 import id.oktoluqman.moviet.utils.CoroutinesTestRule
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runBlockingTest
@@ -30,18 +30,20 @@ class MovieDetailViewModelTest {
     @Mock
     private lateinit var favoriteObserver: Observer<Boolean>
 
+    @Mock
+    private lateinit var useCase: TMDBUseCase
+
     private lateinit var viewModel: MovieDetailViewModel
-    private val repository = mock(TMDBRepository::class.java)
 
     @Before
     fun setUp() {
-        viewModel = MovieDetailViewModel(repository)
+        viewModel = MovieDetailViewModel(useCase)
     }
 
     @Test
     fun setMovie() {
         coroutinesRule.testDispatcher.runBlockingTest {
-            val movie = MovieDetailResponse(
+            val movie = MovieDetail(
                 1,
                 "",
                 "",
@@ -51,13 +53,13 @@ class MovieDetailViewModelTest {
                 0.2f,
                 "",
                 2000000,
-                CreditsResponse(emptyList()),
+                Credits(emptyList()),
             )
-            `when`(repository.getMovie(1)).thenReturn(movie)
+            `when`(useCase.getMovie(1)).thenReturn(movie)
 
             viewModel.setMovie(1)
 
-            verify(repository, times(1)).getMovie(1)
+            verify(useCase, times(1)).getMovie(1)
             assertEquals(viewModel.getMovie().value, movie)
         }
     }
@@ -65,7 +67,7 @@ class MovieDetailViewModelTest {
     @Test
     fun toggleFavoriteFromFalse() {
         coroutinesRule.testDispatcher.runBlockingTest {
-            val movie = MovieDetailResponse(
+            val movie = MovieDetail(
                 1,
                 "t",
                 "o",
@@ -75,27 +77,27 @@ class MovieDetailViewModelTest {
                 0.2f,
                 "r",
                 2000000,
-                CreditsResponse(emptyList()),
+                Credits(emptyList()),
             )
 
-            `when`(repository.getMovie(1)).thenReturn(movie)
-            `when`(repository.isFavoriteMovieById(1)).thenReturn(MutableLiveData(false))
+            `when`(useCase.getMovie(1)).thenReturn(movie)
+            `when`(useCase.isFavoriteMovieById(1)).thenReturn(MutableLiveData(false))
             viewModel.favorite.observeForever(favoriteObserver)
 
             viewModel.setMovie(1)
 
             verify(favoriteObserver).onChanged(false)
-            verify(repository).isFavoriteMovieById(1)
+            verify(useCase).isFavoriteMovieById(1)
 
             viewModel.toggleFavorite()
-            verify(repository, times(1)).setMovieFavorite(movie, true)
+            verify(useCase, times(1)).setMovieFavorite(movie, true)
         }
     }
 
     @Test
     fun toggleFavoriteFromTrue() {
         coroutinesRule.testDispatcher.runBlockingTest {
-            val movie = MovieDetailResponse(
+            val movie = MovieDetail(
                 1,
                 "t",
                 "o",
@@ -105,20 +107,20 @@ class MovieDetailViewModelTest {
                 0.2f,
                 "r",
                 2000000,
-                CreditsResponse(emptyList()),
+                Credits(emptyList()),
             )
 
-            `when`(repository.getMovie(1)).thenReturn(movie)
-            `when`(repository.isFavoriteMovieById(1)).thenReturn(MutableLiveData(true))
+            `when`(useCase.getMovie(1)).thenReturn(movie)
+            `when`(useCase.isFavoriteMovieById(1)).thenReturn(MutableLiveData(true))
             viewModel.favorite.observeForever(favoriteObserver)
 
             viewModel.setMovie(1)
 
             verify(favoriteObserver).onChanged(true)
-            verify(repository).isFavoriteMovieById(1)
+            verify(useCase).isFavoriteMovieById(1)
 
             viewModel.toggleFavorite()
-            verify(repository, times(1)).setMovieFavorite(movie, false)
+            verify(useCase, times(1)).setMovieFavorite(movie, false)
         }
     }
 }

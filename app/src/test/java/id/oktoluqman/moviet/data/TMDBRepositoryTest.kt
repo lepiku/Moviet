@@ -10,6 +10,7 @@ import id.oktoluqman.moviet.data.source.remote.TMDBRemoteDataSource
 import id.oktoluqman.moviet.data.source.remote.response.*
 import id.oktoluqman.moviet.utils.AppExecutors
 import id.oktoluqman.moviet.utils.CoroutinesTestRule
+import id.oktoluqman.moviet.utils.DataMapper
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.take
 import kotlinx.coroutines.flow.toList
@@ -62,7 +63,7 @@ class TMDBRepositoryTest {
         TvItemResponse(1, "a", "over", "/a.jpg"),
         TvItemResponse(2, "b", "here", "/b.jpg"),
     )
-    private val dummyMovie = MovieDetailResponse(
+    private val dummyMovieResponse = MovieDetailResponse(
         1,
         "",
         "",
@@ -74,6 +75,7 @@ class TMDBRepositoryTest {
         2000000,
         CreditsResponse(emptyList()),
     )
+    private val dummyMovie = DataMapper.mapResponseToDomain(dummyMovieResponse)
     private val dummyTv = TvDetailResponse(
         1,
         "",
@@ -120,7 +122,7 @@ class TMDBRepositoryTest {
     @Test
     fun getMovie() {
         coroutinesRule.testDispatcher.runBlockingTest {
-            `when`(remote.getMovie(1024)).thenReturn(dummyMovie)
+            `when`(remote.getMovie(1024)).thenReturn(dummyMovieResponse)
 
             val result = repository.getMovie(1024)
 
@@ -173,10 +175,10 @@ class TMDBRepositoryTest {
         executor.awaitTermination(100, TimeUnit.MILLISECONDS)
 
         val movieEntity = MovieItemEntity(
-            movieId = dummyMovie.id,
-            title = dummyMovie.title,
-            overview = dummyMovie.overview,
-            posterPath = dummyMovie.posterPath,
+            movieId = dummyMovieResponse.id,
+            title = dummyMovieResponse.title,
+            overview = dummyMovieResponse.overview,
+            posterPath = dummyMovieResponse.posterPath,
             favorite = true
         )
         verify(local).insertMovie(movieEntity)

@@ -3,13 +3,13 @@ package id.oktoluqman.moviet.data
 import androidx.lifecycle.LiveData
 import androidx.paging.*
 import id.oktoluqman.moviet.data.source.local.TMDBLocalDataSource
-import id.oktoluqman.moviet.data.source.local.entity.MovieItemEntity
 import id.oktoluqman.moviet.data.source.local.entity.TvItemEntity
 import id.oktoluqman.moviet.data.source.remote.TMDBRemoteDataSource
 import id.oktoluqman.moviet.data.source.remote.response.MovieDetailResponse
 import id.oktoluqman.moviet.data.source.remote.response.MovieItemResponse
 import id.oktoluqman.moviet.data.source.remote.response.TvDetailResponse
 import id.oktoluqman.moviet.data.source.remote.response.TvItemResponse
+import id.oktoluqman.moviet.domain.model.MovieDetail
 import id.oktoluqman.moviet.domain.model.MovieTvItem
 import id.oktoluqman.moviet.domain.repository.TMDBDataSource
 import id.oktoluqman.moviet.utils.AppExecutors
@@ -33,8 +33,8 @@ class TMDBRepository @Inject constructor(
         return remoteDataSource.discoverTv()
     }
 
-    override suspend fun getMovie(id: Int): MovieDetailResponse {
-        return remoteDataSource.getMovie(id)
+    override suspend fun getMovie(id: Int): MovieDetail{
+        return DataMapper.mapResponseToDomain(remoteDataSource.getMovie(id))
     }
 
     override suspend fun getTv(id: Int): TvDetailResponse {
@@ -55,15 +55,9 @@ class TMDBRepository @Inject constructor(
         return localDataSource.isFavoriteMovie(movieId)
     }
 
-    override fun setMovieFavorite(movie: MovieDetailResponse, state: Boolean) {
+    override fun setMovieFavorite(movie: MovieDetail, state: Boolean) {
         appExecutors.diskIO().execute {
-            val movieEntity = MovieItemEntity(
-                movieId = movie.id,
-                title = movie.title,
-                overview = movie.overview,
-                posterPath = movie.posterPath,
-                favorite = state
-            )
+            val movieEntity = DataMapper.mapDomainToEntity(movie, state)
             localDataSource.insertMovie(movieEntity)
         }
     }

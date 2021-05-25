@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
 import id.oktoluqman.moviet.databinding.FragmentItemListBinding
+import id.oktoluqman.moviet.ui.adapter.MovieTvItemListAdapter
 import id.oktoluqman.moviet.ui.movie.detail.MovieDetailActivity
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch

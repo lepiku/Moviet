@@ -2,32 +2,32 @@ package id.oktoluqman.moviet.ui.movie.detail
 
 import androidx.lifecycle.*
 import dagger.hilt.android.lifecycle.HiltViewModel
-import id.oktoluqman.moviet.domain.repository.TMDBDataSource
-import id.oktoluqman.moviet.data.source.remote.response.MovieDetailResponse
+import id.oktoluqman.moviet.domain.model.MovieDetail
+import id.oktoluqman.moviet.domain.usecase.TMDBUseCase
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class MovieDetailViewModel @Inject constructor(private val repository: TMDBDataSource) :
+class MovieDetailViewModel @Inject constructor(private val useCase: TMDBUseCase) :
     ViewModel() {
 
     private val movieId = MutableLiveData<Int>()
-    private val movie = MutableLiveData<MovieDetailResponse>()
+    private val movie = MutableLiveData<MovieDetail>()
     val favorite: LiveData<Boolean> = Transformations.switchMap(movieId) {
-        repository.isFavoriteMovieById(it)
+        useCase.isFavoriteMovieById(it)
     }
 
     fun setMovie(id: Int) {
         viewModelScope.launch {
             movieId.postValue(id)
-            movie.postValue(repository.getMovie(id))
+            movie.postValue(useCase.getMovie(id))
         }
     }
 
     fun toggleFavorite() {
         if (movie.value != null)
-            repository.setMovieFavorite(movie.value!!, !favorite.value!!)
+            useCase.setMovieFavorite(movie.value!!, !favorite.value!!)
     }
 
-    fun getMovie(): LiveData<MovieDetailResponse> = movie
+    fun getMovie(): LiveData<MovieDetail> = movie
 }
