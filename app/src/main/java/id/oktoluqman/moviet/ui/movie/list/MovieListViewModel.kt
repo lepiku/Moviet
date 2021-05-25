@@ -1,27 +1,13 @@
 package id.oktoluqman.moviet.ui.movie.list
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.paging.cachedIn
 import dagger.hilt.android.lifecycle.HiltViewModel
-import id.oktoluqman.moviet.data.source.remote.response.MovieItemResponse
-import id.oktoluqman.moviet.domain.repository.TMDBDataSource
-import kotlinx.coroutines.launch
+import id.oktoluqman.moviet.domain.usecase.TMDBUseCase
 import javax.inject.Inject
 
 @HiltViewModel
-class MovieListViewModel @Inject constructor(
-    private val repository: TMDBDataSource
-) : ViewModel() {
-
-    private val movieList = MutableLiveData<List<MovieItemResponse>>()
-
-    fun queryItemList() {
-        viewModelScope.launch {
-            movieList.postValue(repository.discoverMovies())
-        }
-    }
-
-    fun getItemList(): LiveData<List<MovieItemResponse>> = movieList
+class MovieListViewModel @Inject constructor(useCase: TMDBUseCase) : ViewModel() {
+    val flow = useCase.discoverMovies().cachedIn(viewModelScope)
 }

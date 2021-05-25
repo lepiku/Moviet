@@ -42,7 +42,13 @@ class TMDBRepositoryTest {
     lateinit var pagingSourceMovie: PagingSource<Int, MovieItemEntity>
 
     @Mock
+    lateinit var pagingSourceMovieResponse: PagingSource<Int, MovieItemResponse>
+
+    @Mock
     lateinit var pagingSourceTv: PagingSource<Int, TvItemEntity>
+
+    @Mock
+    lateinit var pagingSourceTvResponse: PagingSource<Int, TvItemResponse>
 
     @Mock
     lateinit var remote: TMDBRemoteDataSource
@@ -55,14 +61,6 @@ class TMDBRepositoryTest {
 
     private lateinit var repository: TMDBRepository
 
-    private val dummyMovies = listOf(
-        MovieItemResponse(1, "a", "over", "/a.jpg"),
-        MovieItemResponse(2, "b", "here", "/b.jpg"),
-    )
-    private val dummyTvs = listOf(
-        TvItemResponse(1, "a", "over", "/a.jpg"),
-        TvItemResponse(2, "b", "here", "/b.jpg"),
-    )
     private val dummyMovieResponse = MovieDetailResponse(
         1,
         "",
@@ -86,8 +84,7 @@ class TMDBRepositoryTest {
         "a.jpg",
         0.2f,
         "",
-        "",
-        CreditsResponse(emptyList()),
+        ""
     )
     private val dummyTv = DataMapper.mapResponseToDomain(dummyTvResponse)
 
@@ -99,24 +96,22 @@ class TMDBRepositoryTest {
     @Test
     fun discoverMovies() {
         coroutinesRule.testDispatcher.runBlockingTest {
-            `when`(remote.discoverMovies()).thenReturn(dummyMovies)
+            `when`(remote.discoverMovies()).thenReturn(pagingSourceMovieResponse)
 
-            val result = repository.discoverMovies()
+            repository.discoverMovies().take(1).toList()
 
             verify(remote).discoverMovies()
-            assertEquals(dummyMovies, result)
         }
     }
 
     @Test
     fun discoverTv() {
         coroutinesRule.testDispatcher.runBlockingTest {
-            `when`(remote.discoverTv()).thenReturn(dummyTvs)
+            `when`(remote.discoverTv()).thenReturn(pagingSourceTvResponse)
 
-            val result = repository.discoverTv()
+            repository.discoverTv().take(1).toList()
 
             verify(remote).discoverTv()
-            assertEquals(dummyTvs, result)
         }
     }
 

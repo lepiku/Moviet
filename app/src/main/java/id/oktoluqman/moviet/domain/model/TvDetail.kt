@@ -11,5 +11,4 @@ data class TvDetail(
     val voteAverage: Float,
     val firstAirDate: String,
     val lastAirDate: String,
-    val credits: Credits,
 )

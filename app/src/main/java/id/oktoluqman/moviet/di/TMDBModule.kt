@@ -16,8 +16,10 @@ import id.oktoluqman.moviet.data.source.local.room.TvDao
 import id.oktoluqman.moviet.data.source.remote.TMDBRemoteDataSource
 import id.oktoluqman.moviet.domain.usecase.TMDBInteractor
 import id.oktoluqman.moviet.domain.usecase.TMDBUseCase
+import id.oktoluqman.moviet.services.TMDBService
 import id.oktoluqman.moviet.utils.AppExecutors
 import id.oktoluqman.moviet.utils.TMDBConstants
+import retrofit2.Retrofit
 import javax.inject.Singleton
 
 @Module
@@ -41,6 +43,12 @@ class TMDBModule {
             TMDBDatabase::class.java,
             TMDBConstants.DATABASE_NAME
         ).build()
+    }
+
+    @Singleton
+    @Provides
+    fun provideTMDBService(retrofit: Retrofit): TMDBService {
+        return retrofit.create(TMDBService::class.java)
     }
 
     @Singleton

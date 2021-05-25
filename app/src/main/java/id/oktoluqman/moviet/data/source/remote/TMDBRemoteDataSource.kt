@@ -1,43 +1,26 @@
 package id.oktoluqman.moviet.data.source.remote
 
 import android.util.Log
+import androidx.paging.PagingSource
 import id.oktoluqman.moviet.BuildConfig
+import id.oktoluqman.moviet.data.source.remote.paging.MoviesPagingSource
+import id.oktoluqman.moviet.data.source.remote.paging.TvsPagingSource
 import id.oktoluqman.moviet.data.source.remote.response.*
 import id.oktoluqman.moviet.services.TMDBService
 import retrofit2.Response
-import retrofit2.Retrofit
 import java.net.UnknownHostException
 import javax.inject.Inject
 
-class TMDBRemoteDataSource @Inject constructor(private val retrofit: Retrofit) {
-    suspend fun discoverMovies(): List<MovieItemResponse> {
-        Log.d(TAG, "discoverMovies: a")
-        val service = retrofit.create(TMDBService::class.java)
-        Log.d(TAG, "discoverMovies: b")
-        return try {
-            val response = service.discoverMovies(BuildConfig.TMDB_TOKEN)
-            getResponse { response }!!.results
-        } catch (e: UnknownHostException) {
-            listOf(MovieItemResponse(0, "No Internet", "", "/a.jpg"))
-        } catch (e: NullPointerException) {
-            listOf(MovieItemResponse(0, "No result", "", "/a.jpg"))
-        }
+class TMDBRemoteDataSource @Inject constructor(private val service: TMDBService) {
+    fun discoverMovies(): PagingSource<Int, MovieItemResponse> {
+        return MoviesPagingSource(service)
     }
 
-    suspend fun discoverTv(): List<TvItemResponse> {
-        val service = retrofit.create(TMDBService::class.java)
-        return try {
-            val response = service.discoverTv(BuildConfig.TMDB_TOKEN)
-            getResponse { response }!!.results
-        } catch (e: UnknownHostException) {
-            listOf(TvItemResponse(0, "No Internet", "", "/a.jpg"))
-        } catch (e: NullPointerException) {
-            listOf(TvItemResponse(0, "No result", "", "/a.jpg"))
-        }
+    fun discoverTv(): PagingSource<Int, TvItemResponse> {
+        return TvsPagingSource(service)
     }
 
     suspend fun getMovie(id: Int): MovieDetailResponse {
-        val service = retrofit.create(TMDBService::class.java)
         return try {
             val response = service.getMovie(id, BuildConfig.TMDB_TOKEN, "credits")
             getResponse { response }!!
@@ -71,9 +54,8 @@ class TMDBRemoteDataSource @Inject constructor(private val retrofit: Retrofit) {
     }
 
     suspend fun getTv(id: Int): TvDetailResponse {
-        val service = retrofit.create(TMDBService::class.java)
         return try {
-            val response = service.getTv(id, BuildConfig.TMDB_TOKEN, null)
+            val response = service.getTv(id, BuildConfig.TMDB_TOKEN)
             return getResponse { response }!!
         } catch (e: UnknownHostException) {
             TvDetailResponse(
@@ -86,8 +68,7 @@ class TMDBRemoteDataSource @Inject constructor(private val retrofit: Retrofit) {
                 "/a.jpg",
                 0f,
                 "",
-                "",
-                CreditsResponse(listOf())
+                ""
             )
         } catch (e: NullPointerException) {
             TvDetailResponse(
@@ -100,8 +81,7 @@ class TMDBRemoteDataSource @Inject constructor(private val retrofit: Retrofit) {
                 "/a.jpg",
                 0f,
                 "",
-                "",
-                CreditsResponse(listOf())
+                ""
             )
 
         }

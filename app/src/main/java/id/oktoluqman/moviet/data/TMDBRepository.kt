@@ -7,8 +7,6 @@ import androidx.paging.PagingData
 import androidx.paging.map
 import id.oktoluqman.moviet.data.source.local.TMDBLocalDataSource
 import id.oktoluqman.moviet.data.source.remote.TMDBRemoteDataSource
-import id.oktoluqman.moviet.data.source.remote.response.MovieItemResponse
-import id.oktoluqman.moviet.data.source.remote.response.TvItemResponse
 import id.oktoluqman.moviet.domain.model.MovieDetail
 import id.oktoluqman.moviet.domain.model.MovieTvItem
 import id.oktoluqman.moviet.domain.model.TvDetail
@@ -26,12 +24,24 @@ class TMDBRepository @Inject constructor(
 ) :
     TMDBDataSource {
 
-    override suspend fun discoverMovies(): List<MovieItemResponse> {
-        return remoteDataSource.discoverMovies()
+    override fun discoverMovies(): Flow<PagingData<MovieTvItem>> {
+        return Pager(PagingConfig(pageSize = 4)) {
+            remoteDataSource.discoverMovies()
+        }.flow.map { pagingData ->
+            pagingData.map { response ->
+                DataMapper.mapResponseToDomain(response)
+            }
+        }
     }
 
-    override suspend fun discoverTv(): List<TvItemResponse> {
-        return remoteDataSource.discoverTv()
+    override fun discoverTv(): Flow<PagingData<MovieTvItem>> {
+        return Pager(PagingConfig(pageSize = 4)) {
+            remoteDataSource.discoverTv()
+        }.flow.map { pagingData ->
+            pagingData.map { response ->
+                DataMapper.mapResponseToDomain(response)
+            }
+        }
     }
 
     override suspend fun getMovie(id: Int): MovieDetail {

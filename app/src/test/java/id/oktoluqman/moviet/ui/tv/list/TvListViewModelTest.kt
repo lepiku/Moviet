@@ -1,10 +1,13 @@
 package id.oktoluqman.moviet.ui.tv.list
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
-import id.oktoluqman.moviet.data.TMDBRepository
+import androidx.paging.PagingData
 import id.oktoluqman.moviet.data.source.remote.response.TvItemResponse
+import id.oktoluqman.moviet.domain.usecase.TMDBUseCase
 import id.oktoluqman.moviet.utils.CoroutinesTestRule
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.test.runBlockingTest
 import org.junit.Assert.assertEquals
 import org.junit.Before
@@ -22,24 +25,19 @@ class TvListViewModelTest {
 
     private lateinit var viewModel: TvListViewModel
 
-    private val repository = Mockito.mock(TMDBRepository::class.java)
+    private val useCase = Mockito.mock(TMDBUseCase::class.java)
 
     @Before
     fun setUp() {
-        viewModel = TvListViewModel(repository)
+        Mockito.`when`(useCase.discoverTv()).thenReturn(flowOf(PagingData.from(emptyList())))
+        viewModel = TvListViewModel(useCase)
     }
 
     @Test
     fun queryItemList() {
         coroutinesRule.testDispatcher.runBlockingTest {
-            val movieItem = TvItemResponse(1, "title", "overview", "/a.jpg")
-            val list = listOf(movieItem)
-            Mockito.`when`(repository.discoverTv()).thenReturn(list)
-
-            viewModel.queryItemList()
-
-            Mockito.verify(repository, Mockito.times(1)).discoverTv()
-            assertEquals(viewModel.getItemList().value, list)
+            viewModel.flow.first()
+            Mockito.verify(useCase).discoverTv()
         }
     }
 }

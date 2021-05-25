@@ -2,16 +2,14 @@ package id.oktoluqman.moviet.domain.usecase
 
 import androidx.lifecycle.LiveData
 import androidx.paging.PagingData
-import id.oktoluqman.moviet.data.source.remote.response.MovieItemResponse
-import id.oktoluqman.moviet.data.source.remote.response.TvItemResponse
 import id.oktoluqman.moviet.domain.model.MovieDetail
 import id.oktoluqman.moviet.domain.model.MovieTvItem
 import id.oktoluqman.moviet.domain.model.TvDetail
 import kotlinx.coroutines.flow.Flow
 
 interface TMDBUseCase {
-    suspend fun discoverMovies(): List<MovieItemResponse>
-    suspend fun discoverTv(): List<TvItemResponse>
+    fun discoverMovies(): Flow<PagingData<MovieTvItem>>
+    fun discoverTv(): Flow<PagingData<MovieTvItem>>
     suspend fun getMovie(id: Int): MovieDetail
     suspend fun getTv(id: Int): TvDetail
     fun getAllFavoriteMovies(): Flow<PagingData<MovieTvItem>>

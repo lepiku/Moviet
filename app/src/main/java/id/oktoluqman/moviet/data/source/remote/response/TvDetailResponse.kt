@@ -18,5 +18,4 @@ data class TvDetailResponse(
     val firstAirDate: String,
     @SerializedName("last_air_date")
     val lastAirDate: String,
-    val credits: CreditsResponse,
 )

@@ -7,8 +7,8 @@ import id.oktoluqman.moviet.domain.repository.TMDBDataSource
 import javax.inject.Inject
 
 class TMDBInteractor @Inject constructor(private val repository: TMDBDataSource) : TMDBUseCase {
-    override suspend fun discoverMovies() = repository.discoverMovies()
-    override suspend fun discoverTv() = repository.discoverTv()
+    override fun discoverMovies() = repository.discoverMovies()
+    override fun discoverTv() = repository.discoverTv()
     override suspend fun getMovie(id: Int) = repository.getMovie(id)
     override suspend fun getTv(id: Int) = repository.getTv(id)
 

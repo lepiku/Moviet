@@ -38,6 +38,22 @@ object DataMapper {
         favorite
     )
 
+    fun mapResponseToDomain(input: MovieItemResponse) = MovieTvItem(
+        input.id,
+        input.title,
+        input.overview,
+        input.posterPath,
+        ItemType.Movie
+    )
+
+    fun mapResponseToDomain(input: TvItemResponse) = MovieTvItem(
+        input.id,
+        input.name,
+        input.overview,
+        input.posterPath,
+        ItemType.Tv
+    )
+
     fun mapResponseToDomain(input: MovieDetailResponse) = MovieDetail(
         movieId = input.id,
         title = input.title,
@@ -62,7 +78,6 @@ object DataMapper {
         voteAverage = input.voteAverage,
         firstAirDate = input.firstAirDate,
         lastAirDate = input.lastAirDate,
-        credits = mapResponseToDomain(input.credits)
     )
 
     private fun mapResponseToDomain(input: GenreResponse) = Genre(input.name)

@@ -24,6 +24,5 @@ interface TMDBService {
     suspend fun getTv(
         @Path("id") id: Int,
         @Query("api_key") apiKey: String,
-        @Query("append_to_response") appendToResponse: String?,
     ): Response<TvDetailResponse>
 }

@@ -53,8 +53,7 @@ class TvDetailViewModelTest {
                 "a.jpg",
                 0.2f,
                 "",
-                "",
-                Credits(emptyList()),
+                ""
             )
             Mockito.`when`(useCase.getTv(1)).thenReturn(tv)
 
@@ -78,8 +77,7 @@ class TvDetailViewModelTest {
                 "a.jpg",
                 0.2f,
                 "",
-                "",
-                Credits(emptyList()),
+                ""
             )
 
             Mockito.`when`(useCase.getTv(1)).thenReturn(tv)
@@ -109,8 +107,7 @@ class TvDetailViewModelTest {
                 "a.jpg",
                 0.2f,
                 "",
-                "",
-                Credits(emptyList()),
+                ""
             )
 
             Mockito.`when`(useCase.getTv(1)).thenReturn(tv)

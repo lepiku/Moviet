@@ -1,10 +1,13 @@
 package id.oktoluqman.moviet.ui.movie.list
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
-import id.oktoluqman.moviet.data.TMDBRepository
+import androidx.paging.PagingData
 import id.oktoluqman.moviet.data.source.remote.response.MovieItemResponse
+import id.oktoluqman.moviet.domain.usecase.TMDBUseCase
 import id.oktoluqman.moviet.utils.CoroutinesTestRule
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.test.runBlockingTest
 import org.junit.Assert.assertEquals
 import org.junit.Before
@@ -22,24 +25,19 @@ class MovieListViewModelTest {
 
     private lateinit var viewModel: MovieListViewModel
 
-    private val repository = mock(TMDBRepository::class.java)
+    private val useCase = mock(TMDBUseCase::class.java)
 
     @Before
     fun setUp() {
-        viewModel = MovieListViewModel(repository)
+        `when`(useCase.discoverMovies()).thenReturn(flowOf(PagingData.from(emptyList())))
+        viewModel = MovieListViewModel(useCase)
     }
 
     @Test
     fun queryItemList() {
         coroutinesRule.testDispatcher.runBlockingTest {
-            val movieItem = MovieItemResponse(1, "title", "overview", "/a.jpg")
-            val list = listOf(movieItem)
-            `when`(repository.discoverMovies()).thenReturn(list)
-
-            viewModel.queryItemList()
-
-            verify(repository, times(1)).discoverMovies()
-            assertEquals(viewModel.getItemList().value, list)
+            viewModel.flow.first()
+            verify(useCase).discoverMovies()
         }
     }
 }
