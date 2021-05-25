@@ -1,5 +1,5 @@
 plugins {
-    id 'com.android.application'
+    id 'com.android.dynamic-feature'
     id 'kotlin-android'
     id 'kotlin-kapt'
     id 'kotlin-parcelize'
@@ -13,14 +13,13 @@ android {
     buildToolsVersion "30.0.3"
 
     defaultConfig {
-        applicationId "id.oktoluqman.moviet"
+        applicationId "id.oktoluqman.moviet.favorite"
         minSdkVersion 21
         targetSdkVersion 30
-        versionCode 3
-        versionName "3.0"
+        versionCode 1
+        versionName "1.0"
 
-        testInstrumentationRunner "id.oktoluqman.moviet.CustomTestRunner"
-        testInstrumentationRunnerArguments clearPackageData: 'true'
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
     buildTypes {
@@ -29,6 +28,7 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
@@ -39,12 +39,9 @@ android {
     buildFeatures {
         viewBinding true
     }
-    testOptions {
-        execution 'ANDROIDX_TEST_ORCHESTRATOR'
-    }
-    dynamicFeatures = [':favorite']
 }
 
 dependencies {
     implementation project(":core")
+    implementation project(":app")
 }

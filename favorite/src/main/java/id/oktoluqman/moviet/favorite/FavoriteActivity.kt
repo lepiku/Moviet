@@ -1,16 +1,31 @@
-package id.oktoluqman.moviet.ui.favorite
+package id.oktoluqman.moviet.favorite
 
 import android.os.Bundle
 import androidx.annotation.StringRes
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.tabs.TabLayoutMediator
-import dagger.hilt.android.AndroidEntryPoint
+import dagger.hilt.android.EntryPointAccessors
 import id.oktoluqman.moviet.R
 import id.oktoluqman.moviet.databinding.ActivityHomeBinding
+import id.oktoluqman.moviet.di.FavoriteModuleDependencies
+import javax.inject.Inject
 
-@AndroidEntryPoint
 class FavoriteActivity : AppCompatActivity() {
+    @Inject
+    lateinit var factory: ViewModelFactory
+
     override fun onCreate(savedInstanceState: Bundle?) {
+        DaggerFavoriteComponent.builder()
+            .context(this)
+            .appDependencies(
+                EntryPointAccessors.fromApplication(
+                    applicationContext,
+                    FavoriteModuleDependencies::class.java
+                )
+            )
+            .build()
+            .inject(this)
+
         super.onCreate(savedInstanceState)
         val binding = ActivityHomeBinding.inflate(layoutInflater)
         setContentView(binding.root)

@@ -1,6 +1,7 @@
 package id.oktoluqman.moviet.ui.home
 
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
@@ -10,7 +11,6 @@ import com.google.android.material.tabs.TabLayoutMediator
 import dagger.hilt.android.AndroidEntryPoint
 import id.oktoluqman.moviet.R
 import id.oktoluqman.moviet.databinding.ActivityHomeBinding
-import id.oktoluqman.moviet.ui.favorite.FavoriteActivity
 
 @AndroidEntryPoint
 class HomeActivity : AppCompatActivity() {
@@ -36,8 +36,8 @@ class HomeActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.action_favorite -> {
-                val intent = Intent(this, FavoriteActivity::class.java)
-                startActivity(intent)
+                val uri = Uri.parse("moviet://favorite")
+                startActivity(Intent(Intent.ACTION_VIEW, uri))
             }
         }
         return super.onOptionsItemSelected(item)

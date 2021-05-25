@@ -12,7 +12,6 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Moviet">
-        <activity android:name=".ui.favorite.FavoriteActivity" />
         <activity android:name=".ui.home.tv.detail.TvDetailActivity" />
         <activity android:name=".ui.home.movie.detail.MovieDetailActivity" />
         <activity android:name=".ui.home.HomeActivity">
