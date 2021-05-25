@@ -1,7 +1,7 @@
 package id.oktoluqman.moviet.data
 
 import androidx.lifecycle.LiveData
-import androidx.paging.PagingSource
+import androidx.paging.*
 import id.oktoluqman.moviet.data.source.local.TMDBLocalDataSource
 import id.oktoluqman.moviet.data.source.local.entity.MovieItemEntity
 import id.oktoluqman.moviet.data.source.local.entity.TvItemEntity
@@ -10,7 +10,12 @@ import id.oktoluqman.moviet.data.source.remote.response.MovieDetailResponse
 import id.oktoluqman.moviet.data.source.remote.response.MovieItemResponse
 import id.oktoluqman.moviet.data.source.remote.response.TvDetailResponse
 import id.oktoluqman.moviet.data.source.remote.response.TvItemResponse
+import id.oktoluqman.moviet.domain.model.MovieTvItem
+import id.oktoluqman.moviet.domain.repository.TMDBDataSource
 import id.oktoluqman.moviet.utils.AppExecutors
+import id.oktoluqman.moviet.utils.DataMapper
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
 class TMDBRepository @Inject constructor(
@@ -36,8 +41,14 @@ class TMDBRepository @Inject constructor(
         return remoteDataSource.getTv(id)
     }
 
-    override fun getAllFavoriteMovies(): PagingSource<Int, MovieItemEntity> {
-        return localDataSource.getAllFavoriteMovies()
+    override fun getAllFavoriteMovies(): Flow<PagingData<MovieTvItem>> {
+        return Pager(PagingConfig(pageSize = 4)) {
+            localDataSource.getAllFavoriteMovies()
+        }.flow.map { pagingData ->
+            pagingData.map { entity ->
+                DataMapper.mapEntityToDomain(entity)
+            }
+        }
     }
 
     override fun isFavoriteMovieById(movieId: Int): LiveData<Boolean> {

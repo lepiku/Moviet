@@ -11,6 +11,8 @@ import id.oktoluqman.moviet.data.source.remote.response.*
 import id.oktoluqman.moviet.utils.AppExecutors
 import id.oktoluqman.moviet.utils.CoroutinesTestRule
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.flow.take
+import kotlinx.coroutines.flow.toList
 import kotlinx.coroutines.test.runBlockingTest
 import org.junit.Assert.assertEquals
 import org.junit.Before
@@ -141,12 +143,13 @@ class TMDBRepositoryTest {
 
     @Test
     fun getAllFavoriteMovies() {
-        `when`(local.getAllFavoriteMovies()).thenReturn(pagingSourceMovie)
+        coroutinesRule.testDispatcher.runBlockingTest {
+            `when`(local.getAllFavoriteMovies()).thenReturn(pagingSourceMovie)
 
-        val result = repository.getAllFavoriteMovies()
+            repository.getAllFavoriteMovies().take(1).toList()
 
-        verify(local).getAllFavoriteMovies()
-        assertEquals(pagingSourceMovie, result)
+            verify(local).getAllFavoriteMovies()
+        }
     }
 
     @Test

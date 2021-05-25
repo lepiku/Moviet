@@ -2,7 +2,7 @@ package id.oktoluqman.moviet.ui.movie.detail
 
 import androidx.lifecycle.*
 import dagger.hilt.android.lifecycle.HiltViewModel
-import id.oktoluqman.moviet.data.TMDBDataSource
+import id.oktoluqman.moviet.domain.repository.TMDBDataSource
 import id.oktoluqman.moviet.data.source.remote.response.MovieDetailResponse
 import kotlinx.coroutines.launch
 import javax.inject.Inject

@@ -33,7 +33,7 @@ class MovieListFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         binding?.let { binding ->
-            val adapter = MovieListAdapter { onClickItem(it) }
+            val adapter = MovieTvItemListAdapter { onClickItem(it) }
 
             binding.rvItems.apply {
                 layoutManager = LinearLayoutManager(requireContext())

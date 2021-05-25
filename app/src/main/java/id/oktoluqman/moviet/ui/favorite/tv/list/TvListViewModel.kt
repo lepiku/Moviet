@@ -6,7 +6,7 @@ import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.cachedIn
 import dagger.hilt.android.lifecycle.HiltViewModel
-import id.oktoluqman.moviet.data.TMDBDataSource
+import id.oktoluqman.moviet.domain.repository.TMDBDataSource
 import javax.inject.Inject
 
 @HiltViewModel

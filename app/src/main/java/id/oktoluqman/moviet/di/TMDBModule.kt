@@ -7,13 +7,15 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
-import id.oktoluqman.moviet.data.TMDBDataSource
+import id.oktoluqman.moviet.domain.repository.TMDBDataSource
 import id.oktoluqman.moviet.data.TMDBRepository
 import id.oktoluqman.moviet.data.source.local.TMDBLocalDataSource
 import id.oktoluqman.moviet.data.source.local.room.MovieDao
 import id.oktoluqman.moviet.data.source.local.room.TMDBDatabase
 import id.oktoluqman.moviet.data.source.local.room.TvDao
 import id.oktoluqman.moviet.data.source.remote.TMDBRemoteDataSource
+import id.oktoluqman.moviet.domain.usecase.TMDBInteractor
+import id.oktoluqman.moviet.domain.usecase.TMDBUseCase
 import id.oktoluqman.moviet.utils.AppExecutors
 import id.oktoluqman.moviet.utils.TMDBConstants
 import javax.inject.Singleton
@@ -57,5 +59,11 @@ class TMDBModule {
     @Provides
     fun provideAppExecutors(): AppExecutors {
         return AppExecutors()
+    }
+
+    @Singleton
+    @Provides
+    fun provideTMDBUseCase(dataSource: TMDBDataSource): TMDBUseCase {
+        return TMDBInteractor(dataSource)
     }
 }
