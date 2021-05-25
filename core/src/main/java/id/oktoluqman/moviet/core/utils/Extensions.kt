@@ -1,8 +1,8 @@
-package id.oktoluqman.moviet.utils
+package id.oktoluqman.moviet.core.utils
 
 import android.widget.ImageView
 import com.bumptech.glide.Glide
-import id.oktoluqman.moviet.R
+import id.oktoluqman.moviet.core.R
 
 object Extensions {
     fun ImageView.loadImage(url: String?) {

@@ -9,7 +9,7 @@ import id.oktoluqman.moviet.R
 import id.oktoluqman.moviet.core.domain.model.MovieTvItem
 import id.oktoluqman.moviet.core.utils.TMDBConstants
 import id.oktoluqman.moviet.databinding.ActivityTvDetailBinding
-import id.oktoluqman.moviet.utils.Extensions.loadImage
+import id.oktoluqman.moviet.core.utils.Extensions.loadImage
 
 @AndroidEntryPoint
 class TvDetailActivity : AppCompatActivity() {

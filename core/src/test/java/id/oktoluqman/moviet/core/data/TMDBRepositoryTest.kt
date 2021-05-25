@@ -3,16 +3,12 @@ package id.oktoluqman.moviet.core.data
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.MutableLiveData
 import androidx.paging.PagingSource
-import id.oktoluqman.moviet.core.data.source.local.TMDBLocalDataSource
-import id.oktoluqman.moviet.core.data.source.local.entity.MovieItemEntity
-import id.oktoluqman.moviet.core.data.source.local.entity.TvItemEntity
-import id.oktoluqman.moviet.core.data.source.remote.TMDBRemoteDataSource
 import id.oktoluqman.moviet.core.data.source.remote.response.*
 import id.oktoluqman.moviet.core.domain.model.ItemType
 import id.oktoluqman.moviet.core.domain.model.MovieTvItem
 import id.oktoluqman.moviet.core.utils.AppExecutors
 import id.oktoluqman.moviet.core.utils.DataMapper
-import id.oktoluqman.moviet.utils.CoroutinesTestRule
+import id.oktoluqman.moviet.core.utils.CoroutinesTestRule
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.take
 import kotlinx.coroutines.flow.toList
@@ -41,22 +37,22 @@ class TMDBRepositoryTest {
     val coroutinesRule = CoroutinesTestRule()
 
     @Mock
-    lateinit var pagingSourceMovie: PagingSource<Int, MovieItemEntity>
+    lateinit var pagingSourceMovie: PagingSource<Int, id.oktoluqman.moviet.core.data.source.local.entity.MovieItemEntity>
 
     @Mock
     lateinit var pagingSourceMovieResponse: PagingSource<Int, MovieItemResponse>
 
     @Mock
-    lateinit var pagingSourceTv: PagingSource<Int, TvItemEntity>
+    lateinit var pagingSourceTv: PagingSource<Int, id.oktoluqman.moviet.core.data.source.local.entity.TvItemEntity>
 
     @Mock
     lateinit var pagingSourceTvResponse: PagingSource<Int, TvItemResponse>
 
     @Mock
-    lateinit var remote: TMDBRemoteDataSource
+    lateinit var remote: id.oktoluqman.moviet.core.data.source.remote.TMDBRemoteDataSource
 
     @Mock
-    lateinit var local: TMDBLocalDataSource
+    lateinit var local: id.oktoluqman.moviet.core.data.source.local.TMDBLocalDataSource
 
     @Mock
     lateinit var appExecutors: AppExecutors
@@ -187,7 +183,7 @@ class TMDBRepositoryTest {
         repository.setMovieFavorite(dummyMovieItem, true)
         executor.awaitTermination(100, TimeUnit.MILLISECONDS)
 
-        val movieEntity = MovieItemEntity(
+        val movieEntity = id.oktoluqman.moviet.core.data.source.local.entity.MovieItemEntity(
             movieId = dummyMovieResponse.id,
             title = dummyMovieResponse.title,
             overview = dummyMovieResponse.overview,
@@ -228,7 +224,7 @@ class TMDBRepositoryTest {
         repository.setTvFavorite(dummyTvItem, true)
         executor.awaitTermination(100, TimeUnit.MILLISECONDS)
 
-        val tvEntity = TvItemEntity(
+        val tvEntity = id.oktoluqman.moviet.core.data.source.local.entity.TvItemEntity(
             tvId = dummyTvResponse.id,
             name = dummyTvResponse.name,
             overview = dummyTvResponse.overview,

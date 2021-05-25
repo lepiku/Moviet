@@ -1,5 +1,5 @@
 plugins {
-    id 'com.android.application'
+    id 'com.android.library'
     id 'kotlin-android'
     id 'kotlin-kapt'
     id 'kotlin-parcelize'
@@ -13,14 +13,14 @@ android {
     buildToolsVersion "30.0.3"
 
     defaultConfig {
-        applicationId "id.oktoluqman.moviet"
         minSdkVersion 21
         targetSdkVersion 30
-        versionCode 3
-        versionName "3.0"
+        versionCode 1
+        versionName "1.0"
 
-        testInstrumentationRunner "id.oktoluqman.moviet.CustomTestRunner"
-        testInstrumentationRunnerArguments clearPackageData: 'true'
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        consumerProguardFiles "consumer-rules.pro"
+        buildConfigField("String", "TMDB_TOKEN", "\"${System.env.the_movie_db_api_key}\"")
     }
 
     buildTypes {
@@ -39,11 +39,7 @@ android {
     buildFeatures {
         viewBinding true
     }
-    testOptions {
-        execution 'ANDROIDX_TEST_ORCHESTRATOR'
-    }
 }
 
 dependencies {
-    implementation project(":core")
 }

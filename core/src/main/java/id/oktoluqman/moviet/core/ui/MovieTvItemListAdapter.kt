@@ -6,11 +6,11 @@ import android.view.ViewGroup
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import id.oktoluqman.moviet.R
+import id.oktoluqman.moviet.core.R
+import id.oktoluqman.moviet.core.databinding.ItemBinding
 import id.oktoluqman.moviet.core.domain.model.MovieTvItem
 import id.oktoluqman.moviet.core.utils.TMDBConstants
-import id.oktoluqman.moviet.databinding.ItemBinding
-import id.oktoluqman.moviet.utils.Extensions.loadImage
+import id.oktoluqman.moviet.core.utils.Extensions.loadImage
 
 class MovieTvItemListAdapter(val onClick: (item: MovieTvItem) -> Unit) :
     PagingDataAdapter<MovieTvItem, MovieTvItemListAdapter.ListViewHolder>(diffCallback) {

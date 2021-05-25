@@ -13,7 +13,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
 import id.oktoluqman.moviet.core.domain.model.MovieTvItem
 import id.oktoluqman.moviet.core.ui.MovieTvItemListAdapter
-import id.oktoluqman.moviet.databinding.FragmentItemListBinding
+import id.oktoluqman.moviet.core.databinding.FragmentItemListBinding
 import id.oktoluqman.moviet.ui.home.movie.detail.MovieDetailActivity
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch

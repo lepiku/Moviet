@@ -1,7 +1,7 @@
 package id.oktoluqman.moviet.core.data.source.remote
 
 import androidx.paging.PagingSource
-import id.oktoluqman.moviet.BuildConfig
+import id.oktoluqman.moviet.core.BuildConfig
 import id.oktoluqman.moviet.core.data.source.remote.network.TMDBService
 import id.oktoluqman.moviet.core.data.source.remote.paging.MoviesPagingSource
 import id.oktoluqman.moviet.core.data.source.remote.paging.TvsPagingSource
