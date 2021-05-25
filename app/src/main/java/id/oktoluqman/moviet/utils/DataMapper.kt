@@ -2,9 +2,7 @@ package id.oktoluqman.moviet.utils
 
 import id.oktoluqman.moviet.data.source.local.entity.MovieItemEntity
 import id.oktoluqman.moviet.data.source.local.entity.TvItemEntity
-import id.oktoluqman.moviet.data.source.remote.response.CreditsResponse
-import id.oktoluqman.moviet.data.source.remote.response.GenreResponse
-import id.oktoluqman.moviet.data.source.remote.response.MovieDetailResponse
+import id.oktoluqman.moviet.data.source.remote.response.*
 import id.oktoluqman.moviet.domain.model.*
 
 object DataMapper {
@@ -32,24 +30,42 @@ object DataMapper {
         favorite
     )
 
-    fun mapResponseToDomain(input: MovieDetailResponse) = MovieDetail(
-        input.id,
-        input.title,
+    fun mapDomainToEntity(input: TvDetail, favorite: Boolean) = TvItemEntity(
+        input.tvId,
+        input.name,
         input.overview,
-        mapResponseToDomain(input.genres),
-        input.status,
         input.posterPath,
-        input.voteAverage,
-        input.releaseDate,
-        input.revenue,
-        mapResponseToDomain(input.credits)
+        favorite
     )
 
-    private fun mapResponseToDomain(input: List<GenreResponse>) = input.map {
-        Genre(
-            it.name
-        )
-    }
+    fun mapResponseToDomain(input: MovieDetailResponse) = MovieDetail(
+        movieId = input.id,
+        title = input.title,
+        overview = input.overview,
+        genres = input.genres.map { mapResponseToDomain(it) },
+        status = input.status,
+        posterPath = input.posterPath,
+        voteAverage = input.voteAverage,
+        releaseDate = input.releaseDate,
+        revenue = input.revenue,
+        credits = mapResponseToDomain(input.credits)
+    )
+
+    fun mapResponseToDomain(input: TvDetailResponse) = TvDetail(
+        tvId = input.id,
+        name = input.name,
+        overview = input.overview,
+        genres = input.genres.map { mapResponseToDomain(it) },
+        status = input.status,
+        createdBy = input.createdBy.map { mapResponseToDomain(it) },
+        posterPath = input.posterPath,
+        voteAverage = input.voteAverage,
+        firstAirDate = input.firstAirDate,
+        lastAirDate = input.lastAirDate,
+        credits = mapResponseToDomain(input.credits)
+    )
+
+    private fun mapResponseToDomain(input: GenreResponse) = Genre(input.name)
 
     private fun mapResponseToDomain(input: CreditsResponse) = Credits(
         crew = input.crew.map {
@@ -59,4 +75,6 @@ object DataMapper {
             )
         }
     )
+
+    private fun mapResponseToDomain(input: CreatorResponse) = Creator(input.name)
 }

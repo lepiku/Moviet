@@ -1,16 +1,17 @@
 package id.oktoluqman.moviet.data
 
 import androidx.lifecycle.LiveData
-import androidx.paging.*
+import androidx.paging.Pager
+import androidx.paging.PagingConfig
+import androidx.paging.PagingData
+import androidx.paging.map
 import id.oktoluqman.moviet.data.source.local.TMDBLocalDataSource
-import id.oktoluqman.moviet.data.source.local.entity.TvItemEntity
 import id.oktoluqman.moviet.data.source.remote.TMDBRemoteDataSource
-import id.oktoluqman.moviet.data.source.remote.response.MovieDetailResponse
 import id.oktoluqman.moviet.data.source.remote.response.MovieItemResponse
-import id.oktoluqman.moviet.data.source.remote.response.TvDetailResponse
 import id.oktoluqman.moviet.data.source.remote.response.TvItemResponse
 import id.oktoluqman.moviet.domain.model.MovieDetail
 import id.oktoluqman.moviet.domain.model.MovieTvItem
+import id.oktoluqman.moviet.domain.model.TvDetail
 import id.oktoluqman.moviet.domain.repository.TMDBDataSource
 import id.oktoluqman.moviet.utils.AppExecutors
 import id.oktoluqman.moviet.utils.DataMapper
@@ -33,12 +34,12 @@ class TMDBRepository @Inject constructor(
         return remoteDataSource.discoverTv()
     }
 
-    override suspend fun getMovie(id: Int): MovieDetail{
+    override suspend fun getMovie(id: Int): MovieDetail {
         return DataMapper.mapResponseToDomain(remoteDataSource.getMovie(id))
     }
 
-    override suspend fun getTv(id: Int): TvDetailResponse {
-        return remoteDataSource.getTv(id)
+    override suspend fun getTv(id: Int): TvDetail {
+        return DataMapper.mapResponseToDomain(remoteDataSource.getTv(id))
     }
 
     override fun getAllFavoriteMovies(): Flow<PagingData<MovieTvItem>> {
@@ -62,23 +63,23 @@ class TMDBRepository @Inject constructor(
         }
     }
 
-    override fun getAllFavoriteTvs(): PagingSource<Int, TvItemEntity> {
-        return localDataSource.getAllFavoriteTvs()
+    override fun getAllFavoriteTvs(): Flow<PagingData<MovieTvItem>> {
+        return Pager(PagingConfig(pageSize = 4)) {
+            localDataSource.getAllFavoriteTvs()
+        }.flow.map { pagingData ->
+            pagingData.map { entity ->
+                DataMapper.mapEntityToDomain(entity)
+            }
+        }
     }
 
     override fun isFavoriteTvById(tvId: Int): LiveData<Boolean> {
         return localDataSource.isFavoriteTv(tvId)
     }
 
-    override fun setTvFavorite(tv: TvDetailResponse, state: Boolean) {
+    override fun setTvFavorite(tv: TvDetail, state: Boolean) {
         appExecutors.diskIO().execute {
-            val tvEntity = TvItemEntity(
-                tvId = tv.id,
-                name = tv.name,
-                overview = tv.overview,
-                posterPath = tv.posterPath,
-                favorite = state
-            )
+            val tvEntity = DataMapper.mapDomainToEntity(tv, state)
             localDataSource.insertTv(tvEntity)
         }
     }

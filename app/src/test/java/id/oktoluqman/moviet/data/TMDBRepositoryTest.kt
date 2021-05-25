@@ -76,7 +76,7 @@ class TMDBRepositoryTest {
         CreditsResponse(emptyList()),
     )
     private val dummyMovie = DataMapper.mapResponseToDomain(dummyMovieResponse)
-    private val dummyTv = TvDetailResponse(
+    private val dummyTvResponse = TvDetailResponse(
         1,
         "",
         "",
@@ -89,6 +89,7 @@ class TMDBRepositoryTest {
         "",
         CreditsResponse(emptyList()),
     )
+    private val dummyTv = DataMapper.mapResponseToDomain(dummyTvResponse)
 
     @Before
     fun setUp() {
@@ -134,7 +135,7 @@ class TMDBRepositoryTest {
     @Test
     fun getTv() {
         coroutinesRule.testDispatcher.runBlockingTest {
-            `when`(remote.getTv(2048)).thenReturn(dummyTv)
+            `when`(remote.getTv(2048)).thenReturn(dummyTvResponse)
 
             val result = repository.getTv(2048)
 
@@ -186,12 +187,13 @@ class TMDBRepositoryTest {
 
     @Test
     fun getAllFavoriteTvs() {
-        `when`(local.getAllFavoriteTvs()).thenReturn(pagingSourceTv)
+        coroutinesRule.testDispatcher.runBlockingTest {
+            `when`(local.getAllFavoriteTvs()).thenReturn(pagingSourceTv)
 
-        val result = repository.getAllFavoriteTvs()
+            repository.getAllFavoriteTvs().take(1).toList()
 
-        verify(local).getAllFavoriteTvs()
-        assertEquals(pagingSourceTv, result)
+            verify(local).getAllFavoriteTvs()
+        }
     }
 
     @Test
@@ -215,10 +217,10 @@ class TMDBRepositoryTest {
         executor.awaitTermination(100, TimeUnit.MILLISECONDS)
 
         val tvEntity = TvItemEntity(
-            tvId = dummyTv.id,
-            name = dummyTv.name,
-            overview = dummyTv.overview,
-            posterPath = dummyTv.posterPath,
+            tvId = dummyTvResponse.id,
+            name = dummyTvResponse.name,
+            overview = dummyTvResponse.overview,
+            posterPath = dummyTvResponse.posterPath,
             favorite = true
         )
         verify(local).insertTv(tvEntity)

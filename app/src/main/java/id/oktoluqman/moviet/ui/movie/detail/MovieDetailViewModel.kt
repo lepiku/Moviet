@@ -8,8 +8,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class MovieDetailViewModel @Inject constructor(private val useCase: TMDBUseCase) :
-    ViewModel() {
+class MovieDetailViewModel @Inject constructor(private val useCase: TMDBUseCase) : ViewModel() {
 
     private val movieId = MutableLiveData<Int>()
     private val movie = MutableLiveData<MovieDetail>()

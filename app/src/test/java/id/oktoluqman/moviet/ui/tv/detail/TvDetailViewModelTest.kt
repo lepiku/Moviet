@@ -3,9 +3,9 @@ package id.oktoluqman.moviet.ui.tv.detail
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
-import id.oktoluqman.moviet.data.TMDBRepository
-import id.oktoluqman.moviet.data.source.remote.response.CreditsResponse
-import id.oktoluqman.moviet.data.source.remote.response.TvDetailResponse
+import id.oktoluqman.moviet.domain.model.Credits
+import id.oktoluqman.moviet.domain.model.TvDetail
+import id.oktoluqman.moviet.domain.usecase.TMDBUseCase
 import id.oktoluqman.moviet.utils.CoroutinesTestRule
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runBlockingTest
@@ -30,18 +30,20 @@ class TvDetailViewModelTest {
     @Mock
     private lateinit var favoriteObserver: Observer<Boolean>
 
+    @Mock
+    private lateinit var useCase: TMDBUseCase
+
     private lateinit var viewModel: TvDetailViewModel
-    private val repository = Mockito.mock(TMDBRepository::class.java)
 
     @Before
     fun setUp() {
-        viewModel = TvDetailViewModel(repository)
+        viewModel = TvDetailViewModel(useCase)
     }
 
     @Test
     fun setTv() {
         coroutinesRule.testDispatcher.runBlockingTest {
-            val tv = TvDetailResponse(
+            val tv = TvDetail(
                 1,
                 "",
                 "",
@@ -52,13 +54,13 @@ class TvDetailViewModelTest {
                 0.2f,
                 "",
                 "",
-                CreditsResponse(emptyList()),
+                Credits(emptyList()),
             )
-            Mockito.`when`(repository.getTv(1)).thenReturn(tv)
+            Mockito.`when`(useCase.getTv(1)).thenReturn(tv)
 
             viewModel.setTv(1)
 
-            Mockito.verify(repository, Mockito.times(1)).getTv(1)
+            Mockito.verify(useCase, Mockito.times(1)).getTv(1)
             assertEquals(viewModel.getTv().value, tv)
         }
     }
@@ -66,7 +68,7 @@ class TvDetailViewModelTest {
     @Test
     fun toggleFavoriteFromFalse() {
         coroutinesRule.testDispatcher.runBlockingTest {
-            val tv = TvDetailResponse(
+            val tv = TvDetail(
                 1,
                 "",
                 "",
@@ -77,27 +79,27 @@ class TvDetailViewModelTest {
                 0.2f,
                 "",
                 "",
-                CreditsResponse(emptyList()),
+                Credits(emptyList()),
             )
 
-            Mockito.`when`(repository.getTv(1)).thenReturn(tv)
-            Mockito.`when`(repository.isFavoriteTvById(1)).thenReturn(MutableLiveData(false))
+            Mockito.`when`(useCase.getTv(1)).thenReturn(tv)
+            Mockito.`when`(useCase.isFavoriteTvById(1)).thenReturn(MutableLiveData(false))
             viewModel.favorite.observeForever(favoriteObserver)
 
             viewModel.setTv(1)
 
             Mockito.verify(favoriteObserver).onChanged(false)
-            Mockito.verify(repository).isFavoriteTvById(1)
+            Mockito.verify(useCase).isFavoriteTvById(1)
 
             viewModel.toggleFavorite()
-            Mockito.verify(repository, Mockito.times(1)).setTvFavorite(tv, true)
+            Mockito.verify(useCase, Mockito.times(1)).setTvFavorite(tv, true)
         }
     }
 
     @Test
     fun toggleFavoriteFromTrue() {
         coroutinesRule.testDispatcher.runBlockingTest {
-            val tv = TvDetailResponse(
+            val tv = TvDetail(
                 1,
                 "",
                 "",
@@ -108,20 +110,20 @@ class TvDetailViewModelTest {
                 0.2f,
                 "",
                 "",
-                CreditsResponse(emptyList()),
+                Credits(emptyList()),
             )
 
-            Mockito.`when`(repository.getTv(1)).thenReturn(tv)
-            Mockito.`when`(repository.isFavoriteTvById(1)).thenReturn(MutableLiveData(true))
+            Mockito.`when`(useCase.getTv(1)).thenReturn(tv)
+            Mockito.`when`(useCase.isFavoriteTvById(1)).thenReturn(MutableLiveData(true))
             viewModel.favorite.observeForever(favoriteObserver)
 
             viewModel.setTv(1)
 
             Mockito.verify(favoriteObserver).onChanged(true)
-            Mockito.verify(repository).isFavoriteTvById(1)
+            Mockito.verify(useCase).isFavoriteTvById(1)
 
             viewModel.toggleFavorite()
-            Mockito.verify(repository, Mockito.times(1)).setTvFavorite(tv, false)
+            Mockito.verify(useCase, Mockito.times(1)).setTvFavorite(tv, false)
         }
     }
 }

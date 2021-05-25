@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
 import id.oktoluqman.moviet.databinding.FragmentItemListBinding
+import id.oktoluqman.moviet.ui.adapter.MovieTvItemListAdapter
 import id.oktoluqman.moviet.ui.tv.detail.TvDetailActivity
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
@@ -33,7 +34,7 @@ class TvListFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         binding?.let { binding ->
-            val adapter = TvListAdapter { onClickItem(it) }
+            val adapter = MovieTvItemListAdapter { onClickItem(it) }
 
             binding.rvItems.apply {
                 layoutManager = LinearLayoutManager(requireContext())
