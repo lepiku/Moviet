@@ -6,8 +6,9 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import dagger.hilt.android.AndroidEntryPoint
 import id.oktoluqman.moviet.R
-import id.oktoluqman.moviet.databinding.ActivityTvDetailBinding
+import id.oktoluqman.moviet.core.domain.model.MovieTvItem
 import id.oktoluqman.moviet.core.utils.TMDBConstants
+import id.oktoluqman.moviet.databinding.ActivityTvDetailBinding
 import id.oktoluqman.moviet.utils.Extensions.loadImage
 
 @AndroidEntryPoint
@@ -36,35 +37,41 @@ class TvDetailActivity : AppCompatActivity() {
     }
 
     private fun setUpViewModel() {
-        val tvId = intent.getIntExtra(EXTRA_ID, 0)
+        val tv = intent.getParcelableExtra<MovieTvItem>(EXTRA_ITEM)
 
-        viewModel.setTv(tvId)
-        viewModel.getTv().observe(this) { tv ->
-            binding.imgPoster.loadImage(TMDBConstants.POSTER_BIG_URL + tv.posterPath)
-            binding.tvTvDetailName.text = tv.name
-            binding.tvReleaseDate.text =
-                resources.getString(R.string.release_from_and_to, tv.firstAirDate, tv.lastAirDate)
-            binding.tvGenre.text = tv.genres.joinToString { it.name }
-            binding.tvVoteAverage.text = tv.voteAverage.toString()
-            if (tv.createdBy.isNotEmpty())
-                binding.tvCreator.text = tv.createdBy.joinToString { it.name }
-            else {
-                binding.tvCreatorLabel.visibility = View.GONE
-                binding.tvCreator.visibility = View.GONE
+        tv?.let {
+            viewModel.setTv(tv.id)
+            viewModel.getTv().observe(this) { tv ->
+                binding.imgPoster.loadImage(TMDBConstants.POSTER_BIG_URL + tv.posterPath)
+                binding.tvTvDetailName.text = tv.name
+                binding.tvReleaseDate.text =
+                    resources.getString(
+                        R.string.release_from_and_to,
+                        tv.firstAirDate,
+                        tv.lastAirDate
+                    )
+                binding.tvGenre.text = tv.genres.joinToString { it.name }
+                binding.tvVoteAverage.text = tv.voteAverage.toString()
+                if (tv.createdBy.isNotEmpty())
+                    binding.tvCreator.text = tv.createdBy.joinToString { it.name }
+                else {
+                    binding.tvCreatorLabel.visibility = View.GONE
+                    binding.tvCreator.visibility = View.GONE
+                }
+                binding.tvOverview.text = tv.overview
+                binding.tvStatus.text = tv.status
             }
-            binding.tvOverview.text = tv.overview
-            binding.tvStatus.text = tv.status
-        }
 
-        viewModel.favorite.observe(this) { status ->
-            if (status)
-                binding.btnFavorite.setImageResource(R.drawable.ic_baseline_favorite_24)
-            else
-                binding.btnFavorite.setImageResource(R.drawable.ic_baseline_favorite_border_24)
+            viewModel.favorite.observe(this) { status ->
+                if (status)
+                    binding.btnFavorite.setImageResource(R.drawable.ic_baseline_favorite_24)
+                else
+                    binding.btnFavorite.setImageResource(R.drawable.ic_baseline_favorite_border_24)
+            }
         }
     }
 
     companion object {
-        const val EXTRA_ID = "extra_id"
+        const val EXTRA_ITEM = "extra_item"
     }
 }

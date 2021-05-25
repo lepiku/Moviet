@@ -11,8 +11,9 @@ import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
-import id.oktoluqman.moviet.databinding.FragmentItemListBinding
+import id.oktoluqman.moviet.core.domain.model.MovieTvItem
 import id.oktoluqman.moviet.core.ui.MovieTvItemListAdapter
+import id.oktoluqman.moviet.databinding.FragmentItemListBinding
 import id.oktoluqman.moviet.ui.home.movie.detail.MovieDetailActivity
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
@@ -53,9 +54,9 @@ class MovieListFragment : Fragment() {
         }
     }
 
-    private fun onClickItem(id: Int) {
+    private fun onClickItem(item: MovieTvItem) {
         Intent(requireContext(), MovieDetailActivity::class.java).apply {
-            putExtra(MovieDetailActivity.EXTRA_ID, id)
+            putExtra(MovieDetailActivity.EXTRA_ITEM, item)
             startActivity(this)
         }
     }

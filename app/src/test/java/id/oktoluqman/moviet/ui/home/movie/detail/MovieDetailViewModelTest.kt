@@ -4,7 +4,9 @@ import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import id.oktoluqman.moviet.core.domain.model.Credits
+import id.oktoluqman.moviet.core.domain.model.ItemType
 import id.oktoluqman.moviet.core.domain.model.MovieDetail
+import id.oktoluqman.moviet.core.domain.model.MovieTvItem
 import id.oktoluqman.moviet.core.domain.usecase.TMDBUseCase
 import id.oktoluqman.moviet.utils.CoroutinesTestRule
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -57,7 +59,7 @@ class MovieDetailViewModelTest {
             )
             `when`(useCase.getMovie(1)).thenReturn(movie)
 
-            viewModel.setMovie(1)
+            viewModel.setMovie(MovieTvItem(1, "", "", "", ItemType.Movie))
 
             verify(useCase, times(1)).getMovie(1)
             assertEquals(viewModel.getMovie().value, movie)
@@ -79,18 +81,19 @@ class MovieDetailViewModelTest {
                 2000000,
                 Credits(emptyList()),
             )
+            val movieItem = MovieTvItem(1, "", "", "", ItemType.Movie)
 
             `when`(useCase.getMovie(1)).thenReturn(movie)
             `when`(useCase.isFavoriteMovieById(1)).thenReturn(MutableLiveData(false))
             viewModel.favorite.observeForever(favoriteObserver)
 
-            viewModel.setMovie(1)
+            viewModel.setMovie(movieItem)
 
             verify(favoriteObserver).onChanged(false)
             verify(useCase).isFavoriteMovieById(1)
 
             viewModel.toggleFavorite()
-            verify(useCase, times(1)).setMovieFavorite(movie, true)
+            verify(useCase, times(1)).setMovieFavorite(movieItem, true)
         }
     }
 
@@ -109,18 +112,19 @@ class MovieDetailViewModelTest {
                 2000000,
                 Credits(emptyList()),
             )
+            val movieItem = MovieTvItem(1, "", "", "", ItemType.Movie)
 
             `when`(useCase.getMovie(1)).thenReturn(movie)
             `when`(useCase.isFavoriteMovieById(1)).thenReturn(MutableLiveData(true))
             viewModel.favorite.observeForever(favoriteObserver)
 
-            viewModel.setMovie(1)
+            viewModel.setMovie(MovieTvItem(1, "", "", "", ItemType.Movie))
 
             verify(favoriteObserver).onChanged(true)
             verify(useCase).isFavoriteMovieById(1)
 
             viewModel.toggleFavorite()
-            verify(useCase, times(1)).setMovieFavorite(movie, false)
+            verify(useCase, times(1)).setMovieFavorite(movieItem, false)
         }
     }
 }

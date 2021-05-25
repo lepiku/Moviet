@@ -66,9 +66,9 @@ class TMDBRepository @Inject constructor(
         return localDataSource.isFavoriteMovie(movieId)
     }
 
-    override fun setMovieFavorite(movie: MovieDetail, state: Boolean) {
+    override fun setMovieFavorite(movie: MovieTvItem, state: Boolean) {
         appExecutors.diskIO().execute {
-            val movieEntity = DataMapper.mapDomainToEntity(movie, state)
+            val movieEntity = DataMapper.mapDomainToMovieEntity(movie, state)
             localDataSource.insertMovie(movieEntity)
         }
     }

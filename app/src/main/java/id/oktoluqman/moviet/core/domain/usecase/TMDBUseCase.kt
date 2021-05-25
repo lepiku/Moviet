@@ -14,7 +14,7 @@ interface TMDBUseCase {
     suspend fun getTv(id: Int): TvDetail
     fun getAllFavoriteMovies(): Flow<PagingData<MovieTvItem>>
     fun isFavoriteMovieById(movieId: Int): LiveData<Boolean>
-    fun setMovieFavorite(movie: MovieDetail, state: Boolean)
+    fun setMovieFavorite(movie: MovieTvItem, state: Boolean)
     fun getAllFavoriteTvs(): Flow<PagingData<MovieTvItem>>
     fun isFavoriteTvById(tvId: Int): LiveData<Boolean>
     fun setTvFavorite(tv: TvDetail, state: Boolean)

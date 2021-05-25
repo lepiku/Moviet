@@ -8,9 +8,11 @@ import id.oktoluqman.moviet.core.data.source.local.entity.MovieItemEntity
 import id.oktoluqman.moviet.core.data.source.local.entity.TvItemEntity
 import id.oktoluqman.moviet.core.data.source.remote.TMDBRemoteDataSource
 import id.oktoluqman.moviet.core.data.source.remote.response.*
+import id.oktoluqman.moviet.core.domain.model.ItemType
+import id.oktoluqman.moviet.core.domain.model.MovieTvItem
 import id.oktoluqman.moviet.core.utils.AppExecutors
-import id.oktoluqman.moviet.utils.CoroutinesTestRule
 import id.oktoluqman.moviet.core.utils.DataMapper
+import id.oktoluqman.moviet.utils.CoroutinesTestRule
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.take
 import kotlinx.coroutines.flow.toList
@@ -87,6 +89,13 @@ class TMDBRepositoryTest {
         ""
     )
     private val dummyTv = DataMapper.mapResponseToDomain(dummyTvResponse)
+    private val dummyMovieItem = MovieTvItem(
+        dummyMovie.movieId,
+        dummyMovie.title,
+        dummyMovie.overview,
+        dummyMovie.posterPath,
+        ItemType.Movie
+    )
 
     @Before
     fun setUp() {
@@ -167,7 +176,7 @@ class TMDBRepositoryTest {
         val executor = Executors.newSingleThreadExecutor()
         `when`(appExecutors.diskIO()).thenReturn(executor)
 
-        repository.setMovieFavorite(dummyMovie, true)
+        repository.setMovieFavorite(dummyMovieItem, true)
         executor.awaitTermination(100, TimeUnit.MILLISECONDS)
 
         val movieEntity = MovieItemEntity(

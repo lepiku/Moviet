@@ -1,6 +1,6 @@
 package id.oktoluqman.moviet.core.domain.usecase
 
-import id.oktoluqman.moviet.core.domain.model.MovieDetail
+import id.oktoluqman.moviet.core.domain.model.MovieTvItem
 import id.oktoluqman.moviet.core.domain.model.TvDetail
 import id.oktoluqman.moviet.core.domain.repository.TMDBDataSource
 import javax.inject.Inject
@@ -13,7 +13,7 @@ class TMDBInteractor @Inject constructor(private val repository: TMDBDataSource)
 
     override fun getAllFavoriteMovies() = repository.getAllFavoriteMovies()
     override fun isFavoriteMovieById(movieId: Int) = repository.isFavoriteMovieById(movieId)
-    override fun setMovieFavorite(movie: MovieDetail, state: Boolean) =
+    override fun setMovieFavorite(movie: MovieTvItem, state: Boolean) =
         repository.setMovieFavorite(movie, state)
 
     override fun getAllFavoriteTvs() = repository.getAllFavoriteTvs()

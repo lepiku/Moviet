@@ -22,9 +22,9 @@ object DataMapper {
         ItemType.Tv,
     )
 
-    fun mapDomainToEntity(input: MovieDetail, favorite: Boolean) = MovieItemEntity(
-        input.movieId,
-        input.title,
+    fun mapDomainToMovieEntity(input: MovieTvItem, favorite: Boolean) = MovieItemEntity(
+        input.id,
+        input.name,
         input.overview,
         input.posterPath,
         favorite
