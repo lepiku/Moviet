@@ -12,7 +12,7 @@ import javax.inject.Inject
 class MovieDetailViewModel @Inject constructor(private val useCase: TMDBUseCase) : ViewModel() {
 
     private val movieItem = MutableLiveData<MovieTvItem>()
-    private val movie = MutableLiveData<MovieDetail>()
+    private val movie: MutableLiveData<MovieDetail> = MutableLiveData()
     val favorite: LiveData<Boolean> = Transformations.switchMap(movieItem) {
         useCase.isFavoriteMovieById(it.id)
     }
