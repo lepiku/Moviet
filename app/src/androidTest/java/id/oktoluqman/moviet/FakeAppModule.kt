@@ -16,6 +16,7 @@ import javax.inject.Inject
     components = [SingletonComponent::class],
     replaces = [AppModule::class]
 )
+@Suppress("unused")
 class FakeAppModule {
     @Provides
     fun provideOkHttpClient(): OkHttpClient {

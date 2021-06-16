@@ -12,7 +12,9 @@
         <dist:fusing dist:include="true" />
     </dist:module>
 
-    <application>
+    <application
+        android:allowBackup="true"
+        android:fullBackupContent="true">
         <activity android:name=".FavoriteActivity">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
