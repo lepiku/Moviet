@@ -6,6 +6,7 @@ import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import id.oktoluqman.moviet.core.BuildConfig
 import id.oktoluqman.moviet.core.utils.TMDBConstants
+import okhttp3.CertificatePinner
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
@@ -25,6 +26,11 @@ class AppModule {
                 HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY)
             clientBuilder.addInterceptor(loggingInterceptor)
         }
+
+        val certificatePinner = CertificatePinner.Builder()
+            .add(TMDBConstants.BASE_HOSTNAME, "sha256/+vqZVAzTqUP8BGkfl88yU7SQ3C8J2uNEa55B7RZjEg0=")
+            .build()
+        clientBuilder.certificatePinner(certificatePinner)
 
         return clientBuilder.build()
     }
