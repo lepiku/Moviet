@@ -50,6 +50,10 @@ dependencies {
     def paging_version = "3.0.0"
     implementation "androidx.paging:paging-runtime-ktx:$paging_version"
 
+    // sqlite encrypt
+    implementation "net.zetetic:android-database-sqlcipher:4.4.3"
+    implementation "androidx.sqlite:sqlite-ktx:2.1.0"
+
     testImplementation 'junit:junit:4.13.2'
 
     def mockito_version = "3.11.1"

@@ -19,6 +19,8 @@ import id.oktoluqman.moviet.core.domain.usecase.TMDBInteractor
 import id.oktoluqman.moviet.core.domain.usecase.TMDBUseCase
 import id.oktoluqman.moviet.core.utils.AppExecutors
 import id.oktoluqman.moviet.core.utils.TMDBConstants
+import net.sqlcipher.database.SQLiteDatabase
+import net.sqlcipher.database.SupportFactory
 import retrofit2.Retrofit
 import javax.inject.Singleton
 
@@ -38,11 +40,13 @@ class TMDBModule {
     @Singleton
     @Provides
     fun provideTMDBDatabase(@ApplicationContext appContext: Context): TMDBDatabase {
+        val passphrase: ByteArray = SQLiteDatabase.getBytes("moviet".toCharArray())
+        val factory = SupportFactory(passphrase)
         return Room.databaseBuilder(
             appContext,
             TMDBDatabase::class.java,
             TMDBConstants.DATABASE_NAME
-        ).build()
+        ).fallbackToDestructiveMigration().openHelperFactory(factory).build()
     }
 
     @Singleton
