@@ -1,0 +1,1 @@
+-keep class id.oktoluqman.moviet.core.data.source.remote.response.** { *; }
