@@ -42,6 +42,7 @@ class FavoriteActivityTest {
                 ViewActions.click()
             )
         )
+        Thread.sleep(800) // for encrypt db overhead
         Espresso.onView(ViewMatchers.withId(R.id.btn_favorite)).perform(ViewActions.click())
 
         // navigate to movies FavoriteActivity
@@ -82,6 +83,7 @@ class FavoriteActivityTest {
                 ViewActions.click()
             )
         )
+        Thread.sleep(800) // for encrypt db overhead
         Espresso.onView(ViewMatchers.withId(R.id.btn_favorite)).perform(ViewActions.click())
 
         // navigate to tv shows FavoriteActivity
